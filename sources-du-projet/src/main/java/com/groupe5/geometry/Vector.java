@@ -1,7 +1,5 @@
 package com.groupe5.geometry;
 
-import java.awt.Point;
-
 public class Vector {
 
 	private float x1, x2; //x1 -> Point de départ sur l'axe X / x2 -> Point d'arrivée sur l'axe X
@@ -19,6 +17,6 @@ public class Vector {
 		z2 = p2.getZ();		
 	}
 	
-	public get 
+	public get
 	
 }
