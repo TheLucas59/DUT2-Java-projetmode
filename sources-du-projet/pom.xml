@@ -28,7 +28,7 @@
 				<artifactId>javafx-maven-plugin</artifactId>
 				<version>0.0.4</version>
 				<configuration>
-					<mainClass>com.groupe5.main.HelloFX</mainClass>
+					<mainClass>com.groupe5.view.ShowScene</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -50,6 +50,11 @@
 			<artifactId>junit-jupiter-engine</artifactId>
 			<version>5.6.2</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>11.0.1</version>
 		</dependency>
 	</dependencies>
 </project>
