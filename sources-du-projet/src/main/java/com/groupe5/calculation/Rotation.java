@@ -16,4 +16,8 @@ public class Rotation {
 		
 	}
 	
+	public Matrix getRotation() {
+		return rotation;
+	}
+	
 }
