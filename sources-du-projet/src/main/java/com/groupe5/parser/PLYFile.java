@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
-import com.groupe5.geometry.Vector;
 
 public class PLYFile {
 	File file;
