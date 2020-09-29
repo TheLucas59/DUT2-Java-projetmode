@@ -12,13 +12,11 @@ public class PLYFile {
 	String header;
 	ArrayList<Face> faces;
 	ArrayList<Point> points;
-	ArrayList<Vector> vectors;
-	
+
 	PLYFile(File file){
 		this.file = file;
 		faces = new ArrayList<Face>();
 		points = new ArrayList<Point>();
-		vectors = new ArrayList<Vector>();
 	}
 	
 	public boolean parse() {
@@ -27,7 +25,6 @@ public class PLYFile {
 		header = p.getHeader();
 		faces = p.getFaces();
 		points = p.getPoints();
-		vectors = p.getVectors();
 		return true;
 	}
 }
