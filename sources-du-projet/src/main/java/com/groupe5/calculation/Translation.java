@@ -11,5 +11,13 @@ public class Translation {
 		
 	}
 	
+	public Matrix getTranslation() {
+		return translation;
+	}
+	
+	public Vector getVector() {
+		return vector;
+	}
+	
 
 }

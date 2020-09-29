@@ -9,10 +9,10 @@ public class Rotation {
 		
 		this.teta = Math.toRadians(teta);
 		
-		rotation = new Matrix(new float[] {(float) Math.cos(teta), (float) -Math.sin(teta), 0, 0}, 
-						 new float[] {(float) Math.sin(teta), (float) Math.cos(teta), 0, 0}, 
-						 new float[] {0, 0, 1, 0},
-						 new float[] {0, 0, 0, 1});
+		rotation = new Matrix(new double[] {Math.cos(teta), -Math.sin(teta), 0, 0}, 
+						 new double[] {Math.sin(teta), Math.cos(teta), 0, 0}, 
+						 new double[] {0, 0, 1, 0},
+						 new double[] {0, 0, 0, 1});
 		
 	}
 	

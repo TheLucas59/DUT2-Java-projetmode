@@ -2,13 +2,13 @@ package com.groupe5.calculation;
 
 public class Matrix {
 	
-	private float[][] matrix;
+	private double[][] matrix;
 
-	public Matrix(float[] line1, float[] line2, float[] line3, float[] line4) {
-		matrix = new float[][] {line1, line2, line3, line4};
+	public Matrix(double[] line1, double[] line2, double[] line3, double[] line4) {
+		matrix = new double[][] {line1, line2, line3, line4};
 	}
 	
-	public float[][] getMatrix(){
+	public double[][] getMatrix(){
 		return matrix;
 	}
 }
