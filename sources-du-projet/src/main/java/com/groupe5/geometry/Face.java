@@ -12,5 +12,9 @@ public class Face {
 	public int getNbPoints() {
 		return nbPoints;
 	}
+
+	public Point[] getPoints() {
+		return points;
+	}
 	
 }
