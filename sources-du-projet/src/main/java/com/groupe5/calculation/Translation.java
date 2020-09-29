@@ -9,15 +9,14 @@ public class Translation {
 	
 	public Translation() {
 		
+		translation = new Matrix(new double[] {1, 0, 0, vector.getEndPoint()[0]}, 
+								 new double[] {0, 1, 0, vector.getEndPoint()[1]}, 
+								 new double[] {0, 0, 1, vector.getEndPoint()[2]},
+								 new double[] {0, 0, 0, 1});
+		
 	}
 	
 	public Matrix getTranslation() {
 		return translation;
 	}
-	
-	public Vector getVector() {
-		return vector;
-	}
-	
-
 }
