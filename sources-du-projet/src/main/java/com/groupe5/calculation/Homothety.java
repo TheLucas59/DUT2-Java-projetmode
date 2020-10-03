@@ -8,10 +8,10 @@ public class Homothety {
 	
 	public Homothety() {
 		
-		homothety = new Matrix(line1, 
-							   line2, 
-							   line3, 
-							   line4);
+		homothety = new Matrix(new double[] {},
+							   new double[] {},
+							   new double[] {},
+							   new double[] {});
 		
 	}
 
