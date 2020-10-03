@@ -6,12 +6,12 @@ public class Homothety {
 
 	private Matrix homothety;
 	
-	public Homothety() {
+	public Homothety(int coefficient) {
 		
-		homothety = new Matrix(new double[] {},
-							   new double[] {},
-							   new double[] {},
-							   new double[] {});
+		homothety = new Matrix(new double[] {coefficient, 0, 0, 0},
+							   new double[] {0, coefficient, 0, 0},
+							   new double[] {0, 0, coefficient, 0},
+							   new double[] {0, 0, 0, 1});
 		
 	}
 
