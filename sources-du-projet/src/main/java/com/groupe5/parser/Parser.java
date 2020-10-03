@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
-import com.groupe5.geometry.Vector;
 
 public class Parser {
 	File file;
@@ -34,11 +33,6 @@ public class Parser {
 	}
 
 	public ArrayList<Point> getPoints() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<Vector> getVectors() {
 		// TODO Auto-generated method stub
 		return null;
 	}
