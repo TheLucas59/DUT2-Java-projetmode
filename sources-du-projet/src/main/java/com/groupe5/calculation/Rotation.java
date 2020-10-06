@@ -1,23 +1,18 @@
 package com.groupe5.calculation;
 
-public class Rotation {
-
-	Matrix rotation;
-	double teta;
+public class Rotation extends Matrix {
 	
 	public Rotation(double teta) {
 		
-		this.teta = Math.toRadians(teta);
-		
-		rotation = new Matrix(new double[] {Math.cos(teta), -Math.sin(teta), 0, 0}, 
-						 new double[] {Math.sin(teta), Math.cos(teta), 0, 0}, 
-						 new double[] {0, 0, 1, 0},
-						 new double[] {0, 0, 0, 1});
+		super(new double[] {Math.cos(Math.toRadians(teta)), -Math.sin(Math.toRadians(teta)), 0, 0},
+				new double[] {Math.sin(Math.toRadians(teta)), Math.cos(Math.toRadians(teta)), 0, 0},
+				new double[] {0, 0, 1, 0},
+				new double[] {0, 0, 0, 1});
 		
 	}
 	
-	public Matrix getRotation() {
-		return rotation;
+	public double[][] getRotation() {
+		return super.getMatrix();
 	}
 	
 }
