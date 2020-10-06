@@ -1,5 +1,8 @@
 package com.groupe5.calculation;
 
+import com.groupe5.geometry.Point;
+import com.groupe5.geometry.Vector;
+
 public class Matrix {
 	
 	private double[][] matrix;
@@ -13,20 +16,27 @@ public class Matrix {
 	}
 
 	public String toString() {
-		String ret = "";
+		String ret = " ╭-----------------------╮ \n";
 
 		for(int i=0; i<getMatrix().length; i++) {
 			for(int j=0; j<getMatrix().length; j++) {
-				ret += matrix[i][j] + " ";
+				ret += " | " + matrix[i][j];
+				if(j==getMatrix().length-1) ret += " |\n";
 			}
-			ret += "\n";
 		}
+
+		ret += " ╰-----------------------╯";
 
 		return ret;
 	}
 
 	public static void main(String[] args) {
-		Homothety m = new Homothety(2);
-		System.out.println(m.toString());
+		Homothety h = new Homothety(2);
+		Rotation r = new Rotation(60);
+		Translation t = new Translation(new Vector(new Point(0, 0, 0), new Point(5, 4, 3)));
+
+		System.out.println(h);
+		System.out.println(r);
+		System.out.println(t);
 	}
 }
