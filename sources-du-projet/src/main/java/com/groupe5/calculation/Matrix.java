@@ -11,8 +11,12 @@ public class Matrix {
 		matrix = new double[][] {line1, line2, line3, line4};
 	}
 	
-	public double[][] getMatrix(){
+	public double[][] getMatrix() {
 		return matrix;
+	}
+
+	public Matrix multiply(Matrix other) {
+		return null;
 	}
 
 	public String toString() {
@@ -38,5 +42,7 @@ public class Matrix {
 		System.out.println(h);
 		System.out.println(r);
 		System.out.println(t);
+
+		System.out.println(h.multiply(t).toString());
 	}
 }
