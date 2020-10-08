@@ -22,6 +22,7 @@ public class Controller {
 	
 	
 	public void initialize() {
+		 plyFiles = new ListView<String>();
 		plyFiles.setOnMouseClicked(e -> {
 			@SuppressWarnings("unused")
 			String modelName =  PATH + plyFiles.getSelectionModel().getSelectedItem();						
@@ -33,7 +34,7 @@ public class Controller {
 		p = new Popup();
 
 		ListPLY files = new ListPLY(PATH);
-		plyFiles = new ListView<String>(files.getFiles());
+		plyFiles.setItems(files.getFiles());
 
 		p.getContent().add(plyFiles);
 		
