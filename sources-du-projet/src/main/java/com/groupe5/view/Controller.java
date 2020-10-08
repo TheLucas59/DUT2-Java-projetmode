@@ -1,53 +1,36 @@
 package com.groupe5.view;
 
+import java.io.File;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow.AnchorLocation;
+import javafx.scene.shape.MeshView;
+import javafx.stage.FileChooser;
 
 public class Controller {
 
-	@FXML Canvas canvas;
+	@FXML MeshView meshView;
 	@FXML Button buttonOpen;
 	@FXML Button buttonClose;
 
-	Popup p;
-	
-	ListView<String> plyFiles;
-	
 	final String PATH = "./exemples/";
-	
-	
-	public void initialize() {
-		 plyFiles = new ListView<String>();
-		plyFiles.setOnMouseClicked(e -> {
-			@SuppressWarnings("unused")
-			String modelName =  PATH + plyFiles.getSelectionModel().getSelectedItem();						
-		});			
-	}
 		
 	public void buttonOpenFile(ActionEvent e){
-
-		p = new Popup();
-
-		ListPLY files = new ListPLY(PATH);
-		plyFiles.setItems(files.getFiles());
-
-		p.getContent().add(plyFiles);
 		
-		p.setAnchorLocation(AnchorLocation.CONTENT_TOP_RIGHT);
+		FileChooser file = new FileChooser();
+		file.setTitle("Open file : ");		
+		file.setInitialDirectory(new File(PATH));
 		
-		p.setAutoHide(true);
-
-		p.show(canvas.getParent().getScene().getWindow(), p.getAnchorX(), p.getAnchorY());
+		//set Extension Filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PLY Files (*.ply)", "*.ply");
+		file.getExtensionFilters().add(extFilter);		
 		
+		@SuppressWarnings("unused")
+		File fileToShow = file.showOpenDialog(meshView.getScene().getWindow());	
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
-		p.hide();
 	}
 	
 }
