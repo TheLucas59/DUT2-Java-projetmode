@@ -1,19 +1,16 @@
 package com.groupe5.view;
 
 import java.io.File;
-import java.io.IOException;
-
-import com.groupe5.parser.Parser;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.shape.MeshView;
 import javafx.stage.FileChooser;
 
 public class Controller {
 
-	@FXML Canvas canvas;
+	@FXML MeshView meshView;
 	@FXML Button buttonOpen;
 	@FXML Button buttonClose;
 
@@ -29,17 +26,11 @@ public class Controller {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PLY Files (*.ply)", "*.ply");
 		file.getExtensionFilters().add(extFilter);		
 		
-		File fileToShow = file.showOpenDialog(canvas.getScene().getWindow());	
-		
-		try {
-			Parser p = new Parser(fileToShow);
-		} catch (IOException e1) {}
-		
-		canvas.getGraphicsContext2D().fillPolygon(new double[] {100,  150,  200, 2} , new double[] {205, 0, 300, 2}, 4);
+		@SuppressWarnings("unused")
+		File fileToShow = file.showOpenDialog(meshView.getScene().getWindow());	
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
-		canvas.getGraphicsContext2D().restore();
 	}
 	
 }
