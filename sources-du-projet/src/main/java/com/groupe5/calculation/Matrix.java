@@ -16,7 +16,21 @@ public class Matrix {
 	}
 
 	public Matrix multiply(Matrix other) {
-		return null;
+
+		int size = getMatrix().length;
+
+		double[][] result = new double[size][size];
+
+		for(int i=0; i<size; i++) {
+			for(int j=0; j<size; j++) {
+				result[i][j] = 0;
+				for(int k=0; k<size; k++) {
+					result[i][j] += this.getMatrix()[i][k] * other.getMatrix()[k][j];
+				}
+			}
+		}
+
+		return new Matrix(result[0], result[1], result[2], result[3]);
 	}
 
 	public String toString() {
@@ -40,7 +54,7 @@ public class Matrix {
 		Translation t = new Translation(new Vector(new Point(0, 0, 0), new Point(5, 4, 3)));
 
 		System.out.println(h);
-		System.out.println(r);
+		//System.out.println(r);
 		System.out.println(t);
 
 		System.out.println(h.multiply(t).toString());
