@@ -11,9 +11,13 @@ public class ListPLY {
     public ListPLY(String path) {
         File dir = new File(path);
         String[] list = dir.list();
-
+        
         files = FXCollections.observableArrayList();
-        files.addAll(list);
+        
+        for(String s : list)
+        	if(s.endsWith(".ply"))
+        		files.add(s);
+        
     }
 
     public ObservableList<String> getFiles() {
