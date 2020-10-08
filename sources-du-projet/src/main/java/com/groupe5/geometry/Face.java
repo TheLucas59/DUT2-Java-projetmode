@@ -17,4 +17,13 @@ public class Face {
 		return points;
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for(Point p : points) {
+			sb.append("(").append(p).append(")");
+		}
+		sb.append("]");
+		return sb.toString();
+	}
 }

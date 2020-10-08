@@ -15,8 +15,6 @@ public class PLYFile {
 
 	public PLYFile(File file){
 		this.file = file;
-		faces = new ArrayList<Face>();
-		points = new ArrayList<Point>();
 	}
 	
 	// returns false if parsing fails
@@ -28,8 +26,8 @@ public class PLYFile {
 			return false;
 		}
 		header = p.getHeader();
-		faces = p.getFaces();
 		points = p.getPoints();
+		faces = p.getFaces(points);
 		return true;
 	}
 }
