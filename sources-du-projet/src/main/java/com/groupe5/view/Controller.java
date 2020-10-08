@@ -3,10 +3,10 @@ package com.groupe5.view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Popup;
 import javafx.stage.PopupWindow.AnchorLocation;
-import javafx.scene.control.Button;
 
 public class Controller {
 
@@ -14,16 +14,18 @@ public class Controller {
 	@FXML Button buttonOpen;
 	@FXML Button buttonClose;
 
-
 	Popup p;
 	
 	ListView<String> plyFiles;
 	
-	final String PATH = "./exemples";
+	final String PATH = "./exemples/";
 	
 	
 	public void initialize() {
-		
+		plyFiles.setOnMouseClicked(e -> {
+			@SuppressWarnings("unused")
+			String modelName =  PATH + plyFiles.getSelectionModel().getSelectedItem();						
+		});			
 	}
 		
 	public void buttonOpenFile(ActionEvent e){

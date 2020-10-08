@@ -12,21 +12,21 @@
       <Canvas fx:id="canvas" height="363.0" layoutX="37.0" layoutY="37.0" width="563.0" />
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="37.0" minWidth="600.0" prefHeight="37.0" prefWidth="600.0" style="-fx-background-color: #424549;">
          <children>
-            <Button contentDisplay="GRAPHIC_ONLY" layoutX="6.0" layoutY="6.0" maxHeight="25.0" maxWidth="58.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#buttonOpenFile" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;" text="Button">
+            <Button fx:id="buttonOpen" contentDisplay="GRAPHIC_ONLY" layoutX="6.0" layoutY="6.0" maxHeight="25.0" maxWidth="58.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#buttonOpenFile" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;" text="Button">
                <tooltip>
                   <Tooltip text="Ouvrir un fichier" />
                </tooltip>
                <graphic>
-                  <ImageView fx:id="buttonOpen" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/img/open_file.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button contentDisplay="GRAPHIC_ONLY" layoutX="35.0" layoutY="6.0" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#buttonCloseFile" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;" text="Button">
+            <Button fx:id="buttonClose" contentDisplay="GRAPHIC_ONLY" layoutX="35.0" layoutY="6.0" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#buttonCloseFile" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;" text="Button">
                <graphic>
-                  <ImageView fx:id="buttonClose" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/img/clear.png" />
                      </image>
