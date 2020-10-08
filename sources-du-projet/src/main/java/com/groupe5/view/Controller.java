@@ -22,11 +22,12 @@ public class Controller {
 	
 	
 	public void initialize() {
-		 plyFiles = new ListView<String>();
+		plyFiles = new ListView<String>();
 		plyFiles.setOnMouseClicked(e -> {
-			@SuppressWarnings("unused")
-			String modelName =  PATH + plyFiles.getSelectionModel().getSelectedItem();						
-		});			
+			String modelName =  PATH + plyFiles.getSelectionModel().getSelectedItem();		
+			System.out.println(modelName);
+		});		
+
 	}
 		
 	public void buttonOpenFile(ActionEvent e){
