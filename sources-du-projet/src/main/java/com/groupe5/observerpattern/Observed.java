@@ -22,7 +22,7 @@ public abstract class Observed {
 	
 	public void notifyObservers(Object data) {
 		for(Observer obs : observers) {
-			obs.update(this, data);
+			obs.update(this, data);;
 		}
 	}
 }
