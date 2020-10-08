@@ -6,11 +6,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListView;
 import javafx.stage.Popup;
 import javafx.stage.PopupWindow.AnchorLocation;
-
+import javafx.scene.control.Button;
 
 public class Controller {
 
 	@FXML Canvas canvas;
+	@FXML Button buttonOpen;
+	@FXML Button buttonClose;
+
 
 	Popup p;
 	
@@ -22,8 +25,7 @@ public class Controller {
 	public void initialize() {
 		
 	}
-	
-	
+		
 	public void buttonOpenFile(ActionEvent e){
 
 		p = new Popup();
