@@ -28,4 +28,4 @@ Java 11 / Maven installé et configuré avec JAVA_HOME pointant sur Java 11 (pou
 
 - Build
 
-`// TODO`
+`mvn clean compile assembly:single`

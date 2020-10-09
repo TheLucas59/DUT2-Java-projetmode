@@ -2,3 +2,10 @@ Ce fichier doit contenir
 - quelle version de java utiliser pour compiler/exécuter
 - ligne de commande pour compiler le projet (en supposant qu'on se trouve dans le répertoire de ce fichier)
 - ligne de commande pour exécuter le projet (en supposant qu'on se trouve dans le répertoire de ce fichier)
+
+Version de java nécéssaire : 11
+Maven nécéssaire (avec JAVA_HOME pointant vers Java 11)
+
+Compiler : `mvn clean compile assembly:single`
+
+Executer : `mvn javafx:run`
