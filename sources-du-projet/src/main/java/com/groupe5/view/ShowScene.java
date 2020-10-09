@@ -1,18 +1,22 @@
 package com.groupe5.view;
 
+import java.io.File;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class ShowScene extends Application{
 
 	public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("scene.fxml"));
+        
+        File fxmlFile = new File("./src/main/resources/interface/scene.fxml");
+        
+        loader.setLocation(fxmlFile.toURI().toURL());
         Parent root = loader.load();
         
         Scene scene = new Scene(root);
