@@ -6,14 +6,14 @@ public class Translation extends Matrix {
 
 	public Translation(Vector vector) {
 		
-		super(new double[] {1, 0, 0, vector.getEndPoint()[0]},
-				new double[] {0, 1, 0, vector.getEndPoint()[1]},
-				new double[] {0, 0, 1, vector.getEndPoint()[2]},
-				new double[] {0, 0, 0, 1});
+		super(new float[] {1, 0, 0, vector.getEndPoint()[0]},
+				new float[] {0, 1, 0, vector.getEndPoint()[1]},
+				new float[] {0, 0, 1, vector.getEndPoint()[2]},
+				new float[] {0, 0, 0, 1});
 		
 	}
 	
-	public double[][] getTranslation() {
+	public float[][] getTranslation() {
 		return super.getMatrix();
 	}
 }

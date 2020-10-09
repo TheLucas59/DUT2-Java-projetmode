@@ -6,14 +6,14 @@ public class Homothety extends Matrix {
 
 	public Homothety(int coeff) {
 
-		super(new double[] {coeff, 0, 0, 0},
-			  new double[] {0, coeff, 0, 0},
-			  new double[] {0, 0, coeff, 0},
-			  new double[] {0, 0, 0, 1});
+		super(new float[] {coeff, 0, 0, 0},
+			  new float[] {0, coeff, 0, 0},
+			  new float[] {0, 0, coeff, 0},
+			  new float[] {0, 0, 0, 1});
 		
 	}
 
-	public double[][] getHomothety() {
+	public float[][] getHomothety() {
 		return super.getMatrix();
 	}	
 }
