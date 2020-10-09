@@ -33,6 +33,10 @@ public class Controller {
 				meshView.setScaleY(meshView.getScaleY()-1);
 			}
 		});
+
+		meshView.setOnMouseDragged(drag -> {
+			meshView.setRotate(meshView.getRotate()+1);
+		});
 	}
 		
 	public void buttonOpenFile(ActionEvent e){
