@@ -27,10 +27,10 @@ public class Parser {
 		String everything = readFile(file);
 		Scanner s = new Scanner(everything);
 		StringBuilder currentStack = new StringBuilder();
-		
+		String line;
 		// parse header
 		while(s.hasNext()){
-			String line = s.nextLine();
+			line = s.nextLine();
 			currentStack.append(line).append("\n");
 			if(line.startsWith("end_header")) {
 				// we are at the end of the header; set it and break
@@ -44,7 +44,7 @@ public class Parser {
 		
 		// parse points
 		while(s.hasNext()){
-			String line = s.nextLine();
+			line = s.nextLine();
 			String[] split = line.split(" ");
 			if(split.length == faceLineLength) {
 				// we encountered a face; set it and break
@@ -55,10 +55,8 @@ public class Parser {
 			}
 			currentStack.append(line).append("\n");
 		}
-		currentStack = new StringBuilder();
 		
 		// parse faces
-		// il manque une face
 		while(s.hasNext()){
 			currentStack.append(s.nextLine()).append("\n");
 		}
