@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.groupe5.geometry.Face;
@@ -14,6 +15,8 @@ public class Parser {
 	String header;
 	String faces;
 	String points;
+
+	List<Integer> idPoints;
 	
 	public Parser(File file) throws IOException{
 		parse(file);
@@ -93,6 +96,9 @@ public class Parser {
 			return null;
 		}
 		ArrayList<Face> f = new ArrayList<Face>();
+
+		idPoints = new ArrayList<>();
+
 		Scanner s = new Scanner(this.faces);
 		while(s.hasNext()){
 			String line = s.nextLine();
@@ -101,6 +107,10 @@ public class Parser {
 				int p1idx = Integer.parseInt(split[1]);
 				int p2idx = Integer.parseInt(split[2]);
 				int p3idx = Integer.parseInt(split[3]);
+
+
+				idPoints.add(p1idx); idPoints.add(p2idx); idPoints.add(p3idx);
+
 				Point[] p = new Point[]{points.get(p1idx), points.get(p2idx), points.get(p3idx)};
 				f.add(new Face(Integer.parseInt(split[0]), p));
 			}
@@ -122,5 +132,14 @@ public class Parser {
 		} finally {
 		    br.close();
 		}
+	}
+
+	public int[] getIdPoints() {
+		int[] ids = new int[idPoints.size()];
+		for (int i = 0; i < ids.length; i++) {
+			ids[i] = idPoints.get(i);
+		}
+
+		return ids;
 	}
 }
