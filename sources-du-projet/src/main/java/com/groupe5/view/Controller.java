@@ -3,11 +3,14 @@ package com.groupe5.view;
 import com.groupe5.parser.Parser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.CullFace;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
+import javafx.scene.shape.VertexFormat;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -51,34 +54,42 @@ public class Controller {
 		
 		File fileToShow = file.showOpenDialog(meshView.getScene().getWindow());
 
-		Parser p = null;
-		
-		try {
-			p = new Parser(fileToShow);
-		} catch (IOException ioException) {}
+
+		Thread showMesh = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Parser p = null;
+
+				try {
+					p = new Parser(fileToShow);
+				} catch (IOException ioException) {}
 
 
-		TriangleMesh mesh = new TriangleMesh();
+				TriangleMesh mesh = new TriangleMesh();
 
-		mesh.getTexCoords().addAll(0, 0);
+				mesh.getTexCoords().addAll(0, 0);
 
-		// Side
+				// Side
 
-		for (int i = 0; i < p.getPoints().size(); i++) {
-			mesh.getPoints().addAll(p.getPoints().get(i).getX(), p.getPoints().get(i).getY(), p.getPoints().get(i).getZ());
-		}
+				for (int i = 0; i < p.getPoints().size(); i++) {
+					mesh.getPoints().addAll(p.getPoints().get(i).getX(), p.getPoints().get(i).getY(), p.getPoints().get(i).getZ());
+				}
 
-		p.getFaces(p.getPoints());
-		for (int i = 0; i < p.getIdPoints().length; i++) {
-			int[] idPoint = p.getIdPoints();
-			mesh.getFaces().addAll(idPoint[i],0);
-		}
+				p.getFaces(p.getPoints());
+				for (int i = 0; i < p.getIdPoints().length; i++) {
+					int[] idPoint = p.getIdPoints();
+					mesh.getFaces().addAll(idPoint[i],0);
+				}
+				meshView.setMesh(mesh);
+			}
+		});
 
 		meshView.setDrawMode(DrawMode.FILL);
 		meshView.setTranslateX(318);
-		meshView.setTranslateY(150);
+		meshView.setTranslateY(120);
 
-		meshView.setMesh(mesh);
+		showMesh.setDaemon(true);
+		showMesh.start();
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
