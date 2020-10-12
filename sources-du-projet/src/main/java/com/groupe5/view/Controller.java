@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.CullFace;
@@ -27,6 +28,8 @@ public class Controller {
 	@FXML Text loadingString;
 	@FXML MenuBar menuBar;
 	@FXML Region regionZoom;
+	@FXML Slider slideZoom;
+	
 	final String PATH = "./exemples/";
 
 	double cursorX, cursorY;
@@ -37,12 +40,12 @@ public class Controller {
 			
 			System.out.println(meshView.getScaleX() + " - " + meshView.getScaleY());
 			if(scroll.getDeltaY() > 0) {
-				meshView.setScaleX(meshView.getScaleX()+1);
-				meshView.setScaleY(meshView.getScaleY()+1);
+				meshView.setScaleX(meshView.getScaleX()+slideZoom.getValue());
+				meshView.setScaleY(meshView.getScaleY()+slideZoom.getValue());
 			}
 			else if(scroll.getDeltaY() < 0 && meshView.getScaleX() > 1 && meshView.getScaleY() > 1) {
-				meshView.setScaleX(meshView.getScaleX()-1);
-				meshView.setScaleY(meshView.getScaleY()-1);
+				meshView.setScaleX(meshView.getScaleX()-slideZoom.getValue());
+				meshView.setScaleY(meshView.getScaleY()-slideZoom.getValue());
 			}
 		});
 		
@@ -109,7 +112,7 @@ public class Controller {
 		});
 
 		meshView.setCullFace(CullFace.FRONT);
-		meshView.setDrawMode(DrawMode.LINE);
+		meshView.setDrawMode(DrawMode.FILL);
 		meshView.setTranslateX(318);
 		meshView.setTranslateY(120);
 		meshView.setScaleX(2);
