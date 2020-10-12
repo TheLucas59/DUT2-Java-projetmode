@@ -9,8 +9,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
+import javafx.scene.shape.CullFace;
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
@@ -24,13 +25,15 @@ public class Controller {
 	@FXML Button buttonClose;
 	@FXML AnchorPane root;
 	@FXML Text loadingString;
-	@FXML ProgressBar loadingBar;
 	@FXML MenuBar menuBar;
-
+	@FXML Region regionZoom;
 	final String PATH = "./exemples/";
 
+	double cursorX, cursorY;
+
 	public void initialize(){
-		meshView.setOnScroll(scroll -> {
+		
+		regionZoom.setOnScroll(scroll -> {
 			
 			System.out.println(meshView.getScaleX() + " - " + meshView.getScaleY());
 			if(scroll.getDeltaY() > 0) {
@@ -42,9 +45,19 @@ public class Controller {
 				meshView.setScaleY(meshView.getScaleY()-1);
 			}
 		});
+		
 
-		meshView.setOnMouseDragged(drag -> {
-			meshView.setRotate(meshView.getRotate()+1);
+		regionZoom.setOnMouseDragEntered(drag -> {
+			cursorX = drag.getX();
+			cursorY = drag.getY();
+			
+			System.out.println(cursorX);
+			System.out.println(cursorY);
+		});
+		
+		regionZoom.setOnMouseDragged(drag -> {
+			if(cursorY > drag.getY()) meshView.setRotate(meshView.getRotate()-1);
+			else if(cursorY < drag.getY()) meshView.setRotate(meshView.getRotate()+1);
 		});
 	}
 		
@@ -67,45 +80,36 @@ public class Controller {
 				Parser p = null;
 				
 				loadingString.setVisible(true);
-				loadingBar.setVisible(true);
 
 				try {
 					p = new Parser(fileToShow);
 				} catch (IOException ioException) {}
 				
-				loadingBar.setProgress(25);
-
-
 				TriangleMesh mesh = new TriangleMesh();
 
 				mesh.getTexCoords().addAll(0, 0);
 				
-				loadingBar.setProgress(50);
-
 				// Side
 
 				for (int i = 0; i < p.getPoints().size(); i++) {
 					mesh.getPoints().addAll(p.getPoints().get(i).getX(), p.getPoints().get(i).getY(), p.getPoints().get(i).getZ());
 				}
 				
-				loadingBar.setProgress(75);
-
 				p.getFaces(p.getPoints());
 				for (int i = 0; i < p.getIdPoints().length; i++) {
 					int[] idPoint = p.getIdPoints();
 					mesh.getFaces().addAll(idPoint[i],0);
 				}
 				
-				loadingBar.setProgress(100);
 				
 				meshView.setMesh(mesh);
 				
 				loadingString.setVisible(false);
-				loadingBar.setVisible(false);
 			}
 		});
 
-		meshView.setDrawMode(DrawMode.FILL);
+		meshView.setCullFace(CullFace.FRONT);
+		meshView.setDrawMode(DrawMode.LINE);
 		meshView.setTranslateX(318);
 		meshView.setTranslateY(120);
 		meshView.setScaleX(2);
