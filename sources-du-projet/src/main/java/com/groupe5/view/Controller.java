@@ -2,7 +2,9 @@ package com.groupe5.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import com.groupe5.geometry.Point;
 import com.groupe5.parser.Parser;
 
 import javafx.event.ActionEvent;
@@ -99,12 +101,12 @@ public class Controller {
 				mesh.getTexCoords().addAll(0, 0);
 				
 				// Side
-
-				for (int i = 0; i < p.getPoints().size(); i++) {
-					mesh.getPoints().addAll(p.getPoints().get(i).getX(), p.getPoints().get(i).getY(), p.getPoints().get(i).getZ());
+				ArrayList<Point> points = p.getPoints();
+				for (int i = 0; i < points.size(); i++) {
+					mesh.getPoints().addAll(points.get(i).getX(), points.get(i).getY(), points.get(i).getZ());
 				}
 				
-				p.getFaces(p.getPoints());
+				p.getFaces(points);
 				for (int i = 0; i < p.getIdPoints().length; i++) {
 					int[] idPoint = p.getIdPoints();
 					mesh.getFaces().addAll(idPoint[i],0);
