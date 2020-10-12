@@ -21,7 +21,8 @@ public class ShowScene extends Application{
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("FXML Demo");
+        stage.setTitle("3D Viewer");
+        Controller.setStage(stage);
         stage.show();
     }
     
