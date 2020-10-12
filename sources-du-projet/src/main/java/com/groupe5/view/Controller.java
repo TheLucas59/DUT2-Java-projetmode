@@ -117,10 +117,8 @@ public class Controller {
 			}
 		});
 
-		meshView.setCullFace(CullFace.FRONT);
+		meshView.setCullFace(CullFace.NONE);
 		meshView.setDrawMode(DrawMode.FILL);
-		meshView.setTranslateX(318);
-		meshView.setTranslateY(120);
 		meshView.setScaleX(2);
 		meshView.setScaleY(2);
 
