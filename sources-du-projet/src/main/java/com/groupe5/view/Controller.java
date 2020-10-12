@@ -18,6 +18,7 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class Controller {
 
@@ -31,8 +32,13 @@ public class Controller {
 	@FXML Slider slideZoom;
 	
 	final String PATH = "./exemples/";
+	private static Stage stage;
 
 	double cursorX, cursorY;
+	
+	public static void setStage(Stage s) {
+		stage = s;
+	}
 
 	public void initialize(){
 		
@@ -66,15 +72,15 @@ public class Controller {
 		
 	public void buttonOpenFile(ActionEvent e){
 		
-		FileChooser file = new FileChooser();
-		file.setTitle("Open file : ");		
-		file.setInitialDirectory(new File(PATH));
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open file : ");		
+		fileChooser.setInitialDirectory(new File(PATH));
 		
 		//set Extension Filter
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PLY Files (*.ply)", "*.ply");
-		file.getExtensionFilters().add(extFilter);		
+		fileChooser.getExtensionFilters().add(extFilter);		
 		
-		File fileToShow = file.showOpenDialog(meshView.getScene().getWindow());
+		File fileToShow = fileChooser.showOpenDialog(meshView.getScene().getWindow());
 
 
 		Thread showMesh = new Thread(new Runnable() {
@@ -119,10 +125,12 @@ public class Controller {
 		meshView.setScaleY(2);
 
 		showMesh.start();
+		stage.setTitle("3D Viewer - "+fileToShow.getName());
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
 		meshView.setMesh(null);
+		stage.setTitle("3D Viewer");
 	}
 	
 }
