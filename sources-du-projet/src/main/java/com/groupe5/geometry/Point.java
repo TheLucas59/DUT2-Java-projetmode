@@ -12,15 +12,15 @@ public class Point {
 		this.z = z;
 	}
 
-	public double getX() {
+	public float getX() {
 		return x;
 	}
 
-	public double getY() {
+	public float getY() {
 		return y;
 	}
 
-	public double getZ() {
+	public float getZ() {
 		return z;
 	}
 	

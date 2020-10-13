@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.groupe5.geometry.Face;
@@ -14,6 +15,8 @@ public class Parser {
 	String header;
 	String faces;
 	String points;
+
+	List<Integer> idPoints;
 	
 	public Parser(File file) throws IOException{
 		parse(file);
@@ -25,10 +28,18 @@ public class Parser {
 		Scanner s = new Scanner(everything);
 		StringBuilder currentStack = new StringBuilder();
 		String line;
+		Integer vertexCount = null;
+		Integer faceCount = null;
 		// parse header
 		while(s.hasNext()){
 			line = s.nextLine();
 			currentStack.append(line).append("\n");
+			if(line.startsWith("element vertex")) {
+				vertexCount = Integer.parseInt(line.split(" ")[2]);				
+			}
+			if(line.startsWith("element face")) {
+				faceCount = Integer.parseInt(line.split(" ")[2]);
+			}
 			if(line.startsWith("end_header")) {
 				// we are at the end of the header; set it and break
 				header = currentStack.toString();
@@ -36,25 +47,22 @@ public class Parser {
 			}
 		}
 		currentStack = new StringBuilder();
-		// temp variables; will be parsed from header later on, for now using defaults
-		int faceLineLength = 4;
 		
-		// parse points
-		while(s.hasNext()){
-			line = s.nextLine();
-			String[] split = line.split(" ");
-			if(split.length == faceLineLength) {
-				// we encountered a face; set it and break
-				points = currentStack.toString();
-				currentStack = new StringBuilder();
-				currentStack.append(line).append("\n");
-				break;
-			}
-			currentStack.append(line).append("\n");
+		if(vertexCount == null || faceCount == null) {
+			System.out.println("ERROR PARSING THE MODEL : Incorrect header");
+			s.close();
+			return;
 		}
 		
+		// parse points
+		for(int i = 0; i < vertexCount; i++){
+			currentStack.append(s.nextLine()).append("\n");
+		}
+		points = currentStack.toString();
+		currentStack = new StringBuilder();
+		
 		// parse faces
-		while(s.hasNext()){
+		for(int i = 0; i < faceCount; i++){
 			currentStack.append(s.nextLine()).append("\n");
 		}
 		faces = currentStack.toString();
@@ -80,7 +88,7 @@ public class Parser {
 			String[] split = line.split(" ");
 			if(split.length == 3) {
 				r.add(new Point(Float.parseFloat(split[0]), Float.parseFloat(split[1]), Float.parseFloat(split[2]), currentLine));
-			}			
+			}
 		}
 		s.close();
 		return r;
@@ -91,17 +99,33 @@ public class Parser {
 			return null;
 		}
 		ArrayList<Face> f = new ArrayList<Face>();
+
+		idPoints = new ArrayList<>();
+
 		Scanner s = new Scanner(this.faces);
 		while(s.hasNext()){
 			String line = s.nextLine();
 			String[] split = line.split(" ");
+			int faceSize = Integer.parseInt(split[0]);
+			Point[] p = new Point[faceSize+1];
+			System.out.print(faceSize + " ");
+			for(int i = 1; i <= faceSize; i++) {
+				int idx = Integer.parseInt(split[i]);
+				idPoints.add(idx);
+				p[i] = points.get(idx);
+			}
+			f.add(new Face(faceSize, p));
+			/*
 			if(split.length == 4) {
 				int p1idx = Integer.parseInt(split[1]);
 				int p2idx = Integer.parseInt(split[2]);
 				int p3idx = Integer.parseInt(split[3]);
+
+				idPoints.add(p1idx); idPoints.add(p2idx); idPoints.add(p3idx);
 				Point[] p = new Point[]{points.get(p1idx), points.get(p2idx), points.get(p3idx)};
 				f.add(new Face(Integer.parseInt(split[0]), p));
 			}
+			*/
 		}
 		s.close();
 		return f;
@@ -120,5 +144,13 @@ public class Parser {
 		} finally {
 		    br.close();
 		}
+	}
+
+	public int[] getIdPoints() {
+		int[] ids = new int[idPoints.size()];
+		for (int i = 0; i < ids.length; i++) {
+			ids[i] = idPoints.get(i);
+		}
+		return ids;
 	}
 }
