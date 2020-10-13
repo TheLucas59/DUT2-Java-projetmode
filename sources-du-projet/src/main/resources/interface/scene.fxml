@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #99aab5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupe5.view.Controller">
    <children>
-      <Canvas height="363.0" layoutX="37.0" layoutY="37.0" width="563.0" />
+      <Canvas fx:id="canvas" height="363.0" layoutX="37.0" layoutY="37.0" width="563.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0" />
       <Region fx:id="regionZoom" layoutX="37.0" layoutY="37.0" prefHeight="363.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0" />
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="37.0" minWidth="600.0" prefHeight="37.0" prefWidth="600.0" style="-fx-background-color: #424549;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
