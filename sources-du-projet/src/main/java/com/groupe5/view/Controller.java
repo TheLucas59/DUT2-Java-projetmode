@@ -16,7 +16,9 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.transform.MatrixType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -43,16 +45,9 @@ public class Controller {
 	}
 
 	public void initialize(){
-		
 		gc = canvas.getGraphicsContext2D();
 		
 		gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
-		regionZoom.setOnScroll(e -> {
-			if(e.getDeltaY() > 0) {
-				canvas.getGraphicsContext2D().scale(10, 10);
-			}
-		});
 	}
 		
 	public void buttonOpenFile(ActionEvent e){
@@ -78,6 +73,7 @@ public class Controller {
 	}
 	
 	public void showFile(File fileToShow) {
+
 		Thread thread = new Thread(new Runnable() {
 			
 			@Override
@@ -88,8 +84,9 @@ public class Controller {
 				}
 				catch (IOException e) {}
 				
-				
-				final int ZOOM = 150;
+				gc.moveTo(canvas.getWidth()/2, canvas.getHeight()/2);
+
+				final int ZOOM = 100;
 				
 				ArrayList<Point> points = p.getPoints();
 				int size = points.size();
@@ -99,9 +96,11 @@ public class Controller {
 					pointsX[i] = points.get(i).getX() * ZOOM;
 					pointsY[i] = points.get(i).getY() * ZOOM;
 				}
-				
+
 				gc.strokePolygon(pointsX, pointsY, size);
-				
+
+
+
 //				canvas.setTranslateX(300);
 //				canvas.setTranslateY(150);
 			}
