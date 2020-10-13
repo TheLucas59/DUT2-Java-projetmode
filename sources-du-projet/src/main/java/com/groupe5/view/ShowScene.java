@@ -14,14 +14,14 @@ public class ShowScene extends Application{
 	public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         
-        File fxmlFile = new File("./src/main/resources/interface/scene.fxml");
+        File fxmlFile = new File("./src/main/resources/interface/filechooser.fxml");
         
         loader.setLocation(fxmlFile.toURI().toURL());
         Parent root = loader.load();
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("3D Viewer");
+        stage.setTitle("Choississez un fichier");
         Controller.setStage(stage);
         stage.show();
     }
