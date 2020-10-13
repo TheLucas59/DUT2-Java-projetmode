@@ -58,17 +58,19 @@ public class Controller {
 		});
 		
 
-		regionZoom.setOnMouseDragEntered(drag -> {
+		/*regionZoom.setOnMouseDragEntered(drag -> {
 			cursorX = drag.getX();
 			cursorY = drag.getY();
 			
 			System.out.println(cursorX);
 			System.out.println(cursorY);
-		});
+		});*/
 		
 		regionZoom.setOnMouseDragged(drag -> {
-			if(cursorY > drag.getY()) meshView.setRotate(meshView.getRotate()-1);
-			else if(cursorY < drag.getY()) meshView.setRotate(meshView.getRotate()+1);
+			if(cursorX > drag.getX()) meshView.setRotate(meshView.getRotate()-1);
+			else if(cursorX < drag.getX()) meshView.setRotate(meshView.getRotate()+1);
+			cursorX = drag.getX();
+			cursorY = drag.getY();
 		});
 	}
 		
