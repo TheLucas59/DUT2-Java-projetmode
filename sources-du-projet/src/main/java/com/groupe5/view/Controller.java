@@ -46,8 +46,6 @@ public class Controller {
 
 	public void initialize(){
 		gc = canvas.getGraphicsContext2D();
-		
-		gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 		
 	public void buttonOpenFile(ActionEvent e){
@@ -68,11 +66,13 @@ public class Controller {
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
-		gc.restore();
 		stage.setTitle("3D Viewer");
 	}
 	
 	public void showFile(File fileToShow) {
+		
+//		canvas.setWidth(root.getScene().getWidth());
+//		canvas.setHeight(root.getScene().getHeight());
 
 		Thread thread = new Thread(new Runnable() {
 			
@@ -84,7 +84,6 @@ public class Controller {
 				}
 				catch (IOException e) {}
 				
-				gc.moveTo(canvas.getWidth()/2, canvas.getHeight()/2);
 
 				final int ZOOM = 100;
 				
@@ -93,13 +92,11 @@ public class Controller {
 				double pointsX[] = new double[size];
 				double pointsY[] = new double[size];
 				for(int i = 0; i < size; i++) {
-					pointsX[i] = points.get(i).getX() * ZOOM;
-					pointsY[i] = points.get(i).getY() * ZOOM;
+					pointsX[i] = points.get(i).getX() * ZOOM + root.getWidth()/2;
+					pointsY[i] = points.get(i).getY() * ZOOM + root.getHeight()/2.5;
 				}
 
 				gc.strokePolygon(pointsX, pointsY, size);
-
-
 
 //				canvas.setTranslateX(300);
 //				canvas.setTranslateY(150);
