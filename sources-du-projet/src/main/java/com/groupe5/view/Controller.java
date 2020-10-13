@@ -10,6 +10,7 @@ import com.groupe5.parser.Parser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
@@ -30,6 +31,8 @@ public class Controller {
 	@FXML Region regionZoom;
 	@FXML Slider slideZoom;
 	
+	private GraphicsContext gc;
+	
 	final String PATH = "./exemples/";
 	private static Stage stage;
 
@@ -40,6 +43,11 @@ public class Controller {
 	}
 
 	public void initialize(){
+		
+		gc = canvas.getGraphicsContext2D();
+		
+		gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		
 		regionZoom.setOnScroll(e -> {
 			if(e.getDeltaY() > 0) {
 				canvas.getGraphicsContext2D().scale(10, 10);
@@ -65,7 +73,7 @@ public class Controller {
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
-		canvas.getGraphicsContext2D().restore();
+		gc.restore();
 		stage.setTitle("3D Viewer");
 	}
 	
@@ -80,17 +88,22 @@ public class Controller {
 				}
 				catch (IOException e) {}
 				
+				
+				final int ZOOM = 150;
+				
 				ArrayList<Point> points = p.getPoints();
 				int size = points.size();
 				double pointsX[] = new double[size];
 				double pointsY[] = new double[size];
 				for(int i = 0; i < size; i++) {
-					pointsX[i] = points.get(i).getX();
-					pointsY[i] = points.get(i).getY();
+					pointsX[i] = points.get(i).getX() * ZOOM;
+					pointsY[i] = points.get(i).getY() * ZOOM;
 				}
-				canvas.getGraphicsContext2D().strokePolygon(pointsX, pointsY, size);
-				canvas.setTranslateX(300);
-				canvas.setTranslateY(150);
+				
+				gc.strokePolygon(pointsX, pointsY, size);
+				
+//				canvas.setTranslateX(300);
+//				canvas.setTranslateY(150);
 			}
 		});
 		

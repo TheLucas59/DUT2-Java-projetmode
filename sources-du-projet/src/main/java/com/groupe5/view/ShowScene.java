@@ -14,7 +14,7 @@ public class ShowScene extends Application{
 	public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         
-        File fxmlFile = new File("./src/main/resources/interface/filechooser.fxml");
+        File fxmlFile = new File("./src/main/resources/interface/scene.fxml");
         
         loader.setLocation(fxmlFile.toURI().toURL());
         Parent root = loader.load();
