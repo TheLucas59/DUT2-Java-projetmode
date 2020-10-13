@@ -9,22 +9,19 @@ import com.groupe5.parser.Parser;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
-import javafx.scene.shape.CullFace;
-import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.MeshView;
-import javafx.scene.shape.TriangleMesh;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Controller {
 
-	@FXML MeshView meshView;
+	@FXML Canvas canvas;
 	@FXML Button buttonOpen;
 	@FXML Button buttonClose;
 	@FXML AnchorPane root;
@@ -43,34 +40,10 @@ public class Controller {
 	}
 
 	public void initialize(){
-		
-		regionZoom.setOnScroll(scroll -> {
-			
-			System.out.println(meshView.getScaleX() + " - " + meshView.getScaleY());
-			if(scroll.getDeltaY() > 0) {
-				meshView.setScaleX(meshView.getScaleX()+slideZoom.getValue());
-				meshView.setScaleY(meshView.getScaleY()+slideZoom.getValue());
+		regionZoom.setOnScroll(e -> {
+			if(e.getDeltaY() > 0) {
+				canvas.getGraphicsContext2D().scale(10, 10);
 			}
-			else if(scroll.getDeltaY() < 0 && meshView.getScaleX() > 1 && meshView.getScaleY() > 1) {
-				meshView.setScaleX(meshView.getScaleX()-slideZoom.getValue());
-				meshView.setScaleY(meshView.getScaleY()-slideZoom.getValue());
-			}
-		});
-		
-
-		/*regionZoom.setOnMouseDragEntered(drag -> {
-			cursorX = drag.getX();
-			cursorY = drag.getY();
-			
-			System.out.println(cursorX);
-			System.out.println(cursorY);
-		});*/
-		
-		regionZoom.setOnMouseDragged(drag -> {
-			if(cursorX > drag.getX()) meshView.setRotate(meshView.getRotate()-1);
-			else if(cursorX < drag.getX()) meshView.setRotate(meshView.getRotate()+1);
-			cursorX = drag.getX();
-			cursorY = drag.getY();
 		});
 	}
 		
@@ -84,55 +57,44 @@ public class Controller {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PLY Files (*.ply)", "*.ply");
 		fileChooser.getExtensionFilters().add(extFilter);		
 		
-		File fileToShow = fileChooser.showOpenDialog(meshView.getScene().getWindow());
-
-
-		Thread showMesh = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				Parser p = null;
-				
-				loadingString.setVisible(true);
-
-				try {
-					p = new Parser(fileToShow);
-				} catch (IOException ioException) {}
-				
-				TriangleMesh mesh = new TriangleMesh();
-
-				mesh.getTexCoords().addAll(0, 0);
-				
-				// Side
-				ArrayList<Point> points = p.getPoints();
-				for (int i = 0; i < points.size(); i++) {
-					mesh.getPoints().addAll(points.get(i).getX(), points.get(i).getY(), points.get(i).getZ());
-				}
-				
-				p.getFaces(points);
-				for (int i = 0; i < p.getIdPoints().length; i++) {
-					int[] idPoint = p.getIdPoints();
-					mesh.getFaces().addAll(idPoint[i],0);
-				}
-				
-				
-				meshView.setMesh(mesh);
-				
-				loadingString.setVisible(false);
-			}
-		});
-
-		meshView.setCullFace(CullFace.NONE);
-		meshView.setDrawMode(DrawMode.FILL);
-		meshView.setScaleX(2);
-		meshView.setScaleY(2);
-
-		showMesh.start();
-		stage.setTitle("3D Viewer - "+fileToShow.getName());
+		File fileToShow = fileChooser.showOpenDialog(root.getScene().getWindow());
+		
+		showFile(fileToShow);
+		stage.setTitle("3D Viewer - " + fileToShow.getName());
+		
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
-		meshView.setMesh(null);
+		canvas.getGraphicsContext2D().restore();
 		stage.setTitle("3D Viewer");
 	}
 	
+	public void showFile(File fileToShow) {
+		Thread thread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Parser p = null;
+				try {
+					p = new Parser(fileToShow);
+				}
+				catch (IOException e) {}
+				
+				ArrayList<Point> points = p.getPoints();
+				int size = points.size();
+				double pointsX[] = new double[size];
+				double pointsY[] = new double[size];
+				for(int i = 0; i < size; i++) {
+					pointsX[i] = points.get(i).getX();
+					pointsY[i] = points.get(i).getY();
+				}
+				canvas.getGraphicsContext2D().strokePolygon(pointsX, pointsY, size);
+				canvas.setTranslateX(300);
+				canvas.setTranslateY(150);
+			}
+		});
+		
+		thread.setDaemon(true);
+		thread.start();
+	}
 }
