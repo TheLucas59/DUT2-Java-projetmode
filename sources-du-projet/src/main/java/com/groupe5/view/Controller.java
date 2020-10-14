@@ -1,12 +1,7 @@
 package com.groupe5.view;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import com.groupe5.geometry.Point;
 import com.groupe5.parser.Parser;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -18,9 +13,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.transform.MatrixType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Controller {
 
@@ -32,6 +30,8 @@ public class Controller {
 	@FXML MenuBar menuBar;
 	@FXML Region regionZoom;
 	@FXML Slider slideZoom;
+	@FXML Button testCanvas;
+	@FXML Button testCow;
 	
 	private GraphicsContext gc;
 	
@@ -46,6 +46,16 @@ public class Controller {
 
 	public void initialize(){
 		gc = canvas.getGraphicsContext2D();
+
+		testCanvas.setOnAction(a -> {
+			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			gc.setFill(Color.RED);
+			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		});
+
+		testCow.setOnAction(a -> {
+			showFile(new File("./exemples/cow.ply"));
+		});
 	}
 		
 	public void buttonOpenFile(ActionEvent e){
@@ -62,16 +72,6 @@ public class Controller {
 		
 		showFile(fileToShow);
 		stage.setTitle("3D Viewer - " + fileToShow.getName());
-
-		stage.getScene().setOnMousePressed(click -> {
-			canvas.setWidth(stage.getWidth());
-			canvas.setHeight(stage.getHeight()-37);
-
-			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-			gc.setFill(Color.RED);
-			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		});
-		
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
@@ -83,9 +83,9 @@ public class Controller {
 	}
 	
 	public void showFile(File fileToShow) {
-		
-//		canvas.setWidth(root.getScene().getWidth());
-//		canvas.setHeight(root.getScene().getHeight());
+
+		canvas.setWidth(stage.getWidth());
+		canvas.setHeight(stage.getHeight()-37);
 
 		Thread thread = new Thread(new Runnable() {
 			
@@ -106,7 +106,7 @@ public class Controller {
 				double pointsY[] = new double[size];
 				for(int i = 0; i < size; i++) {
 					pointsX[i] = points.get(i).getX() * ZOOM + canvas.getWidth()/2;
-					pointsY[i] = points.get(i).getY() * ZOOM + canvas.getHeight()/2;
+					pointsY[i] = points.get(i).getY() * ZOOM + canvas.getHeight()/3;
 				}
 
 				for (int i = 0; i < pointsX.length; i++) {

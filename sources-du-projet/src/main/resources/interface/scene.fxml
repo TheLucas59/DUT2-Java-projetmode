@@ -11,10 +11,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #99aab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupe5.view.Controller">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #99aab5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupe5.view.Controller">
    <children>
-      <Canvas fx:id="canvas" height="1080.0" layoutX="-17.0" layoutY="19.0" width="1920.0" AnchorPane.bottomAnchor="-699.0" AnchorPane.leftAnchor="-17.0" AnchorPane.rightAnchor="-1303.0" AnchorPane.topAnchor="19.0" />
-      <Region fx:id="regionZoom" layoutX="37.0" layoutY="37.0" prefHeight="363.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0" />
+      <Canvas fx:id="canvas" height="337.0" layoutX="-17.0" layoutY="19.0" width="557.0" AnchorPane.bottomAnchor="-699.0" AnchorPane.leftAnchor="-17.0" AnchorPane.rightAnchor="-1303.0" AnchorPane.topAnchor="19.0" />
+      <Region fx:id="regionZoom" layoutX="38.0" layoutY="37.0" prefHeight="363.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0" />
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="37.0" minWidth="600.0" prefHeight="37.0" prefWidth="600.0" style="-fx-background-color: #424549;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Button fx:id="buttonOpen" contentDisplay="GRAPHIC_ONLY" layoutX="6.0" layoutY="6.0" maxHeight="25.0" maxWidth="58.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#buttonOpenFile" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;" text="Button">
@@ -43,7 +43,19 @@
             </Button>
             <Slider fx:id="slideZoom" blockIncrement="1.0" layoutX="230.0" min="1.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" value="1.0" />
          </children></AnchorPane>
-      <AnchorPane layoutY="37.0" prefHeight="363.0" prefWidth="37.0" style="-fx-background-color: #424549;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="37.0" />
+      <AnchorPane layoutY="37.0" prefHeight="363.0" prefWidth="37.0" style="-fx-background-color: #424549;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="37.0">
+         <children>
+            <Button fx:id="testCanvas" contentDisplay="TOP" mnemonicParsing="false" prefHeight="134.0" prefWidth="38.0" text="TEST CANVAS" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Button>
+            <Button fx:id="testCow" contentDisplay="TOP" layoutY="174.0" mnemonicParsing="false" prefHeight="134.0" prefWidth="38.0" text="TEST COW" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
       <Text fx:id="loadingString" layoutX="169.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CHARGEMENT DU MODELE ..." visible="false">
          <font>
             <Font size="20.0" />
