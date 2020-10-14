@@ -1,47 +1,96 @@
 package com.groupe5.calculation;
 
+import java.util.ArrayList;
+
+import com.groupe5.geometry.Point;
+
 public class Matrix {
 	
 	private float[][] matrix;
+	
+	private final float COORDONNEE_HOMOGENE = 1.0f;
 
-	public Matrix(float[] line1, float[] line2, float[] line3, float[] line4) {
-		matrix = new float[][] {line1, line2, line3, line4};
+	public Matrix(ArrayList<Point> points) {
+		matrix = new float[points.size()][4];
+		
+		for(int i=0; i<matrix.length; i++) {
+			for(int j=0; j<4; j++) {
+				
+				if(j == 0) matrix[i][j] = points.get(i).getX();
+				if(j == 1) matrix[i][j] = points.get(i).getY();
+				if(j == 2) matrix[i][j] = points.get(i).getZ();
+				if(j == 3) matrix[i][j] = COORDONNEE_HOMOGENE;
+						
+			}
+		}
+	}
+	
+	public Matrix(float[][] matrix) {
+		this.matrix = matrix;
 	}
 	
 	public float[][] getMatrix() {
 		return matrix;
 	}
+	
+	public double[] getLineX() {
+		double[] x = new double[matrix.length];
+		
+		for(int i=0; i<x.length; i++) {
+			x[i] = matrix[i][0];
+		}
+		
+		return x;
+	}
+	
+	public double[] getLineY() {
+		double[] y = new double[matrix.length];
+		
+		for(int i=0; i<y.length; i++) {
+			y[i] = matrix[i][1];
+		}
+		
+		return y;
+	}
+	
+	public double[] getLineZ() {
+		double[] z = new double[matrix.length];
+		
+		for(int i=0; i<z.length; i++) {
+			z[i] = matrix[i][2];
+		}
+		
+		return z;
+	}
 
-	public Matrix multiply(Matrix other) {
+	public float[][] multiply(Matrix other) {
+		
+		float[][] result = new float[matrix.length][matrix[1].length];
 
-		int size = getMatrix().length;
-
-		float[][] result = new float[size][size];
-
-		for(int i=0; i<size; i++) {
-			for(int j=0; j<size; j++) {
+		for(int i=0; i<matrix.length; i++) {
+			for(int j=0; j<matrix[i].length; j++) {
 				result[i][j] = 0;
-				for(int k=0; k<size; k++) {
+				for(int k=0; k<matrix[i].length; k++) {
 					result[i][j] += this.getMatrix()[i][k] * other.getMatrix()[k][j];
 				}
 			}
 		}
+		
+		matrix = result;
 
-		return new Matrix(result[0], result[1], result[2], result[3]);
+		return matrix;
 	}
 
 	public String toString() {
-		String ret = " ╭-----------------------╮ \n";
-
-		for(int i=0; i<getMatrix().length; i++) {
-			for(int j=0; j<getMatrix().length; j++) {
-				ret += " | " + matrix[i][j];
-				if(j==getMatrix().length-1) ret += " |\n";
+		StringBuilder ret = new StringBuilder("");
+		
+		for(int i=0; i<matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				ret.append(matrix[i][j] + " ");
 			}
+			ret.append("\n");
 		}
 
-		ret += " ╰-----------------------╯";
-
-		return ret;
+		return ret.toString();
 	}
 }

@@ -1,7 +1,16 @@
 package com.groupe5.view;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import com.groupe5.calculation.Homothety;
+import com.groupe5.calculation.Matrix;
+import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Point;
+import com.groupe5.geometry.Vector;
 import com.groupe5.parser.Parser;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -15,10 +24,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class Controller {
 
@@ -97,23 +102,18 @@ public class Controller {
 				}
 				catch (IOException e) {}
 				
-
-				final int ZOOM = 100;
-				
 				ArrayList<Point> points = p.getPoints();
 				int size = points.size();
-				double pointsX[] = new double[size];
-				double pointsY[] = new double[size];
-				for(int i = 0; i < size; i++) {
-					pointsX[i] = points.get(i).getX() * ZOOM + canvas.getWidth()/2;
-					pointsY[i] = points.get(i).getY() * ZOOM + canvas.getHeight()/3;
-				}
+				Matrix m = new Matrix(points);
+				
+				System.out.println(m);
+				
+				Homothety h = new Homothety(slideZoom.getValue());				
+				m.multiply(h);
+				
+				System.out.println(m);
 
-				for (int i = 0; i < pointsX.length; i++) {
-					System.out.println(pointsX[i] + "  -  " + pointsY[i]);
-				}
-
-				gc.strokePolygon(pointsX, pointsY, size);
+				gc.strokePolygon(m.getLineX(), m.getLineY(), size);
 
 //				canvas.setTranslateX(300);
 //				canvas.setTranslateY(150);
