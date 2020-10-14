@@ -62,10 +62,23 @@ public class Controller {
 		
 		showFile(fileToShow);
 		stage.setTitle("3D Viewer - " + fileToShow.getName());
+
+		stage.getScene().setOnMousePressed(click -> {
+			canvas.setWidth(stage.getWidth());
+			canvas.setHeight(stage.getHeight()-37);
+
+			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			gc.setFill(Color.RED);
+			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		});
 		
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
+
+		gc.setFill(Color.rgb(153, 170, 181));
+		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
+
 		stage.setTitle("3D Viewer");
 	}
 	
@@ -92,8 +105,12 @@ public class Controller {
 				double pointsX[] = new double[size];
 				double pointsY[] = new double[size];
 				for(int i = 0; i < size; i++) {
-					pointsX[i] = points.get(i).getX() * ZOOM + root.getWidth()/2;
-					pointsY[i] = points.get(i).getY() * ZOOM + root.getHeight()/2.5;
+					pointsX[i] = points.get(i).getX() * ZOOM + canvas.getWidth()/2;
+					pointsY[i] = points.get(i).getY() * ZOOM + canvas.getHeight()/2;
+				}
+
+				for (int i = 0; i < pointsX.length; i++) {
+					System.out.println(pointsX[i] + "  -  " + pointsY[i]);
 				}
 
 				gc.strokePolygon(pointsX, pointsY, size);
