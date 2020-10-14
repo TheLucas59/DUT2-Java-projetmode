@@ -6,9 +6,7 @@ import java.util.ArrayList;
 
 import com.groupe5.calculation.Homothety;
 import com.groupe5.calculation.Matrix;
-import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Point;
-import com.groupe5.geometry.Vector;
 import com.groupe5.parser.Parser;
 
 import javafx.event.ActionEvent;
@@ -37,6 +35,7 @@ public class Controller {
 	@FXML Slider slideZoom;
 	@FXML Button testCanvas;
 	@FXML Button testCow;
+	@FXML Text zoomText;
 	
 	private GraphicsContext gc;
 	
@@ -60,6 +59,10 @@ public class Controller {
 
 		testCow.setOnAction(a -> {
 			showFile(new File("./exemples/cow.ply"));
+		});
+		
+		slideZoom.setOnMouseReleased(drag -> {
+			zoomText.setText("ZOOM : " + slideZoom.getValue());
 		});
 	}
 		
@@ -109,7 +112,7 @@ public class Controller {
 				System.out.println(m);
 				
 				Homothety h = new Homothety(slideZoom.getValue());				
-				m.multiply(h);
+				m.setMatrix(m.multiply(h));
 				
 				System.out.println(m);
 

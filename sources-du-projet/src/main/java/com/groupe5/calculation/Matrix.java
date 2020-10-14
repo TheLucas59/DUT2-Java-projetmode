@@ -74,11 +74,13 @@ public class Matrix {
 					result[i][j] += this.getMatrix()[i][k] * other.getMatrix()[k][j];
 				}
 			}
-		}
-		
-		matrix = result;
+		}	
 
-		return matrix;
+		return result;
+	}
+	
+	public void setMatrix(float[][] tab) {
+		matrix = tab;
 	}
 
 	public String toString() {
