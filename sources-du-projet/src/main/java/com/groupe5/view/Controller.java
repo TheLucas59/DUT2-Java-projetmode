@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import com.groupe5.calculation.Homothety;
 import com.groupe5.calculation.Matrix;
+import com.groupe5.calculation.RotationZ;
+import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Point;
 import com.groupe5.parser.Parser;
 
@@ -22,6 +24,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import javax.sql.rowset.spi.TransactionalWriter;
 
 public class Controller {
 
@@ -42,7 +46,8 @@ public class Controller {
 	final String PATH = "./exemples/";
 	private static Stage stage;
 
-	double cursorX, cursorY;
+	private Matrix m;
+	private int size;
 	
 	public static void setStage(Stage s) {
 		stage = s;
@@ -59,10 +64,6 @@ public class Controller {
 
 		testCow.setOnAction(a -> {
 			showFile(new File("./exemples/cow.ply"));
-		});
-		
-		slideZoom.setOnMouseReleased(drag -> {
-			zoomText.setText("ZOOM : " + slideZoom.getValue());
 		});
 	}
 		
@@ -83,10 +84,8 @@ public class Controller {
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
-
-		gc.setFill(Color.rgb(153, 170, 181));
-		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
-
+		clearScreen();
+		
 		stage.setTitle("3D Viewer");
 	}
 	
@@ -94,9 +93,27 @@ public class Controller {
 
 		canvas.setWidth(stage.getWidth());
 		canvas.setHeight(stage.getHeight()-37);
+		
+		//ACTIVATION ZOOM AUTO AVEC SLIDER
+
+		slideZoom.setOnMouseDragged(e -> {
+			zoomText.setText("ZOOM : " + slideZoom.getValue());
+			clearScreen();
+			Homothety h = new Homothety(slideZoom.getValue());
+			Matrix m_zoom = new Matrix(m.multiply(h));
+			gc.strokePolygon(m_zoom.getLineX(), m_zoom.getLineY(), size);
+		});
+
+		slideZoom.setOnMouseReleased(e -> {
+			zoomText.setText("ZOOM : " + slideZoom.getValue());
+			clearScreen();
+			Homothety h = new Homothety(slideZoom.getValue());
+			Matrix m_zoom = new Matrix(m.multiply(h));
+			gc.strokePolygon(m_zoom.getLineX(), m_zoom.getLineY(), size);
+		});
+		
 
 		Thread thread = new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				Parser p = null;
@@ -106,24 +123,19 @@ public class Controller {
 				catch (IOException e) {}
 				
 				ArrayList<Point> points = p.getPoints();
-				int size = points.size();
-				Matrix m = new Matrix(points);
-				
-				System.out.println(m);
-				
-				Homothety h = new Homothety(slideZoom.getValue());				
-				m.setMatrix(m.multiply(h));
-				
-				System.out.println(m);
+				size = points.size();
+				m = new Matrix(points);
 
 				gc.strokePolygon(m.getLineX(), m.getLineY(), size);
-
-//				canvas.setTranslateX(300);
-//				canvas.setTranslateY(150);
 			}
 		});
 		
 		thread.setDaemon(true);
 		thread.start();
+	}
+	
+	public void clearScreen() {
+		gc.setFill(Color.rgb(153, 170, 181));
+		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
 	}
 }
