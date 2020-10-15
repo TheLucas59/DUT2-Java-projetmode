@@ -6,8 +6,8 @@ public class RotationZ extends Matrix{
 		
 		super(
 			new float[][] {
-				{(float) Math.cos(teta), (float) -Math.sin(teta), 0, 0},
-				{(float) Math.sin(teta), (float) Math.cos(teta), 0, 0},
+				{(float) Math.cos(Math.toRadians(teta)), (float) -Math.sin(Math.toRadians(teta)), 0, 0},
+				{(float) Math.sin(Math.toRadians(teta)), (float) Math.cos(Math.toRadians(teta)), 0, 0},
 				{0, 0, 1, 0},
 				{0, 0, 0, 1}
 			}

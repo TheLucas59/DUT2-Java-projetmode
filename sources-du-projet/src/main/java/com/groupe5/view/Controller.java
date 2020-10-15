@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import com.groupe5.calculation.Homothety;
 import com.groupe5.calculation.Matrix;
 import com.groupe5.calculation.RotationZ;
-import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Point;
 import com.groupe5.parser.Parser;
 
@@ -24,8 +23,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import javax.sql.rowset.spi.TransactionalWriter;
 
 public class Controller {
 
@@ -48,6 +45,8 @@ public class Controller {
 
 	private Matrix m;
 	private int size;
+	
+	public static double widthCanvas, heightCanvas;
 	
 	public static void setStage(Stage s) {
 		stage = s;
@@ -90,9 +89,13 @@ public class Controller {
 	}
 	
 	public void showFile(File fileToShow) {
+		clearScreen();
 
 		canvas.setWidth(stage.getWidth());
 		canvas.setHeight(stage.getHeight()-37);
+		
+		widthCanvas = canvas.getWidth();
+		heightCanvas = canvas.getHeight();
 		
 		//ACTIVATION ZOOM AUTO AVEC SLIDER
 
@@ -125,6 +128,8 @@ public class Controller {
 				ArrayList<Point> points = p.getPoints();
 				size = points.size();
 				m = new Matrix(points);
+				
+				m.setMatrix(m.multiply(new RotationZ(180)));
 
 				gc.strokePolygon(m.getLineX(), m.getLineY(), size);
 			}

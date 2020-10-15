@@ -3,6 +3,7 @@ package com.groupe5.calculation;
 import java.util.ArrayList;
 
 import com.groupe5.geometry.Point;
+import com.groupe5.view.Controller;
 
 public class Matrix {
 	
@@ -37,7 +38,7 @@ public class Matrix {
 		double[] x = new double[matrix.length];
 		
 		for(int i=0; i<x.length; i++) {
-			x[i] = matrix[i][0];
+			x[i] = matrix[i][0] + Controller.widthCanvas/2;
 		}
 		
 		return x;
@@ -47,7 +48,7 @@ public class Matrix {
 		double[] y = new double[matrix.length];
 		
 		for(int i=0; i<y.length; i++) {
-			y[i] = matrix[i][1];
+			y[i] = matrix[i][1] + Controller.heightCanvas/1.25;
 		}
 		
 		return y;
