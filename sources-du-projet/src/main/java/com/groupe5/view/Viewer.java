@@ -50,6 +50,7 @@ public class Viewer{
 		instance = this;
 		
 		gc = canvas.getGraphicsContext2D();
+		slideZoom.setValue(1);
 		
 		testCanvas.setOnAction(a -> {
 			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -114,7 +115,8 @@ public class Viewer{
 				m = new Matrix(points);
 				
 				m.setMatrix(m.multiply(new RotationZ(180)));
-
+				slideZoom.setValue(1);
+				zoomText.setText("ZOOM : " + slideZoom.getValue());
 				gc.strokePolygon(m.getLineX(), m.getLineY(), size);
 			}
 		});
