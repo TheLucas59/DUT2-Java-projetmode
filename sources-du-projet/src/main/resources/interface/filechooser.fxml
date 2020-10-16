@@ -13,14 +13,14 @@
       <TextField fx:id="textPath" layoutX="120.0" layoutY="8.0" prefHeight="25.0" prefWidth="281.0" />
       <Button layoutX="403.0" layoutY="8.0" mnemonicParsing="false" onAction="#buttonFolder" text="Parcourir" />
       <ListView fx:id="listFiles" layoutX="2.0" layoutY="64.0" prefHeight="336.0" prefWidth="298.0" />
-      <TitledPane fx:id="tpFile" animated="false" disable="true" expanded="false" layoutX="299.0" layoutY="39.0" prefHeight="360.0" prefWidth="299.0" text="aucun fichier selectionné">
+      <TitledPane fx:id="tpFile" expanded="false" animated="false" disable="true" layoutX="299.0" layoutY="39.0" prefHeight="360.0" prefWidth="299.0" text="aucun fichier selectionné">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Text fx:id="info_FileFormat" layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Format:" />
                   <Text fx:id="info_FilePoints" layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de point(s):" />
                   <Text fx:id="info_FileFaces" layoutX="14.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de face(s):" />
-                  <Button layoutX="14.0" layoutY="68.0" mnemonicParsing="false" onAction="#openSelectedFile" text="Ouvrir" />
+                  <Button fx:id="buttonOpenFile" disable="true" layoutX="14.0" layoutY="68.0" mnemonicParsing="false" onAction="#openSelectedFile" text="Ouvrir" />
                </children>
             </AnchorPane>
         </content>

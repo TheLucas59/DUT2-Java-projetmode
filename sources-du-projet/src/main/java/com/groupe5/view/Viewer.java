@@ -21,10 +21,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-public class Controller {
+public class Viewer{
 
 	@FXML Canvas canvas;
 	@FXML Button buttonOpen;
@@ -40,21 +38,19 @@ public class Controller {
 	
 	private GraphicsContext gc;
 	
-	final String PATH = "./exemples/";
-	private static Stage stage;
-
 	private Matrix m;
 	private int size;
 	
 	public static double widthCanvas, heightCanvas;
 	
-	public static void setStage(Stage s) {
-		stage = s;
-	}
-
+	private static Viewer instance;
+	
 	public void initialize(){
+		System.out.println("init viewer");
+		instance = this;
+		
 		gc = canvas.getGraphicsContext2D();
-
+		
 		testCanvas.setOnAction(a -> {
 			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 			gc.setFill(Color.RED);
@@ -65,34 +61,22 @@ public class Controller {
 			showFile(new File("./exemples/cow.ply"));
 		});
 	}
-		
+	
 	public void buttonOpenFile(ActionEvent e){
-		
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open file : ");		
-		fileChooser.setInitialDirectory(new File(PATH));
-		
-		//set Extension Filter
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PLY Files (*.ply)", "*.ply");
-		fileChooser.getExtensionFilters().add(extFilter);		
-		
-		File fileToShow = fileChooser.showOpenDialog(root.getScene().getWindow());
-		
-		showFile(fileToShow);
-		stage.setTitle("3D Viewer - " + fileToShow.getName());
+		ShowScene.getViewer().hide();
+		ShowScene.getFileChooser().show();
 	}
 	
 	public void buttonCloseFile(ActionEvent e){
 		clearScreen();
-		
-		stage.setTitle("3D Viewer");
+		System.out.println("closeFile");
 	}
 	
 	public void showFile(File fileToShow) {
 		clearScreen();
 
-		canvas.setWidth(stage.getWidth());
-		canvas.setHeight(stage.getHeight()-37);
+		canvas.setWidth(ShowScene.getViewer().getWidth());
+		canvas.setHeight(ShowScene.getViewer().getHeight()-37);
 		
 		widthCanvas = canvas.getWidth();
 		heightCanvas = canvas.getHeight();
@@ -143,4 +127,9 @@ public class Controller {
 		gc.setFill(Color.rgb(153, 170, 181));
 		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
 	}
+	
+	public static void setFile(File fileToShow){
+		instance.showFile(fileToShow);
+	}
+
 }

@@ -10,6 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
@@ -30,6 +31,7 @@ public class FileSelector {
 	private String defaultFilePoints = "";
 	@FXML Text info_FileFaces;
 	private String defaultFileFaces = "";
+	@FXML Button buttonOpenFile;
 	
 	private File selectedFile = null;
 	
@@ -55,6 +57,8 @@ public class FileSelector {
 			    }
 		    	selectedFile = selectedItem.getFile();
 			    tpFile.setExpanded(true);
+			    tpFile.setDisable(false);
+			    buttonOpenFile.setDisable(false);
 			    tpFile.setText(selectedFile.getName());
 			    info_FileFormat.setText(defaultFileFormat + "format du fichier");
 			    info_FilePoints.setText(defaultFilePoints + "nb");
@@ -77,7 +81,9 @@ public class FileSelector {
 	
 	
 	public void openSelectedFile(ActionEvent e){
-		// ouvrir le fichier avec le logiciel
+		ShowScene.getFileChooser().hide();
+		ShowScene.getViewer().show();
+		Viewer.setFile(selectedFile);
 	}
 	
 	private List<File> filesToList(){
@@ -95,11 +101,13 @@ public class FileSelector {
 	
 	private void resetTitledPane() {
 		this.selectedFile = null;
+		this.tpFile.setDisable(true);
 		this.tpFile.setText(defaultTpFile);
 		this.info_FileFaces.setText(defaultFileFaces);
 		this.info_FileFormat.setText(defaultFileFaces);
 		this.info_FilePoints.setText(defaultFilePoints);
 		this.tpFile.setExpanded(false);
+		this.buttonOpenFile.setDisable(true);
 		System.out.println("reset");
 	}
 }
