@@ -17,6 +17,10 @@ public class PLYFile {
 		this.file = file;
 	}
 	
+	public File getFile() {
+		return this.file;
+	}
+	
 	// returns false if parsing fails
 	public boolean parse() {
 		Parser p;
@@ -29,5 +33,9 @@ public class PLYFile {
 		points = p.getPoints();
 		faces = p.getFaces(points);
 		return true;
+	}
+	
+	public String toString() {
+		return this.file.getName();
 	}
 }
