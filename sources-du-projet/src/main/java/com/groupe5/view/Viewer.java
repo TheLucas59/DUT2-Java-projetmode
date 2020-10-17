@@ -33,8 +33,6 @@ public class Viewer{
 	@FXML MenuBar menuBar;
 	@FXML Region regionZoom;
 	@FXML Slider slideZoom;
-	@FXML Button testCanvas;
-	@FXML Button testCow;
 	@FXML Text zoomText;
 	
 	private GraphicsContext gc;
@@ -100,7 +98,7 @@ public class Viewer{
 				m.setMatrix(r.multiply(m));
 				
 				m.setMatrix(center.multiply(m));
-				
+
 				gc.strokePolygon(m.getLineX(), m.getLineY(), size);
 			}
 		});
