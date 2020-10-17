@@ -3,7 +3,6 @@ package com.groupe5.calculation;
 import java.util.ArrayList;
 
 import com.groupe5.geometry.Point;
-import com.groupe5.view.Viewer;
 
 public class Matrix {
 	
@@ -12,15 +11,15 @@ public class Matrix {
 	private final float COORDONNEE_HOMOGENE = 1.0f;
 
 	public Matrix(ArrayList<Point> points) {
-		matrix = new float[points.size()][4];
+		matrix = new float[4][points.size()];	
 		
 		for(int i=0; i<matrix.length; i++) {
-			for(int j=0; j<4; j++) {
+			for(int j=0; j<matrix[i].length; j++) {
 				
-				if(j == 0) matrix[i][j] = points.get(i).getX();
-				if(j == 1) matrix[i][j] = points.get(i).getY();
-				if(j == 2) matrix[i][j] = points.get(i).getZ();
-				if(j == 3) matrix[i][j] = COORDONNEE_HOMOGENE;
+				if(i == 0) matrix[i][j] = points.get(j).getX();
+				if(i == 1) matrix[i][j] = points.get(j).getY();
+				if(i == 2) matrix[i][j] = points.get(j).getZ();
+				if(i == 3) matrix[i][j] = COORDONNEE_HOMOGENE;
 						
 			}
 		}
@@ -35,50 +34,50 @@ public class Matrix {
 	}
 	
 	public double[] getLineX() {
-		double[] x = new double[matrix.length];
+		double[] x = new double[matrix[0].length];		
 		
 		for(int i=0; i<x.length; i++) {
-			x[i] = matrix[i][0] + Viewer.widthCanvas/2;
+			x[i] = matrix[0][i];
 		}
 		
 		return x;
 	}
 	
 	public double[] getLineY() {
-		double[] y = new double[matrix.length];
+		double[] y = new double[matrix[0].length];
 		
 		for(int i=0; i<y.length; i++) {
-			y[i] = matrix[i][1] + Viewer.heightCanvas/1.25;
+			y[i] = matrix[1][i];
 		}
 		
 		return y;
 	}
 	
 	public double[] getLineZ() {
-		double[] z = new double[matrix.length];
+		double[] z = new double[matrix[0].length];
 		
 		for(int i=0; i<z.length; i++) {
-			z[i] = matrix[i][2];
+			z[i] = matrix[2][i];
 		}
 		
 		return z;
 	}
-
+	
 	public float[][] multiply(Matrix other) {
+		float[][] firstMatrix = this.getMatrix();
+		float[][] secondMatrix = other.getMatrix();
 		
-		float[][] result = new float[matrix.length][matrix[1].length];
+        float[][] product = new float[firstMatrix.length][secondMatrix[0].length];
+        for(int i = 0; i < firstMatrix.length; i++) {
+            for (int j = 0; j < secondMatrix[i].length; j++) {
+                for (int k = 0; k < secondMatrix.length; k++) {
+                    product[i][j] += firstMatrix[i][k] * secondMatrix[k][j];
+                }
+            }
+        }
 
-		for(int i=0; i<matrix.length; i++) {
-			for(int j=0; j<matrix[i].length; j++) {
-				result[i][j] = 0;
-				for(int k=0; k<matrix[i].length; k++) {
-					result[i][j] += this.getMatrix()[i][k] * other.getMatrix()[k][j];
-				}
-			}
-		}	
-
-		return result;
-	}
+        return product;
+    }
 	
 	public void setMatrix(float[][] tab) {
 		matrix = tab;

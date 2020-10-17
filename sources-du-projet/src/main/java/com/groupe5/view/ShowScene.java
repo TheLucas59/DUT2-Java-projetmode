@@ -44,7 +44,7 @@ public class ShowScene extends Application{
     		try {
 				loader.setLocation(fxmlFile.toURI().toURL());
 	    		Parent root = loader.load();
-	    		Scene scene = new Scene(root);
+	    		Scene scene = new Scene(root, 1280, 720);
 	    		viewer = new Stage();
 	    		viewer.setScene(scene);
 	    		viewer.setTitle("3D Viewer");

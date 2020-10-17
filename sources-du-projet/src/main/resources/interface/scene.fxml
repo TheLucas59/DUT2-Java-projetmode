@@ -45,18 +45,7 @@
             <Text fx:id="zoomText" fill="WHITE" layoutX="396.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ZOOM : " />
          </children></AnchorPane>
       <AnchorPane layoutY="37.0" prefHeight="363.0" prefWidth="37.0" style="-fx-background-color: #424549;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="37.0">
-         <children>
-            <Button fx:id="testCanvas" contentDisplay="TOP" mnemonicParsing="false" prefHeight="134.0" prefWidth="38.0" text="TEST CANVAS" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font size="8.0" />
-               </font>
-            </Button>
-            <Button fx:id="testCow" contentDisplay="TOP" layoutY="174.0" mnemonicParsing="false" prefHeight="134.0" prefWidth="38.0" text="TEST COW" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font size="8.0" />
-               </font>
-            </Button>
-         </children></AnchorPane>
+      </AnchorPane>
       <Text fx:id="loadingString" layoutX="169.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CHARGEMENT DU MODELE ..." visible="false">
          <font>
             <Font size="20.0" />

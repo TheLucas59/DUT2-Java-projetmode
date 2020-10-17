@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.groupe5.calculation.Homothety;
 import com.groupe5.calculation.Matrix;
 import com.groupe5.calculation.RotationZ;
+import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Point;
 import com.groupe5.parser.Parser;
 
@@ -41,25 +42,15 @@ public class Viewer{
 	private Matrix m;
 	private int size;
 	
-	public static double widthCanvas, heightCanvas;
-	
 	private static Viewer instance;
+	
+	private Translation center;
 	
 	public void initialize(){
 		System.out.println("init viewer");
 		instance = this;
 		
 		gc = canvas.getGraphicsContext2D();
-		
-		testCanvas.setOnAction(a -> {
-			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-			gc.setFill(Color.RED);
-			gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		});
-
-		testCow.setOnAction(a -> {
-			showFile(new File("./exemples/cow.ply"));
-		});
 	}
 	
 	public void buttonOpenFile(ActionEvent e){
@@ -78,25 +69,16 @@ public class Viewer{
 		canvas.setWidth(ShowScene.getViewer().getWidth());
 		canvas.setHeight(ShowScene.getViewer().getHeight()-37);
 		
-		widthCanvas = canvas.getWidth();
-		heightCanvas = canvas.getHeight();
+		center = new Translation(new Point(((float) canvas.getWidth()/2), ((float) canvas.getHeight()/2), 1, 1));
 		
 		//ACTIVATION ZOOM AUTO AVEC SLIDER
 
 		slideZoom.setOnMouseDragged(e -> {
-			zoomText.setText("ZOOM : " + slideZoom.getValue());
-			clearScreen();
-			Homothety h = new Homothety(slideZoom.getValue());
-			Matrix m_zoom = new Matrix(m.multiply(h));
-			gc.strokePolygon(m_zoom.getLineX(), m_zoom.getLineY(), size);
+			zoom();
 		});
 
 		slideZoom.setOnMouseReleased(e -> {
-			zoomText.setText("ZOOM : " + slideZoom.getValue());
-			clearScreen();
-			Homothety h = new Homothety(slideZoom.getValue());
-			Matrix m_zoom = new Matrix(m.multiply(h));
-			gc.strokePolygon(m_zoom.getLineX(), m_zoom.getLineY(), size);
+			zoom();
 		});
 		
 
@@ -113,8 +95,12 @@ public class Viewer{
 				size = points.size();
 				m = new Matrix(points);
 				
-				m.setMatrix(m.multiply(new RotationZ(180)));
-
+				RotationZ r = new RotationZ(180);
+				
+				m.setMatrix(r.multiply(m));
+				
+				m.setMatrix(center.multiply(m));
+				
 				gc.strokePolygon(m.getLineX(), m.getLineY(), size);
 			}
 		});
@@ -130,6 +116,19 @@ public class Viewer{
 	
 	public static void setFile(File fileToShow){
 		instance.showFile(fileToShow);
+	}
+	
+	public void zoom() {
+		zoomText.setText("ZOOM : " + slideZoom.getValue());
+		clearScreen();
+		
+		Homothety h = new Homothety(slideZoom.getValue());		
+		Matrix tmp = new Matrix(center.inv().multiply(m));		
+		
+		Matrix m_zoom = new Matrix(h.multiply(tmp));
+		
+		Matrix reMoveCenter = new Matrix(center.multiply(m_zoom));
+		gc.strokePolygon(reMoveCenter.getLineX(), reMoveCenter.getLineY(), size);
 	}
 
 }
