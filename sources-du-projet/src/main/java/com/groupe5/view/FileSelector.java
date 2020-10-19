@@ -1,8 +1,8 @@
 package com.groupe5.view;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.LinkedList;
 
 import com.groupe5.parser.PLYFile;
 
@@ -86,14 +86,15 @@ public class FileSelector {
 		Viewer.setFile(selectedFile);
 	}
 	
-	private List<File> filesToList(){
-		List<File> list = new ArrayList<File>();
+	private LinkedList<File> filesToList(){
+		LinkedList<File> list = new LinkedList<File>();
 		File dir = new File(textPath.getText());
 		for(File f : dir.listFiles()) if(f.getName().endsWith(".ply")) list.add(f);
+		Collections.sort(list);
 		return list;
 	}
 	
-	private void showFiles(List<File> files) {
+	private void showFiles(LinkedList<File> files) {
 		textFileCount.setText(defaultFileCount + files.size());
 		this.listFiles.getItems().clear();
 		for(File f : files) this.listFiles.getItems().add(new PLYFile(f));
