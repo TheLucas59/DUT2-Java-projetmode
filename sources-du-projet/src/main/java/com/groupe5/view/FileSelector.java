@@ -60,9 +60,9 @@ public class FileSelector {
 			    tpFile.setDisable(false);
 			    buttonOpenFile.setDisable(false);
 			    tpFile.setText(selectedFile.getName());
-			    info_FileFormat.setText(defaultFileFormat + "format du fichier");
-			    info_FilePoints.setText(defaultFilePoints + "nb");
-			    info_FileFaces.setText(defaultFileFaces + "nb faces");
+			    info_FileFormat.setText(defaultFileFormat + selectedItem.getFormat());
+			    info_FilePoints.setText(defaultFilePoints + selectedItem.getTotalPoints());
+			    info_FileFaces.setText(defaultFileFaces + selectedItem.getTotalFaces());
 		    }
 		});
 	}

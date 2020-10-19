@@ -15,10 +15,25 @@ public class PLYFile {
 
 	public PLYFile(File file){
 		this.file = file;
+		header="";
+		faces=new ArrayList<Face>();
+		points=new ArrayList<Point>();
 	}
 	
 	public File getFile() {
 		return this.file;
+	}
+	
+	public String getFormat(){
+		return "format";
+	}
+	
+	public int getTotalPoints(){
+		return points.size();
+	}
+	
+	public int getTotalFaces(){
+		return faces.size();
 	}
 	
 	// returns false if parsing fails

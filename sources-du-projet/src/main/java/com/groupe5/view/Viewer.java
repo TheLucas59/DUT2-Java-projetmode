@@ -67,6 +67,8 @@ public class Viewer{
 		canvas.setWidth(ShowScene.getViewer().getWidth());
 		canvas.setHeight(ShowScene.getViewer().getHeight()-37);
 		
+		ShowScene.getViewer().setTitle("3D Viewer - "+fileToShow.getName());
+		
 		center = new Translation(new Point(((float) canvas.getWidth()/2), ((float) canvas.getHeight()/2), 1, 1));
 		
 		//ACTIVATION ZOOM AUTO AVEC SLIDER
