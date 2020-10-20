@@ -3,7 +3,6 @@ package com.groupe5.parser;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
@@ -29,23 +28,17 @@ public class PLYFile {
 	}
 	
 	public String getFormat(){
-		if(this.header == "") {
-			this.onlyHeader();
-		}
+		this.onlyHeader();
 		return fileFormat;
 	}
 	
 	public int getTotalPoints(){
-		if(this.header == "") {
-			this.onlyHeader();
-		}
+		this.onlyHeader();
 		return vertexCount;
 	}
 	
 	public int getTotalFaces(){
-		if(this.header == "") {
-			this.onlyHeader();
-		}
+		this.onlyHeader();
 		return faceCount;
 	}
 	
@@ -65,6 +58,7 @@ public class PLYFile {
 	}
 	
 	public boolean onlyHeader() {
+		if(header.length() != 0) return false;
 		Parser p;
 		try {
 			p = new Parser(this.file);
