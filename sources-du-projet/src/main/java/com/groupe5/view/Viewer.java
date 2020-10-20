@@ -43,6 +43,7 @@ public class Viewer{
 	private static Viewer instance;
 	
 	private Translation center;
+	private Point objectCenter;
 	
 	public void initialize(){
 		System.out.println("init viewer");
@@ -94,6 +95,7 @@ public class Viewer{
 				ArrayList<Point> points = p.getPoints();
 				size = points.size();
 				m = new Matrix(points);
+				objectCenter = setObjectCenter(points);
 				
 				RotationZ r = new RotationZ(180);
 				
@@ -125,10 +127,21 @@ public class Viewer{
 		Homothety h = new Homothety(slideZoom.getValue());		
 		Matrix tmp = new Matrix(center.inv().multiply(m));		
 		
-		Matrix m_zoom = new Matrix(h.multiply(tmp));
-		
-		Matrix reMoveCenter = new Matrix(center.multiply(m_zoom));
+		Matrix reMoveCenter = new Matrix(center.multiply(h.multiply(tmp)));
 		gc.strokePolygon(reMoveCenter.getLineX(), reMoveCenter.getLineY(), size);
+	}
+	
+	public Point setObjectCenter(ArrayList<Point> points) {
+		double X = 0, Y = 0, Z = 0;
+		int size = points.size();
+		
+		for(Point p : points) {
+			X += p.getX();
+			Y += p.getY();
+			Z += p.getZ();
+		}
+		
+		return new Point(((float) X/size), ((float) Y/size), ((float) Z/size), 0);
 	}
 
 }

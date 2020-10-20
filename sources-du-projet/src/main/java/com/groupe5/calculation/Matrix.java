@@ -63,9 +63,8 @@ public class Matrix {
 		return z;
 	}
 	
-	public float[][] multiply(Matrix other) {
+	public float[][] multiply(float[][] secondMatrix) {
 		float[][] firstMatrix = this.getMatrix();
-		float[][] secondMatrix = other.getMatrix();
 		
         float[][] product = new float[firstMatrix.length][secondMatrix[0].length];
         for(int i = 0; i < firstMatrix.length; i++) {
@@ -78,6 +77,10 @@ public class Matrix {
 
         return product;
     }
+	
+	public float[][] multiply(Matrix other) {
+		return multiply(other.getMatrix());
+	}
 	
 	public void setMatrix(float[][] tab) {
 		matrix = tab;
