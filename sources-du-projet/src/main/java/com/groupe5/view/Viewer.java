@@ -82,6 +82,18 @@ public class Viewer{
 			zoom();
 		});
 		
+		regionZoom.setOnScroll(scroll -> {
+			if(scroll.getDeltaY() > 0) {
+				slideZoom.setValue(slideZoom.getValue() + 1);
+				zoom();
+			}
+			
+			if(scroll.getDeltaY() < 0) {
+				slideZoom.setValue(slideZoom.getValue() - 1);
+				zoom();
+			}
+		});
+		
 
 		Thread thread = new Thread(new Runnable() {
 			@Override
@@ -103,7 +115,7 @@ public class Viewer{
 				
 				m.setMatrix(center.multiply(m));
 
-				gc.strokePolygon(m.getLineX(), m.getLineY(), size);
+				showObject(m.getLineX(), m.getLineY(), size);
 			}
 		});
 		
@@ -128,7 +140,7 @@ public class Viewer{
 		Matrix tmp = new Matrix(center.inv().multiply(m));		
 		
 		Matrix reMoveCenter = new Matrix(center.multiply(h.multiply(tmp)));
-		gc.strokePolygon(reMoveCenter.getLineX(), reMoveCenter.getLineY(), size);
+		showObject(reMoveCenter.getLineX(), reMoveCenter.getLineY(), size);
 	}
 	
 	public Point setObjectCenter(ArrayList<Point> points) {
@@ -142,6 +154,11 @@ public class Viewer{
 		}
 		
 		return new Point(((float) X/size), ((float) Y/size), ((float) Z/size), 0);
+	}
+	
+	public void showObject(double[] X, double[] Y, int nb_points) {
+		gc.setFill(Color.RED);
+		gc.fillPolygon(X, Y, nb_points);
 	}
 
 }
