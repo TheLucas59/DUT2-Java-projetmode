@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import com.groupe5.calculation.Homothety;
 import com.groupe5.calculation.Matrix;
+import com.groupe5.calculation.RotationX;
+import com.groupe5.calculation.RotationY;
 import com.groupe5.calculation.RotationZ;
 import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Point;
@@ -82,6 +84,13 @@ public class Viewer{
 			zoom();
 		});
 		
+		regionZoom.setOnMouseDragged(e -> {
+			rotate();
+		});
+		
+		regionZoom.setOnMouseReleased(e -> {
+			rotate();
+		});
 
 		Thread thread = new Thread(new Runnable() {
 			@Override
@@ -129,6 +138,20 @@ public class Viewer{
 		
 		Matrix reMoveCenter = new Matrix(center.multiply(h.multiply(tmp)));
 		gc.strokePolygon(reMoveCenter.getLineX(), reMoveCenter.getLineY(), size);
+	}
+	
+	public void rotate() {
+		System.out.println("rotation");
+		clearScreen();
+		
+		RotationX rx = new RotationX(30);
+		RotationY ry = new RotationY(30);
+		RotationZ rz = new RotationZ(30);
+		
+		Matrix completeRotation = new Matrix(new Matrix(rx.multiply(ry)).multiply(rz));
+		m.setMatrix(m.multiply(completeRotation));
+		
+		gc.strokePolygon(m.getLineX(), m.getLineY(), size);
 	}
 	
 	public Point setObjectCenter(ArrayList<Point> points) {
