@@ -123,6 +123,8 @@ public class Viewer{
 				m.setMatrix(r.multiply(m));
 				
 				m.setMatrix(center.multiply(m));
+				
+				projection(m);
 
 				showObject(m.getLineX(), m.getLineY(), size);
 			}
@@ -166,6 +168,21 @@ public class Viewer{
 		gc.strokePolygon(m.getLineX(), m.getLineY(), size);
 	}
 	
+	public void projection(Matrix m) {
+		float[][] matrix = m.getMatrix();
+		
+		final float COEFF_PROJECTION = 1500;
+		
+		for(int i = 0; i < matrix[0].length; i++) {
+			float z = COEFF_PROJECTION/(COEFF_PROJECTION+matrix[2][i]);
+			
+			matrix[0][i] = matrix[0][i] * z; 
+			matrix[1][i] = matrix[1][i] * z; 
+		}
+		
+		m.setMatrix(matrix);
+	}
+	
 	public Point setObjectCenter(ArrayList<Point> points) {
 		double X = 0, Y = 0, Z = 0;
 		int size = points.size();
@@ -180,8 +197,7 @@ public class Viewer{
 	}
 	
 	public void showObject(double[] X, double[] Y, int nb_points) {
-		gc.setFill(Color.RED);
-		gc.fillPolygon(X, Y, nb_points);
+		gc.strokePolygon(X, Y, nb_points);
 	}
 
 }
