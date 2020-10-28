@@ -20,6 +20,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -46,6 +47,9 @@ public class Viewer{
 	
 	private Translation center;
 	private Point objectCenter;
+	
+	private double oldMousePosX;
+	private double oldMousePosY;
 	
 	public void initialize(){
 		System.out.println("init viewer");
@@ -96,12 +100,12 @@ public class Viewer{
 			}
 		});
 
-		regionZoom.setOnMouseDragged(e -> {
-			rotate();
+		regionZoom.setOnMousePressed(e -> {
+			setOldAngles(e);
 		});
 		
-		regionZoom.setOnMouseReleased(e -> {
-			rotate();
+		regionZoom.setOnMouseDragged(e -> {
+			rotate(e);
 		});
 
 		Thread thread = new Thread(new Runnable() {
@@ -154,18 +158,26 @@ public class Viewer{
 		showObject(reMoveCenter.getLineX(), reMoveCenter.getLineY(), size);
 	}
 	
-	public void rotate() {
+	private void setOldAngles(MouseEvent e) {
+		oldMousePosX = e.getSceneX();
+		oldMousePosY = e.getSceneY();
+	}
+	
+	public void rotate(MouseEvent e) {
 		System.out.println("rotation");
 		clearScreen();
 		
-		RotationX rx = new RotationX(30);
-		RotationY ry = new RotationY(30);
-		RotationZ rz = new RotationZ(30);
+		double mousePosX = e.getSceneX();
+		double mousePosY = e.getSceneY();
 		
-		Matrix completeRotation = new Matrix(new Matrix(rx.multiply(ry)).multiply(rz));
-		m.setMatrix(m.multiply(completeRotation));
+		RotationX rx = new RotationX((float) (mousePosX - oldMousePosX));
+		RotationY ry = new RotationY((float) (mousePosY - oldMousePosY));
+		//RotationZ rz = new RotationZ(30);
 		
-		gc.strokePolygon(m.getLineX(), m.getLineY(), size);
+		Matrix completeRotation = new Matrix(rx.multiply(ry));
+		m.setMatrix(center.multiply(completeRotation.multiply(center.inv().multiply(m))));
+		
+		zoom();
 	}
 	
 	public void projection(Matrix m) {
