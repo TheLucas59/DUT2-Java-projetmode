@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
 
 public class Viewer{
@@ -130,7 +131,7 @@ public class Viewer{
 				
 				projection(m);
 
-				showObject(m.getLineX(), m.getLineY(), size);
+				drawObject(m.getLineX(), m.getLineY(), size);
 			}
 		});
 		
@@ -155,7 +156,7 @@ public class Viewer{
 		Matrix tmp = new Matrix(center.inv().multiply(m));		
 		
 		Matrix reMoveCenter = new Matrix(center.multiply(h.multiply(tmp)));
-		showObject(reMoveCenter.getLineX(), reMoveCenter.getLineY(), size);
+		drawObject(reMoveCenter.getLineX(), reMoveCenter.getLineY(), size);
 	}
 	
 	private void setOldAngles(MouseEvent e) {
@@ -208,7 +209,7 @@ public class Viewer{
 		return new Point(((float) X/size), ((float) Y/size), ((float) Z/size), 0);
 	}
 	
-	public void showObject(double[] X, double[] Y, int nb_points) {
+	public void drawObject(double[] X, double[] Y, int nb_points) {		
 		gc.strokePolygon(X, Y, nb_points);
 	}
 
