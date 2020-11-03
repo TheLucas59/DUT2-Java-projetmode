@@ -14,7 +14,27 @@
 
 ### Répartition des tâches
 
-// TODO
+##### Lucas PLÉ
+
+- Géométrie
+- Affichage
+- Calculs
+
+##### Loïc DEMAY
+
+- Parser
+- Structuration du projet
+
+##### Aubrian DUHAYON
+
+- Géométrie
+- Affichage
+- Calculs
+
+##### Axel PIRC
+
+- Vues JavaFX
+- File Selector
 
 ### Build / Run
 
