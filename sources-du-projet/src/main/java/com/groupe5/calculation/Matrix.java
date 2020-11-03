@@ -11,7 +11,8 @@ public class Matrix {
 	private final float COORDONNEE_HOMOGENE = 1.0f;
 
 	public Matrix(ArrayList<Point> points) {
-		matrix = new float[4][points.size()];	
+		
+		matrix = new float[4][points.size()];			
 		
 		for(int i=0; i<matrix.length; i++) {
 			for(int j=0; j<matrix[i].length; j++) {

@@ -10,6 +10,7 @@ import com.groupe5.calculation.RotationX;
 import com.groupe5.calculation.RotationY;
 import com.groupe5.calculation.RotationZ;
 import com.groupe5.calculation.Translation;
+import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
 import com.groupe5.parser.Parser;
 
@@ -24,7 +25,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Text;
 
 public class Viewer{
@@ -119,8 +119,10 @@ public class Viewer{
 				catch (IOException e) {}
 				
 				ArrayList<Point> points = p.getPoints();
+					
 				size = points.size();
 				m = new Matrix(points);
+				
 				objectCenter = setObjectCenter(points);
 				
 				RotationZ r = new RotationZ(180);
@@ -209,7 +211,7 @@ public class Viewer{
 		return new Point(((float) X/size), ((float) Y/size), ((float) Z/size), 0);
 	}
 	
-	public void drawObject(double[] X, double[] Y, int nb_points) {		
+	public void drawObject(double[] X, double[] Y, int nb_points) {	
 		gc.strokePolygon(X, Y, nb_points);
 	}
 
