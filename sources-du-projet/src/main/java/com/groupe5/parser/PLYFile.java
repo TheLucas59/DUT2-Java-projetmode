@@ -15,6 +15,7 @@ public class PLYFile {
 	int faceCount;
 	int vertexCount;
 	String fileFormat;
+	String comment = "(aucun)";
 
 	public PLYFile(File file){
 		this.file = file;
@@ -28,18 +29,31 @@ public class PLYFile {
 	}
 	
 	public String getFormat(){
-		this.onlyHeader();
+		if(fileFormat == null) {
+			this.onlyHeader();
+		}
 		return fileFormat;
 	}
 	
 	public int getTotalPoints(){
-		this.onlyHeader();
+		if(vertexCount == 0) {
+			this.onlyHeader();
+		}
 		return vertexCount;
 	}
 	
 	public int getTotalFaces(){
-		this.onlyHeader();
+		if(faceCount == 0) {
+			this.onlyHeader();
+		}
 		return faceCount;
+	}
+	
+	public String getComment() {
+		if(comment == null) {
+			this.onlyHeader();
+		}
+		return comment;
 	}
 	
 	// returns false if parsing fails
@@ -85,6 +99,13 @@ public class PLYFile {
 			}
 			if(fields[i].startsWith("element face")) {
 				faceCount = Integer.parseInt(fields[i].split(" ")[2]);
+			}
+			if(fields[i].startsWith("comment")) {
+				if(comment.equals("(aucun)")) {
+					comment = fields[i].replaceFirst("comment ", "");
+				} else {
+					comment += "\n" + fields[i].replaceFirst("comment ", "");
+				}
 			}
 		}
 	}

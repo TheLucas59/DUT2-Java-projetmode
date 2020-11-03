@@ -31,6 +31,8 @@ public class FileSelector {
 	private String defaultFilePoints = "";
 	@FXML Text info_FileFaces;
 	private String defaultFileFaces = "";
+	@FXML Text info_Comment;
+	private String defaultComment = "";
 	@FXML Button buttonOpenFile;
 	
 	private File selectedFile = null;
@@ -42,6 +44,7 @@ public class FileSelector {
 		defaultFileFormat = info_FileFormat.getText()+" ";
 		defaultFilePoints = info_FilePoints.getText()+" ";
 		defaultFileFaces = info_FileFaces.getText()+" ";
+		defaultComment = info_Comment.getText()+" ";
 		defaultTpFile = tpFile.getText();
 		/*listFiles.getSelectionModel().selectedItemProperty().addListener(( -> {
 		     
@@ -63,6 +66,7 @@ public class FileSelector {
 			    info_FileFormat.setText(defaultFileFormat + selectedItem.getFormat());
 			    info_FilePoints.setText(defaultFilePoints + selectedItem.getTotalPoints());
 			    info_FileFaces.setText(defaultFileFaces + selectedItem.getTotalFaces());
+			    info_Comment.setText(defaultComment + selectedItem.getComment());
 		    }
 		});
 	}
@@ -104,6 +108,7 @@ public class FileSelector {
 		this.selectedFile = null;
 		this.tpFile.setDisable(true);
 		this.tpFile.setText(defaultTpFile);
+		this.info_Comment.setText(defaultComment);
 		this.info_FileFaces.setText(defaultFileFaces);
 		this.info_FileFormat.setText(defaultFileFaces);
 		this.info_FilePoints.setText(defaultFilePoints);
