@@ -21,6 +21,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
@@ -102,12 +103,20 @@ public class Viewer{
 		});
 
 		regionZoom.setOnMousePressed(e -> {
-			setOldAngles(e);
+				setOldAngles(e);
 		});
 		
 		regionZoom.setOnMouseDragged(e -> {
-			rotate(e);
+			if(e.getButton().equals(MouseButton.PRIMARY)) {
+				rotate(e);
+				setOldAngles(e);
+			}
+			else if(e.getButton().equals(MouseButton.SECONDARY)) {
+				translation(e);
+				setOldAngles(e);
+			}
 		});
+		
 
 		Thread thread = new Thread(new Runnable() {
 			@Override
@@ -167,15 +176,15 @@ public class Viewer{
 	}
 	
 	public void rotate(MouseEvent e) {
-		System.out.println("rotation");
 		clearScreen();
 		
 		double mousePosX = e.getSceneX();
 		double mousePosY = e.getSceneY();
+		System.out.println("new: " + mousePosX);
+		System.out.println("old: " + oldMousePosX);
 		
-		RotationX rx = new RotationX((float) (mousePosX - oldMousePosX));
-		RotationY ry = new RotationY((float) (mousePosY - oldMousePosY));
-		//RotationZ rz = new RotationZ(30);
+		RotationX rx = new RotationX((float) ((mousePosY - oldMousePosY)/(slideZoom.getValue()/100)));
+		RotationY ry = new RotationY((float) ((mousePosX - oldMousePosX)/(slideZoom.getValue()/100)));
 		
 		Matrix completeRotation = new Matrix(rx.multiply(ry));
 		m.setMatrix(center.multiply(completeRotation.multiply(center.inv().multiply(m))));
@@ -196,6 +205,18 @@ public class Viewer{
 		}
 		
 		m.setMatrix(matrix);
+	}
+	
+	public void translation(MouseEvent e) {
+		double mousePosX = e.getSceneX();
+		double mousePosY = e.getSceneY();
+		
+		Point pointTranslate = new Point((float) ((mousePosX - oldMousePosX)/slideZoom.getValue()), (float) ((mousePosY - oldMousePosY)/slideZoom.getValue()), (float) 0.0, 0); 
+		Translation t = new Translation(pointTranslate);
+		
+		m.setMatrix(center.multiply(t.multiply(center.inv().multiply(m))));
+		
+		zoom();
 	}
 	
 	public Point setObjectCenter(ArrayList<Point> points) {
