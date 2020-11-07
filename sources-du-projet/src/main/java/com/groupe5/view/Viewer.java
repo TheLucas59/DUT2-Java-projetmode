@@ -10,7 +10,6 @@ import com.groupe5.calculation.RotationX;
 import com.groupe5.calculation.RotationY;
 import com.groupe5.calculation.RotationZ;
 import com.groupe5.calculation.Translation;
-import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
 import com.groupe5.parser.Parser;
 
