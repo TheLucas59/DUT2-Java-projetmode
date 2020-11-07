@@ -119,6 +119,7 @@ public class Parser {
 		s.close();
 		return f;
 	}
+	
 	public String readFile(File file) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
 		try {

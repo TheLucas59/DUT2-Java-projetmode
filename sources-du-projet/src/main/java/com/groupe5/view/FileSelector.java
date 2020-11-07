@@ -46,9 +46,6 @@ public class FileSelector {
 		defaultFileFaces = info_FileFaces.getText()+" ";
 		defaultComment = info_Comment.getText()+" ";
 		defaultTpFile = tpFile.getText();
-		/*listFiles.getSelectionModel().selectedItemProperty().addListener(( -> {
-		     
-		});*/
 		
 		listFiles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PLYFile>() {
 		    @Override
@@ -77,7 +74,6 @@ public class FileSelector {
 		else if(new File("./exemples/").exists()) directoryChooser.setInitialDirectory(new File("./exemples/"));
 		File selectedDirectory = directoryChooser.showDialog(null);
 		if(selectedDirectory == null) return;
-		//resetTitledPane();
 		textPath.setText(selectedDirectory.getAbsolutePath());
 		showFiles(filesToList());
 	}

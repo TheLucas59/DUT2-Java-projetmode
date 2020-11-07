@@ -40,16 +40,12 @@ public class Viewer{
 	@FXML Text zoomText;
 	
 	private GraphicsContext gc;
-	
 	private Matrix m;
 	private int size;
-	
 	private static Viewer instance;
-	
 	private Translation center;
 	@SuppressWarnings("unused")
 	private Point objectCenter;
-	
 	private double oldMousePosX;
 	private double oldMousePosY;
 	
@@ -128,20 +124,13 @@ public class Viewer{
 				catch (IOException e) {}
 				
 				ArrayList<Point> points = p.getPoints();
-					
 				size = points.size();
 				m = new Matrix(points);
-				
 				objectCenter = setObjectCenter(points);
-				
 				RotationZ r = new RotationZ(180);
-				
 				m.setMatrix(r.multiply(m));
-				
 				m.setMatrix(center.multiply(m));
-				
 				projection(m);
-
 				drawObject(m.getLineX(), m.getLineY(), size);
 			}
 		});
