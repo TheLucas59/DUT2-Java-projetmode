@@ -47,13 +47,14 @@ public class Viewer{
 	private static Viewer instance;
 	
 	private Translation center;
+	@SuppressWarnings("unused")
 	private Point objectCenter;
 	
 	private double oldMousePosX;
 	private double oldMousePosY;
 	
 	public void initialize(){
-		System.out.println("init viewer");
+		// System.out.println("init viewer");
 		instance = this;
 		
 		gc = canvas.getGraphicsContext2D();
@@ -66,7 +67,7 @@ public class Viewer{
 	
 	public void buttonCloseFile(ActionEvent e){
 		clearScreen();
-		System.out.println("closeFile");
+		// System.out.println("closeFile");
 	}
 	
 	public void showFile(File fileToShow) {
@@ -159,7 +160,7 @@ public class Viewer{
 	}
 	
 	public void zoom() {
-		zoomText.setText("ZOOM : " + slideZoom.getValue());
+		zoomText.setText("ZOOM : " + Math.round(slideZoom.getValue()) + "%");
 		clearScreen();
 		
 		Homothety h = new Homothety(slideZoom.getValue());		

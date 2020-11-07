@@ -1,6 +1,5 @@
 package com.groupe5.view;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -16,10 +15,7 @@ public class ShowScene extends Application{
 
 	public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        
-        File fxmlFile = new File("./src/main/resources/interface/filechooser.fxml");
-        
-        loader.setLocation(fxmlFile.toURI().toURL());
+        loader.setLocation(this.getClass().getResource("/interface/filechooser.fxml"));
         Parent root = loader.load();
         
         Scene scene = new Scene(root);
@@ -40,10 +36,9 @@ public class ShowScene extends Application{
     public static Stage getViewer() {
     	if(viewer == null) {
     		FXMLLoader loader = new FXMLLoader();
-    		File fxmlFile = new File("./src/main/resources/interface/scene.fxml");
     		try {
-				loader.setLocation(fxmlFile.toURI().toURL());
-	    		Parent root = loader.load();
+	    		loader.setLocation(ShowScene.class.getResource("/interface/scene.fxml"));
+    			Parent root = loader.load();
 	    		Scene scene = new Scene(root, 1280, 720);
 	    		viewer = new Stage();
 	    		viewer.setScene(scene);
