@@ -109,23 +109,12 @@ public class Parser {
 			int faceSize = Integer.parseInt(split[0]);
 			Point[] p = new Point[faceSize+1];
 			System.out.print(faceSize + " ");
-			for(int i = 1; i <= faceSize; i++) {
+			for(int i = 0; i <= faceSize; i++) {
 				int idx = Integer.parseInt(split[i]);
 				idPoints.add(idx);
 				p[i] = points.get(idx);
 			}
 			f.add(new Face(faceSize, p));
-			/*
-			if(split.length == 4) {
-				int p1idx = Integer.parseInt(split[1]);
-				int p2idx = Integer.parseInt(split[2]);
-				int p3idx = Integer.parseInt(split[3]);
-
-				idPoints.add(p1idx); idPoints.add(p2idx); idPoints.add(p3idx);
-				Point[] p = new Point[]{points.get(p1idx), points.get(p2idx), points.get(p3idx)};
-				f.add(new Face(Integer.parseInt(split[0]), p));
-			}
-			*/
 		}
 		s.close();
 		return f;
@@ -144,13 +133,5 @@ public class Parser {
 		} finally {
 		    br.close();
 		}
-	}
-
-	public int[] getIdPoints() {
-		int[] ids = new int[idPoints.size()];
-		for (int i = 0; i < ids.length; i++) {
-			ids[i] = idPoints.get(i);
-		}
-		return ids;
 	}
 }
