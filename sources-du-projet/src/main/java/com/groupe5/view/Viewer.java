@@ -179,8 +179,6 @@ public class Viewer{
 		
 		double mousePosX = e.getSceneX();
 		double mousePosY = e.getSceneY();
-		System.out.println("new: " + mousePosX);
-		System.out.println("old: " + oldMousePosX);
 		
 		RotationX rx = new RotationX((float) ((mousePosY - oldMousePosY)/(slideZoom.getValue()/100)));
 		RotationY ry = new RotationY((float) ((mousePosX - oldMousePosX)/(slideZoom.getValue()/100)));
