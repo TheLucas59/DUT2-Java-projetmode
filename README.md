@@ -4,9 +4,9 @@
 - Toutes précisions qui vous semblent importantes pour la bonne évaluation de votre projet (problème spécifique par exemple une absence prolongée de l'un des membres, réalisation dont vous êtes particulièrement fiers, ...)
 -->
 
-# Projet modélisation - Groupe J (n°5)
+# <center>Projet modélisation - Groupe J (n°5)</center>
 
-### Étudiants
+## <center>Étudiants</center>
 - Lucas PLÉ
 - Loïc DEMAY
 - Aubrian DUHAYON
@@ -36,7 +36,15 @@
 - Vues JavaFX
 - File Selector
 
-### Build / Run
+## <center>Contrôles</center>
+
+Clic de souris gauche : Rotation
+
+Clic de souris droit : Translation
+
+Molette / Slider en haut de la fenêtre : Zoom
+
+## <center>Build / Run</center>
 
 ##### Dépendances
 
