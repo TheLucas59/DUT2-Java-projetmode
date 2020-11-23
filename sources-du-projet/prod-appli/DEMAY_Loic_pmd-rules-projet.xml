@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Custom Rules" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+    <description>
+        Règles personnalisées pour le projet - Loïc DEMAY - DUT2J
+    </description>
+	<rule ref="category/java/documentation.xml/CommentRequired">
+		<properties>
+			<property name="methodWithOverrideCommentRequirement" value="Ignored" />
+			<property name="accessorCommentRequirement" value="Ignored" />
+			<property name="classCommentRequirement" value="Required" />
+			<property name="fieldCommentRequirement" value="Required" />
+			<property name="publicMethodCommentRequirement" value="Required" />
+			<property name="protectedMethodCommentRequirement" value="Required" />
+			<property name="enumCommentRequirement" value="Required" />
+			<property name="serialVersionUIDCommentRequired" value="Ignored" />
+			<property name="serialPersistentFieldsCommentRequired" value="Ignored" />
+		</properties>
+	</rule>
+	<rule ref="category/java/errorprone.xml/AvoidInstanceofChecksInCatchClause" />
+	<rule ref="category/java/codestyle.xml/FieldNamingConventions">
+		<properties>
+			<property name="publicConstantPattern" value="[A-Z][A-Z_0-9]*" />
+			<property name="constantPattern" value="[A-Z][A-Z_0-9]*" />
+			<property name="enumConstantPattern" value="[A-Z][A-Z_0-9]*" />
+			<property name="finalFieldPattern" value="[a-z][a-zA-Z0-9]*" />
+			<property name="staticFieldPattern" value="[a-z][a-zA-Z0-9]*" />
+			<property name="defaultFieldPattern" value="[a-z][a-zA-Z0-9]*" />
+			<property name="exclusions" value="serialVersionUID|serialPersistentFields" />
+		</properties>
+	</rule>
+	<rule ref="category/java/design.xml/FinalFieldCouldBeStatic" />
+	<rule ref="category/java/codestyle.xml/UseDiamondOperator" />
+	<rule ref="category/java/bestpractices.xml/LooseCoupling" />
+	<rule ref="category/java/bestpractices.xml/SystemPrintln" />
+	<rule ref="category/java/codestyle.xml/LongVariable" />
+	<rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingTypeName" />
+	<rule ref="category/java/bestpractices.xml/ForLoopCanBeForeach" />
+	<rule ref="category/java/bestpractices.xml/ForLoopVariableCount" />
+	<rule ref="category/java/design.xml/ImmutableField" />
+	<rule ref="category/java/codestyle.xml/LinguisticNaming" />
+	<rule ref="category/java/codestyle.xml/ShortVariable" />
+	<rule ref="category/java/design.xml/TooManyFields" />
+	<rule ref="category/java/design.xml/SingularField" />
+	<rule ref="category/java/design.xml/NcssCount">
+		<properties>
+			<property name="methodReportLevel" value="60" />
+			<property name="classReportLevel" value="1500" />
+			<property name="ncssOptions" value="" />
+		</properties>
+	</rule>
+	<rule ref="category/java/design.xml/NcssMethodCount">
+		<properties>
+			<property name="minimum" value="100.0" />
+		</properties>
+	</rule>
+	<rule ref="category/java/codestyle.xml/LocalVariableCouldBeFinal" />
+	<rule ref="category/java/bestpractices.xml/JUnit4TestShouldUseTestAnnotation" />
+</ruleset>

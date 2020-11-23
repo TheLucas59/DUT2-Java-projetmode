@@ -1,0 +1,20 @@
+Les plus importantes
+
+| Règle              | Pourquoi                                                                                                                                     |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| UseDiamondOperator | Dans la plupart des cas, expliciter les types n'est pas nécessaire et cela rend le code moins lisible.                                       |
+| LooseCoupling      | Utiliser une interface permet de faciliter le maintien du code si il y a un besoin de changer l'implémentation de cette interface plus tard. |
+| SystemPrintln      | Utiliser un logger est toujours meilleur qu'un println.                                                                                      |
+| LongVariable       | Permet une meilleur lisibilité du code.                                                                                                      |
+| CommentRequired    | Permet de maintenir plus facilement le code dans la durée.                                                                                   |
+
+Actuellement un problème mais moins important
+
+| Règle                          | Pourquoi                                                                                                |
+|--------------------------------|---------------------------------------------------------------------------------------------------------|
+| AvoidLiteralsInIfCondition     | Déclenche beaucoup de faux positifs mais certaines valeurs peuvent être transformées en final.          |
+| AvoidFieldNameMatchingTypeName | Peut porter a confusion. Peut causer une erreur si le nom du champ est mal écris et avec une majuscule, |
+|                                | car un IDE reconnaitra le nom de la classe.                                                             |
+| ForLoopCanBeForeach            | Optimisation dans le futur.                                                                             |
+| ImmutableField                 | Optimisation possible et garde fou en cas d'erreur dans le code.                                        |
+| LinguisticNaming               | Pour être sur que les getters font bien du sens.                                                        |
