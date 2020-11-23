@@ -1,0 +1,46 @@
+Règles choisies :
+
+Class Naming Conventions :
+Il est important que les classes aient une norme de nommage.
+Cela permet d'avoir un projet bien structuré et de mieux s'y retrouver dans les classes.
+
+Method Naming Conventions : 
+Il faut que les méthodes soient nommées de la même façon, pour qu'on puisse comprendre ce qu'elles font
+et que tout le monde puisse les invoquer de la même façon dans l'équipe.
+
+Use Diamond Operator : 
+Cela peut-être intéressant de l'utiliser quand cela est possible, pour procurer une meilleure lisibilité du code.
+
+NcssCount :
+Cette règle est importante pour la COA, mais elle peut aussi permettre de se retrouver plus facilement dans le 
+projet car les méthodes et les classes sont moins longues, donc plus lisibles mais aussi plus maintenables.
+
+Avoid Deeply If Statements :
+Cette règle permet de se forcer à ne pas faire trop de if imbriqués et de gagner en clarté dans le code.
+Le code est plus simple à relire et est plus maintenable.
+
+Règles pas choisies :
+
+Cyclomatic Complexity :
+Je n'ai pas mis cette règle car il se peut que des méthodes utilisent des parcours sur des listes etc. et que le 
+traitement devienne trop lourd sans que nous puissions y faire grand chose. Cependant je pense que cette règle
+peut être importante car elle peut permettre de faire une application plus optimisée.
+
+Missing Break In Switch :
+Nous n'utilisons pas de switch, cependant un break est nécessaire dans les switch pour être sur que ceux-ci 
+fonctionnent convenablement.
+
+Suspicious Equals Method Name :
+Il est important que la méthode equals ait la même signature que la méthode equals définie dans Object. 
+Il s'agit ici d'un problème d'héritage, ce qui peut être problématique lors de l'exécution, notamment si la méthode
+equals est requise dans l'exécution.
+
+Comment Required :
+Je ne l'ai pas mise dans mes règles car j'ai préféré me focaliser sur des problèmes plus algorithmiques ainsi qu'en
+terme de lisibilité. Il est vrai que la documentation est importante et qu'il faut en écrire une, ce qui permet à
+n'importe qui qui récupérera le code de l'application de comprendre quelle méthode fait quoi et ce qu'elle retourne.
+
+Comment Size :
+Comme dit juste au-dessus, il est important d'écrire une documentation mais il faut que celle-ci reste 
+compréhensible et synthétique. Il ne faut pas décrire chaque ligne de chaque méthode. Il faut que l'explication
+soit rapide, claire et précise. On n'a pas besoin de faire une documentation de 150 lignes.

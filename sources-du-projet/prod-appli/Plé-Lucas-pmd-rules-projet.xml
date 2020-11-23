@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<ruleset name="Règles Lucas Plé"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+<description>
+        Règles pour le TP2 sur le projet de modé
+    </description>
+
+<rule ref="category/java/design.xml/AvoidDeeplyNestedIfStmts">
+    <properties>
+        <property name="problemDepth" value="3" />
+    </properties>
+</rule>
+<rule ref="category/java/design.xml/CollapsibleIfStatements" />
+<rule ref="category/java/design.xml/TooManyFields">
+    <properties>
+        <property name="maxfields" value="15" />
+    </properties>
+</rule>
+<rule ref="category/java/design.xml/NcssCount">
+    <properties>
+         <property name="methodReportLevel" value="50" />
+         <property name="classReportLevel" value="200" />
+         <property name="ncssOptions" value="" />
+    </properties>
+</rule>
+<rule ref="category/java/design.xml/FinalFieldCouldBeStatic" />
+<rule ref="category/java/design.xml/AvoidThrowingNullPointerException" />
+<rule ref="category/java/codestyle.xml/UseDiamondOperator" />
+<rule ref="category/java/codestyle.xml/UselessParentheses" />
+<rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName" />
+<rule ref="category/java/documentation.xml/UncommentedEmptyMethodBody" />
+<rule ref="category/java/codestyle.xml/FieldNamingConventions">
+    <properties>
+        <property name="publicConstantPattern" value="[A-Z][A-Z_0-9]*" />
+        <property name="constantPattern" value="[A-Z][A-Z_0-9]*" />
+        <property name="enumConstantPattern" value="[A-Z][A-Z_0-9]*" />
+        <property name="finalFieldPattern" value="[a-z][a-zA-Z0-9]*" />
+        <property name="staticFieldPattern" value="[a-z][a-zA-Z0-9]*" />
+        <property name="defaultFieldPattern" value="[a-z][a-zA-Z0-9]*" />
+        <property name="exclusions" value="serialVersionUID|serialPersistentFields" />
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/LocalVariableNamingConventions">
+    <properties>
+        <property name="localVarPattern" value="[a-z][a-zA-Z0-9]*" />
+        <property name="finalVarPattern" value="[a-z][a-zA-Z0-9]*" />
+        <property name="catchParameterPattern" value="[a-z][a-zA-Z0-9]*" />
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/MethodNamingConventions">
+    <properties>
+        <property name="methodPattern" value="[a-z][a-zA-Z0-9]*" />
+        <property name="staticPattern" value="[a-z][a-zA-Z0-9]*" />
+        <property name="nativePattern" value="[a-z][a-zA-Z0-9]*" />
+        <property name="junit3TestPattern" value="test[A-Z0-9][a-zA-Z0-9]*" />
+        <property name="junit4TestPattern" value="[a-z][a-zA-Z0-9]*" />
+        <property name="junit5TestPattern" value="[a-z][a-zA-Z0-9]*" />
+    </properties>
+</rule>
+<rule ref="category/java/codestyle.xml/ClassNamingConventions">
+    <properties>
+        <property name="classPattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="abstractClassPattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="interfacePattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="enumPattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="annotationPattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]+(Utils?|Helper|Constants)" />
+    </properties>
+</rule>
+<rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName" />
+<rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition">
+    <properties>
+        <property name="ignoreMagicNumbers" value="-1,0" />
+        <property name="ignoreExpressions" value="true" />
+    </properties>
+</rule>
+<rule ref="category/java/errorprone.xml/EqualsNull" />
+<rule ref="category/java/performance.xml/StringInstantiation" />
+<rule ref="category/java/performance.xml/StringToString" />
+<rule ref="category/java/bestpractices.xml/AvoidReassigningLoopVariables">
+    <properties>
+        <property name="foreachReassign" value="deny" />
+        <property name="forReassign" value="deny" />
+    </properties>
+</rule>
+</ruleset>
