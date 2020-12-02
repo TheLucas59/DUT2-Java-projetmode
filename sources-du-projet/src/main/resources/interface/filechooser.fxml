@@ -6,8 +6,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupe5.view.FileChooser">
    <children>
+      <Button defaultButton="true" layoutX="584.0" layoutY="12.0" mnemonicParsing="false" onAction="#pathButton" prefHeight="25.0" prefWidth="174.0" text="Parcourir..." />
       <TextField fx:id="path" layoutX="14.0" layoutY="12.0" onAction="#pathAction" prefHeight="25.0" prefWidth="563.0" promptText="Chemin vers le dossier contenant les fichiers PLY..." />
-      <Button layoutX="584.0" layoutY="12.0" mnemonicParsing="false" onAction="#pathButton" prefHeight="25.0" prefWidth="174.0" text="Parcourir..." />
       <TableView fx:id="tableview" layoutX="14.0" layoutY="47.0" prefHeight="447.0" prefWidth="744.0">
         <columns>
           <TableColumn fx:id="fileName" prefWidth="150.0" text="Nom du fichier" />

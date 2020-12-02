@@ -145,7 +145,9 @@ public class Viewer{
 	}
 	
 	public static void setFile(File fileToShow){
+		System.out.println("chargement "+fileToShow.getName());
 		instance.showFile(fileToShow);
+		System.out.println("chargement terminé");
 	}
 	
 	public void zoom() {
