@@ -76,7 +76,7 @@ public class PLYFile {
 		Parser p;
 		try {
 			p = new Parser(this.file);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			return false;
 		}
 		header = p.getHeader();
