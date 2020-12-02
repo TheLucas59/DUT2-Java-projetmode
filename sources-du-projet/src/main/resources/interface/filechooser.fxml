@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupe5.view.FileSelector">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupe5.view.FileChooser">
    <children>
-      <TextField fx:id="textPath" layoutX="120.0" layoutY="8.0" prefHeight="25.0" prefWidth="281.0" />
-      <Button layoutX="403.0" layoutY="8.0" mnemonicParsing="false" onAction="#buttonFolder" text="Parcourir" />
-      <ListView fx:id="listFiles" layoutX="2.0" layoutY="64.0" prefHeight="336.0" prefWidth="298.0" />
-      <TitledPane fx:id="tpFile" animated="false" disable="true" expanded="false" layoutX="300.0" layoutY="52.0" prefHeight="360.0" prefWidth="299.0" text="aucun fichier selectionné">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Text fx:id="info_FileFormat" layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Format:" />
-                  <Text fx:id="info_FilePoints" layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de point(s) : " />
-                  <Text fx:id="info_FileFaces" layoutX="14.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de face(s) : " />
-                  <Text fx:id="info_Comment" layoutX="14.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Commentaire : " />
-                  <Button fx:id="buttonOpenFile" disable="true" layoutX="14.0" layoutY="285.0" mnemonicParsing="false" onAction="#openSelectedFile" text="Ouvrir" />
-               </children>
-            </AnchorPane>
-        </content>
-      </TitledPane>
-      <Text fx:id="textFileCount" layoutX="4.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre de fichier(s): 0" />
+      <TextField fx:id="path" layoutX="14.0" layoutY="12.0" onAction="#pathAction" prefHeight="25.0" prefWidth="563.0" promptText="Chemin vers le dossier contenant les fichiers PLY..." />
+      <Button layoutX="584.0" layoutY="12.0" mnemonicParsing="false" onAction="#pathButton" prefHeight="25.0" prefWidth="174.0" text="Parcourir..." />
+      <TableView fx:id="tableview" layoutX="14.0" layoutY="47.0" prefHeight="447.0" prefWidth="744.0">
+        <columns>
+          <TableColumn fx:id="fileName" prefWidth="150.0" text="Nom du fichier" />
+            <TableColumn fx:id="fileComment" minWidth="0.0" prefWidth="240.0" text="Commentaire" />
+          <TableColumn fx:id="filePoints" prefWidth="100.0" text="Points" />
+            <TableColumn fx:id="fileFaces" prefWidth="100.0" text="Faces" />
+            <TableColumn fx:id="fileFormat" prefWidth="153.0" text="Format" />
+        </columns>
+      </TableView>
    </children>
-</Pane>
+</AnchorPane>
