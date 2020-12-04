@@ -100,21 +100,18 @@ public class Parser {
 		}
 		ArrayList<Face> f = new ArrayList<Face>();
 
-		idPoints = new ArrayList<>();
 
 		Scanner s = new Scanner(this.faces);
 		while(s.hasNext()){
+			idPoints = new ArrayList<>();
 			String line = s.nextLine();
 			String[] split = line.split(" ");
 			int faceSize = Integer.parseInt(split[0]);
-			Point[] p = new Point[faceSize+1];
-			System.out.print(faceSize + " ");
 			for(int i = 0; i <= faceSize; i++) {
 				int idx = Integer.parseInt(split[i]);
 				idPoints.add(idx);
-				p[i] = points.get(idx);
 			}
-			f.add(new Face(faceSize, p));
+			f.add(new Face(idPoints));
 		}
 		s.close();
 		return f;

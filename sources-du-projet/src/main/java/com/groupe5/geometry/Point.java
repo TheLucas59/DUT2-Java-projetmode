@@ -27,4 +27,16 @@ public class Point {
 	public String toString() {
 		return this.x + "," + this.y + "," + this.z;
 	}
+
+	public void setX(float f) {
+		this.x = f;		
+	}
+
+	public void setY(float f) {
+		this.y = f;
+	}
+	
+	public void setZ(float f) {
+		this.z = f;
+	}
 }

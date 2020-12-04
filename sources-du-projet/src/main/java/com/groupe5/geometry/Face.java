@@ -1,29 +1,25 @@
 package com.groupe5.geometry;
 
-public class Face {
-	private int nbPoints;
-	private Point[] points;
+import java.util.List;
+
+public class Face implements Comparable<Face> {
+	private List<Integer> indices;
 	
-	public Face(int nbPoints, Point[] points) {
-		this.points = points;
-		this.nbPoints = points.length;
+	public Face(List<Integer> indices) {
+		this.indices = indices;
 	}
 	
 	public int getNbPoints() {
-		return nbPoints;
+		return indices.size();
 	}
 
-	public Point[] getPoints() {
-		return points;
+	public List<Integer> getPoints() {
+		return indices;
+	}
+
+	@Override
+	public int compareTo(Face o) {
+		return 1;
 	}
 	
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[");
-		for(Point p : points) {
-			sb.append("(").append(p).append(")");
-		}
-		sb.append("]");
-		return sb.toString();
-	}
 }

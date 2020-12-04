@@ -34,6 +34,14 @@ public class Matrix {
 		return matrix;
 	}
 	
+	public double[] getColumn(int indice) {
+		double[] coords = new double[matrix.length-1];
+		for(int i = 0; i < matrix.length-1; i++) {
+			coords[i] = (double) matrix[i][indice];
+		}
+		return coords;
+		
+	}
 	public double[] getLineX() {
 		double[] x = new double[matrix[0].length];		
 		

@@ -3,6 +3,8 @@ package com.groupe5.view;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import com.groupe5.calculation.Homothety;
 import com.groupe5.calculation.Matrix;
@@ -10,6 +12,8 @@ import com.groupe5.calculation.RotationX;
 import com.groupe5.calculation.RotationY;
 import com.groupe5.calculation.RotationZ;
 import com.groupe5.calculation.Translation;
+import com.groupe5.geometry.Face;
+import com.groupe5.geometry.Modele3D;
 import com.groupe5.geometry.Point;
 import com.groupe5.parser.Parser;
 
@@ -40,7 +44,7 @@ public class Viewer{
 	@FXML Text zoomText;
 	
 	private GraphicsContext gc;
-	private Matrix m;
+	private Modele3D modele;
 	private int size;
 	private static Viewer instance;
 	private Translation center;
@@ -48,12 +52,19 @@ public class Viewer{
 	private Point objectCenter;
 	private double oldMousePosX;
 	private double oldMousePosY;
+	private double oldZoom = 1;
+	
+	boolean showLines;
+	boolean showFaces;
+	
 	
 	public void initialize(){
 		// System.out.println("init viewer");
 		instance = this;
 		
 		gc = canvas.getGraphicsContext2D();
+		showLines = true;
+		showFaces = false;
 	}
 	
 	public void buttonOpenFile(ActionEvent e){
@@ -80,21 +91,25 @@ public class Viewer{
 
 		slideZoom.setOnMouseDragged(e -> {
 			zoom();
+			oldZoom = slideZoom.getValue();
 		});
 
 		slideZoom.setOnMouseReleased(e -> {
 			zoom();
+			oldZoom = slideZoom.getValue();
 		});
 
 		regionZoom.setOnScroll(scroll -> {
 			if(scroll.getDeltaY() > 0) {
 				slideZoom.setValue(slideZoom.getValue() + 1);
 				zoom();
+				oldZoom = slideZoom.getValue();
 			}
 			
 			if(scroll.getDeltaY() < 0) {
 				slideZoom.setValue(slideZoom.getValue() - 1);
 				zoom();
+				oldZoom = slideZoom.getValue();
 			}
 		});
 
@@ -124,14 +139,22 @@ public class Viewer{
 				catch (IOException e) {}
 				
 				ArrayList<Point> points = p.getPoints();
-				size = points.size();
-				m = new Matrix(points);
 				objectCenter = setObjectCenter(points);
+				for(Point pt : points) {
+					pt.setX(pt.getX()-objectCenter.getX());
+					pt.setY(pt.getY()-objectCenter.getY());
+					pt.setZ(pt.getZ()-objectCenter.getZ());
+				}
+				ArrayList<Face> faces = p.getFaces(points);
+				
+				slideZoom.setValue(1);
+				oldZoom = 1;
+				modele = new Modele3D(new Matrix(points), faces);
+				
 				RotationZ r = new RotationZ(180);
-				m.setMatrix(r.multiply(m));
-				m.setMatrix(center.multiply(m));
-				projection(m);
-				drawObject(m.getLineX(), m.getLineY(), size);
+				modele.getPoints().setMatrix(r.multiply(modele.getPoints()));
+				modele.getPoints().setMatrix(center.multiply(modele.getPoints()));
+				drawObject(modele.getFaces(), showLines, showFaces);
 			}
 		});
 		
@@ -145,20 +168,22 @@ public class Viewer{
 	}
 	
 	public static void setFile(File fileToShow){
-		System.out.println("chargement "+fileToShow.getName());
 		instance.showFile(fileToShow);
-		System.out.println("chargement terminé");
 	}
 	
 	public void zoom() {
 		zoomText.setText("ZOOM : " + Math.round(slideZoom.getValue()) + "%");
 		clearScreen();
 		
-		Homothety h = new Homothety(slideZoom.getValue());		
-		Matrix tmp = new Matrix(center.inv().multiply(m));		
+		modele.getPoints().setMatrix(center.inv().multiply(modele.getPoints()));
+		Homothety h1 = new Homothety(1/oldZoom);		
+		modele.getPoints().setMatrix(h1.multiply(modele.getPoints()));
 		
-		Matrix reMoveCenter = new Matrix(center.multiply(h.multiply(tmp)));
-		drawObject(reMoveCenter.getLineX(), reMoveCenter.getLineY(), size);
+		Homothety h2 = new Homothety(slideZoom.getValue());		
+		
+		Matrix removeCenter = new Matrix(center.multiply(h2.multiply(modele.getPoints())));
+		modele.setMatrix(removeCenter);
+		drawObject(modele.getFaces(), showLines, showFaces);
 	}
 	
 	private void setOldAngles(MouseEvent e) {
@@ -172,38 +197,23 @@ public class Viewer{
 		double mousePosX = e.getSceneX();
 		double mousePosY = e.getSceneY();
 		
-		RotationX rx = new RotationX((float) ((mousePosY - oldMousePosY)/(slideZoom.getValue()/100)));
-		RotationY ry = new RotationY((float) ((mousePosX - oldMousePosX)/(slideZoom.getValue()/100)));
+		RotationX rx = new RotationX((float) ((mousePosY - oldMousePosY)));
+		RotationY ry = new RotationY((float) ((mousePosX - oldMousePosX)));
 		
 		Matrix completeRotation = new Matrix(rx.multiply(ry));
-		m.setMatrix(center.multiply(completeRotation.multiply(center.inv().multiply(m))));
+		modele.getPoints().setMatrix(center.multiply(completeRotation.multiply(center.inv().multiply(modele.getPoints()))));
 		
 		zoom();
-	}
-	
-	public void projection(Matrix m) {
-		float[][] matrix = m.getMatrix();
-		
-		final float COEFF_PROJECTION = 1500;
-		
-		for(int i = 0; i < matrix[0].length; i++) {
-			float z = COEFF_PROJECTION/(COEFF_PROJECTION+matrix[2][i]);
-			
-			matrix[0][i] = matrix[0][i] * z; 
-			matrix[1][i] = matrix[1][i] * z; 
-		}
-		
-		m.setMatrix(matrix);
 	}
 	
 	public void translation(MouseEvent e) {
 		double mousePosX = e.getSceneX();
 		double mousePosY = e.getSceneY();
 		
-		Point pointTranslate = new Point((float) ((mousePosX - oldMousePosX)/slideZoom.getValue()), (float) ((mousePosY - oldMousePosY)/slideZoom.getValue()), (float) 0.0, 0); 
+		Point pointTranslate = new Point((float) ((mousePosX - oldMousePosX)), (float) ((mousePosY - oldMousePosY)), (float) 0.0, 0); 
 		Translation t = new Translation(pointTranslate);
 		
-		m.setMatrix(center.multiply(t.multiply(center.inv().multiply(m))));
+		modele.getPoints().setMatrix(center.multiply(t.multiply(center.inv().multiply(modele.getPoints()))));
 		
 		zoom();
 	}
@@ -221,8 +231,55 @@ public class Viewer{
 		return new Point(((float) X/size), ((float) Y/size), ((float) Z/size), 0);
 	}
 	
-	public void drawObject(double[] X, double[] Y, int nb_points) {	
-		gc.strokePolygon(X, Y, nb_points);
+	public void drawObject(List<Face> faces, boolean showLines, boolean showFaces) {	
+		clearScreen();
+		
+		modele.sortFaces();
+		gc.setStroke(Color.GRAY);
+		gc.setLineWidth(0.5);
+		gc.setFill(Color.LIGHTGRAY);
+		
+		for(Face f : faces) {
+			double[] pointsX = getCoordsX(f);
+			double[] pointsY = getCoordsY(f);
+			if(showFaces)
+				gc.fillPolygon(pointsX, pointsY, f.getNbPoints()-1);
+			if(showLines)
+				gc.strokePolygon(pointsX, pointsY, f.getNbPoints()-1);
+		}
+	}
+	
+	private double[] getCoordsX(Face f) {
+		double[] result = new double[f.getNbPoints()-1];
+		int j = 0;
+		for(Integer i : f.getPoints()) {
+			if(j != 0) {
+				result[j-1] = modele.getPoints().getColumn(i)[0];
+			}
+			j++;
+		}
+		return result;
 	}
 
+	private double[] getCoordsY(Face f) {
+		double[] result = new double[f.getNbPoints()];
+		int j = 0;
+		for(Integer i : f.getPoints()) {
+			if(j != 0) {
+				result[j-1] = modele.getPoints().getColumn(i)[1];
+			}
+			j++;
+		}
+		return result;
+	}
+	
+	public void updateShowLines() {
+		showLines = !showLines;
+		drawObject(modele.getFaces(), showLines, showFaces);
+	}
+	
+	public void updateShowFaces() {
+		showFaces = !showFaces;
+		drawObject(modele.getFaces(), showLines, showFaces);
+	}
 }
