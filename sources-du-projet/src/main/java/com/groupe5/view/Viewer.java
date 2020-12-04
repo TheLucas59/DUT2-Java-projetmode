@@ -130,6 +130,11 @@ public class Viewer{
 		
 
 		Thread thread = new Thread(new Runnable() {
+			private boolean reduce = false;
+			private boolean zoom = false;
+			private int iRed = 0;
+			private int iZoom = 0;
+
 			@Override
 			public void run() {
 				Parser p = null;
@@ -140,11 +145,39 @@ public class Viewer{
 				
 				ArrayList<Point> points = p.getPoints();
 				objectCenter = setObjectCenter(points);
+				
+				
 				for(Point pt : points) {
 					pt.setX(pt.getX()-objectCenter.getX());
 					pt.setY(pt.getY()-objectCenter.getY());
 					pt.setZ(pt.getZ()-objectCenter.getZ());
+					
+					if(pt.getX() > 100) iRed++;
+					else if(pt.getY() > 100) iRed++;
+					if(pt.getX() < 1) iZoom++;
+					else if(pt.getY() < 1) iZoom++;
 				}
+				
+				if(iRed >= points.size()*0.95) reduce = true;
+				if(iZoom >= points.size()*0.95) zoom = true;
+				
+				if(reduce) {					
+					for(Point pt : points) {
+						pt.setX(pt.getX()/10);
+						pt.setY(pt.getY()/10);
+						pt.setZ(pt.getZ()/10);
+					}
+				}
+				
+				if(zoom) {					
+					for(Point pt : points) {
+						pt.setX(pt.getX()*20);
+						pt.setY(pt.getY()*20);
+						pt.setZ(pt.getZ()*20);
+					}
+				}
+				
+				
 				ArrayList<Face> faces = p.getFaces(points);
 				
 				slideZoom.setValue(1);
@@ -281,5 +314,10 @@ public class Viewer{
 	public void updateShowFaces() {
 		showFaces = !showFaces;
 		drawObject(modele.getFaces(), showLines, showFaces);
+	}
+	
+	public void center() {
+		Translation t = new Translation(objectCenter);
+		modele.getPoints().setMatrix(t.multiply(modele.getPoints()));
 	}
 }
