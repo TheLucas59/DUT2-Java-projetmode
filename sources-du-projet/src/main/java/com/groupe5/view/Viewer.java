@@ -161,28 +161,21 @@ public class Viewer{
 				if(iRed >= points.size()*0.95) reduce = true;
 				if(iZoom >= points.size()*0.95) zoom = true;
 				
-				if(reduce) {					
-					for(Point pt : points) {
-						pt.setX(pt.getX()/10);
-						pt.setY(pt.getY()/10);
-						pt.setZ(pt.getZ()/10);
-					}
-				}
-				
-				if(zoom) {					
-					for(Point pt : points) {
-						pt.setX(pt.getX()*20);
-						pt.setY(pt.getY()*20);
-						pt.setZ(pt.getZ()*20);
-					}
-				}
-				
-				
 				ArrayList<Face> faces = p.getFaces(points);
 				
 				slideZoom.setValue(1);
 				oldZoom = 1;
 				modele = new Modele3D(new Matrix(points), faces);
+				
+				if(reduce) {
+					Homothety red = new Homothety(1/10);
+					modele.getPoints().setMatrix(red.multiply(modele.getPoints()));
+				}
+				
+				if(zoom) {
+					Homothety zoom = new Homothety(20);
+					modele.getPoints().setMatrix(zoom.multiply(modele.getPoints()));
+				}
 				
 				RotationZ r = new RotationZ(180);
 				modele.getPoints().setMatrix(r.multiply(modele.getPoints()));
