@@ -308,9 +308,4 @@ public class Viewer{
 		showFaces = !showFaces;
 		drawObject(modele.getFaces(), showLines, showFaces);
 	}
-	
-	public void center() {
-		Translation t = new Translation(objectCenter);
-		modele.getPoints().setMatrix(t.multiply(modele.getPoints()));
-	}
 }
