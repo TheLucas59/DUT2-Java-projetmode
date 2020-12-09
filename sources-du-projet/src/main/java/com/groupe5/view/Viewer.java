@@ -3,13 +3,11 @@ package com.groupe5.view;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import com.groupe5.calculation.Homothety;
 import com.groupe5.calculation.Matrix;
-import com.groupe5.calculation.RotationX;
-import com.groupe5.calculation.RotationY;
 import com.groupe5.calculation.RotationZ;
 import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Face;
@@ -40,22 +38,21 @@ public class Viewer{
 	@FXML Text loadingString;
 	@FXML MenuBar menuBar;
 	@FXML Region regionZoom;
-	@FXML Slider slideZoom;
+	@FXML
+	public Slider slideZoom;
 	@FXML Text zoomText;
 	
 	private GraphicsContext gc;
 	private Modele3D modele;
-	private int size;
 	private static Viewer instance;
 	private Translation center;
-	@SuppressWarnings("unused")
 	private Point objectCenter;
 	private double oldMousePosX;
 	private double oldMousePosY;
-	private double oldZoom = 1;
+	public double oldZoom = 1;
 	
-	boolean showLines;
-	boolean showFaces;
+	public boolean showLines;
+	public boolean showFaces;
 	
 	
 	public void initialize(){
@@ -74,7 +71,6 @@ public class Viewer{
 	
 	public void buttonCloseFile(ActionEvent e){
 		clearScreen();
-		// System.out.println("closeFile");
 	}
 	
 	public void showFile(File fileToShow) {
@@ -90,25 +86,25 @@ public class Viewer{
 		//ACTIVATION ZOOM AUTO AVEC SLIDER
 
 		slideZoom.setOnMouseDragged(e -> {
-			zoom();
+			modele.zoom();
 			oldZoom = slideZoom.getValue();
 		});
 
 		slideZoom.setOnMouseReleased(e -> {
-			zoom();
+			modele.zoom();
 			oldZoom = slideZoom.getValue();
 		});
 
 		regionZoom.setOnScroll(scroll -> {
 			if(scroll.getDeltaY() > 0) {
 				slideZoom.setValue(slideZoom.getValue() + 1);
-				zoom();
+				modele.zoom();
 				oldZoom = slideZoom.getValue();
 			}
 			
 			if(scroll.getDeltaY() < 0) {
 				slideZoom.setValue(slideZoom.getValue() - 1);
-				zoom();
+				modele.zoom();
 				oldZoom = slideZoom.getValue();
 			}
 		});
@@ -119,11 +115,11 @@ public class Viewer{
 		
 		regionZoom.setOnMouseDragged(e -> {
 			if(e.getButton().equals(MouseButton.PRIMARY)) {
-				rotate(e);
+				modele.rotate(e, oldMousePosX, oldMousePosY);
 				setOldAngles(e);
 			}
 			else if(e.getButton().equals(MouseButton.SECONDARY)) {
-				translation(e);
+				modele.translation(e, oldMousePosX, oldMousePosY);
 				setOldAngles(e);
 			}
 		});
@@ -141,7 +137,9 @@ public class Viewer{
 				try {
 					p = new Parser(fileToShow);
 				}
-				catch (IOException e) {}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
 				
 				ArrayList<Point> points = p.getPoints();
 				objectCenter = setObjectCenter(points);
@@ -158,18 +156,22 @@ public class Viewer{
 					else if(pt.getY() < 1) iZoom++;
 				}
 				
-				if(iRed >= points.size()*0.95) reduce = true;
+				if(iRed >= points.size()*0.5) reduce = true;
 				if(iZoom >= points.size()*0.95) zoom = true;
 				
 				ArrayList<Face> faces = p.getFaces(points);
 				
 				slideZoom.setValue(1);
 				oldZoom = 1;
-				modele = new Modele3D(new Matrix(points), faces);
+				modele = new Modele3D(new Matrix(points), faces, instance);
+				
+				System.out.println(Arrays.toString(modele.getPoints().getLineX()));
 				
 				if(reduce) {
-					Homothety red = new Homothety(1/10);
+					Homothety red = new Homothety(0.1);
 					modele.getPoints().setMatrix(red.multiply(modele.getPoints()));
+					
+					System.out.println(Arrays.toString(modele.getPoints().getLineX()));
 				}
 				
 				if(zoom) {
@@ -188,61 +190,6 @@ public class Viewer{
 		thread.start();
 	}
 	
-	public void clearScreen() {
-		gc.setFill(Color.rgb(153, 170, 181));
-		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
-	}
-	
-	public static void setFile(File fileToShow){
-		instance.showFile(fileToShow);
-	}
-	
-	public void zoom() {
-		zoomText.setText("ZOOM : " + Math.round(slideZoom.getValue()) + "%");
-		clearScreen();
-		
-		modele.getPoints().setMatrix(center.inv().multiply(modele.getPoints()));
-		Homothety h1 = new Homothety(1/oldZoom);		
-		modele.getPoints().setMatrix(h1.multiply(modele.getPoints()));
-		
-		Homothety h2 = new Homothety(slideZoom.getValue());		
-		
-		Matrix removeCenter = new Matrix(center.multiply(h2.multiply(modele.getPoints())));
-		modele.setMatrix(removeCenter);
-		drawObject(modele.getFaces(), showLines, showFaces);
-	}
-	
-	private void setOldAngles(MouseEvent e) {
-		oldMousePosX = e.getSceneX();
-		oldMousePosY = e.getSceneY();
-	}
-	
-	public void rotate(MouseEvent e) {
-		clearScreen();
-		
-		double mousePosX = e.getSceneX();
-		double mousePosY = e.getSceneY();
-		
-		RotationX rx = new RotationX((float) ((mousePosY - oldMousePosY)));
-		RotationY ry = new RotationY((float) ((mousePosX - oldMousePosX)));
-		
-		Matrix completeRotation = new Matrix(rx.multiply(ry));
-		modele.getPoints().setMatrix(center.multiply(completeRotation.multiply(center.inv().multiply(modele.getPoints()))));
-		
-		zoom();
-	}
-	
-	public void translation(MouseEvent e) {
-		double mousePosX = e.getSceneX();
-		double mousePosY = e.getSceneY();
-		
-		Point pointTranslate = new Point((float) ((mousePosX - oldMousePosX)), (float) ((mousePosY - oldMousePosY)), (float) 0.0, 0); 
-		Translation t = new Translation(pointTranslate);
-		
-		modele.getPoints().setMatrix(center.multiply(t.multiply(center.inv().multiply(modele.getPoints()))));
-		
-		zoom();
-	}
 	
 	public Point setObjectCenter(ArrayList<Point> points) {
 		double X = 0, Y = 0, Z = 0;
@@ -255,6 +202,20 @@ public class Viewer{
 		}
 		
 		return new Point(((float) X/size), ((float) Y/size), ((float) Z/size), 0);
+	}
+	
+	public void clearScreen() {
+		gc.setFill(Color.rgb(153, 170, 181));
+		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
+	}
+	
+	public static void setFile(File fileToShow){
+		instance.showFile(fileToShow);
+	}
+	
+	private void setOldAngles(MouseEvent e) {
+		oldMousePosX = e.getSceneX();
+		oldMousePosY = e.getSceneY();
 	}
 	
 	public void drawObject(List<Face> faces, boolean showLines, boolean showFaces) {	
@@ -307,5 +268,13 @@ public class Viewer{
 	public void updateShowFaces() {
 		showFaces = !showFaces;
 		drawObject(modele.getFaces(), showLines, showFaces);
+	}
+
+	public Translation getCenter() {
+		return center;
+	}
+
+	public Text getZoomText() {
+		return zoomText;
 	}
 }
