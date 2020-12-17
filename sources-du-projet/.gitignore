@@ -1,2 +1,4 @@
 /target/
 /mode-1.0-jar-with-dependencies.jar
+/.pmd
+/.ruleset
