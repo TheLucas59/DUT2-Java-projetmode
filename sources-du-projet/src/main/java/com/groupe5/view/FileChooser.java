@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 
 public class FileChooser {
@@ -29,6 +30,8 @@ public class FileChooser {
 	@FXML TableColumn<PLYFile, Integer> filePoints;
 	@FXML TableColumn<PLYFile, Integer> fileFaces;
 	@FXML TableColumn<PLYFile, String> fileFormat;
+	
+	private PLYFile selectedItem = null;
 
 
 	public void initialize(){
@@ -43,9 +46,8 @@ public class FileChooser {
 			@Override
 			public void handle(KeyEvent k) {
 				if (k.getCode().equals(KeyCode.ENTER)) {
-					ShowScene.getFileChooser().hide();
-					ShowScene.getViewer().show();
-					Viewer.setFile(tableview.getSelectionModel().getSelectedItem().getFile());
+					selectedItem = tableview.getSelectionModel().getSelectedItem();
+					if(selectedItem != null) openFile();
 				}
 			}
 		});
@@ -64,9 +66,24 @@ public class FileChooser {
 			}
 		});
 		
-		
+		tableview.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event){
+				if(selectedItem == tableview.getSelectionModel().getSelectedItem()){
+					if(selectedItem != null) openFile();
+				}else{
+					selectedItem = tableview.getSelectionModel().getSelectedItem();
+				}
+			}
+		});
 	}
 
+	private void openFile(){
+		ShowScene.getFileChooser().hide();
+		ShowScene.getViewer().show();
+		Viewer.setFile(selectedItem.getFile());
+	}
+	
 	public void pathButton(ActionEvent e){
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		if(path.getText().length() != 0 && new File(path.getText()).exists()) directoryChooser.setInitialDirectory(new File(path.getText()));
