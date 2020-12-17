@@ -4,11 +4,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupe5.view.FileChooser">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="507.0" minWidth="772.0" prefHeight="507.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupe5.view.FileChooser">
    <children>
-      <Button defaultButton="true" layoutX="584.0" layoutY="12.0" mnemonicParsing="false" onAction="#pathButton" prefHeight="25.0" prefWidth="174.0" text="Parcourir..." />
-      <TextField fx:id="path" layoutX="14.0" layoutY="12.0" onAction="#pathAction" prefHeight="25.0" prefWidth="563.0" promptText="Chemin vers le dossier contenant les fichiers PLY..." />
-      <TableView fx:id="tableview" layoutX="14.0" layoutY="47.0" prefHeight="447.0" prefWidth="744.0">
+      <Button layoutX="584.0" layoutY="12.0" mnemonicParsing="false" onAction="#pathButton" prefHeight="25.0" prefWidth="174.0" text="Parcourir..." AnchorPane.bottomAnchor="470.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="12.0" />
+      <TextField fx:id="path" layoutX="14.0" layoutY="12.0" prefHeight="25.0" prefWidth="563.0" promptText="Chemin vers le dossier contenant les fichiers PLY..." AnchorPane.bottomAnchor="470.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="12.0" />
+      <TableView fx:id="tableview" layoutX="14.0" layoutY="47.0" prefHeight="447.0" prefWidth="744.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="47.0">
         <columns>
           <TableColumn fx:id="fileName" prefWidth="150.0" text="Nom du fichier" />
             <TableColumn fx:id="fileComment" minWidth="0.0" prefWidth="240.0" text="Commentaire" />

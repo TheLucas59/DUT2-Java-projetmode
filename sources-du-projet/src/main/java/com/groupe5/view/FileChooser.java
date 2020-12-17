@@ -11,6 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -47,10 +49,22 @@ public class FileChooser {
 				}
 			}
 		});
-	}
-
-	public void pathAction(ActionEvent e){
-
+		
+		path.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent k) {
+				if(k.getCode().equals(KeyCode.ENTER)){
+					File dir = new File(path.getText());
+					if(dir.exists()){
+						showFiles(dir);
+					}else{
+						showAlert("3D Viewer", "Erreur", "Dossier non trouvé");
+					}
+				}
+			}
+		});
+		
+		
 	}
 
 	public void pathButton(ActionEvent e){
@@ -73,8 +87,14 @@ public class FileChooser {
 		}
 		tableview.setItems(FXCollections.observableArrayList(list));
 	}
+	
+	public void showAlert(String title, String headerText, String contentText){
+		Alert alert = new Alert(AlertType.ERROR);
 
-	public void tableviewEnter(ActionEvent e){
+		alert.setTitle(title);
+		alert.setHeaderText(headerText);
+		alert.setContentText(contentText);
 
+		alert.showAndWait();
 	}
 }
