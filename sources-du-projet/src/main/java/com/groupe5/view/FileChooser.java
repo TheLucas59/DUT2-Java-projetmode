@@ -23,7 +23,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 
-@SuppressWarnings("unused")
 public class FileChooser {
 	@FXML TextField path;
 	@FXML TableView<PLYFile> tableview;
@@ -32,8 +31,10 @@ public class FileChooser {
 	@FXML TableColumn<PLYFile, Integer> filePoints;
 	@FXML TableColumn<PLYFile, Integer> fileFaces;
 	@FXML TableColumn<PLYFile, String> fileFormat;
+	@FXML TextField fileSearch;
 	
 	private PLYFile selectedItem = null;
+	private File selectedDirectory = null;
 
 
 	public void initialize(){
@@ -78,6 +79,14 @@ public class FileChooser {
 				}
 			}
 		});
+		
+		fileSearch.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event){
+				File act = new File(path.getText());
+				if(act.exists()) showFiles(act);
+			}
+		});
 	}
 
 	private void openFile(){
@@ -97,11 +106,17 @@ public class FileChooser {
 	}
 
 	public void showFiles(File selectedDirectory) {
+		if(selectedDirectory != null && this.selectedDirectory != null && !selectedDirectory.getPath().equalsIgnoreCase(this.selectedDirectory.getPath())){
+			fileSearch.clear();
+			this.selectedDirectory = selectedDirectory;
+		}
 		ArrayList<PLYFile> list = new ArrayList<PLYFile>();
 		for(File f : selectedDirectory.listFiles()){
 			if(f.getName().endsWith(".ply")){
 				PLYFile ply = new PLYFile(f);
-				if(ply.onlyHeader()) list.add(ply);
+				if(ply.onlyHeader()) {
+					if(fileSearch.getText().isEmpty() || ply.getFile().getName().contains(fileSearch.getText())) list.add(ply);
+				}
 			}
 		}
 		tableview.setItems(FXCollections.observableArrayList(list));
