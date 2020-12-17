@@ -35,6 +35,7 @@ public class FileChooser {
 	
 	private PLYFile selectedItem = null;
 	private File selectedDirectory = null;
+	private ArrayList<PLYFile> listFile = new ArrayList<PLYFile>();
 
 
 	public void initialize(){
@@ -83,8 +84,7 @@ public class FileChooser {
 		fileSearch.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event){
-				File act = new File(path.getText());
-				if(act.exists()) showFiles(act);
+				showFilesSearch();
 			}
 		});
 	}
@@ -106,20 +106,30 @@ public class FileChooser {
 	}
 
 	public void showFiles(File selectedDirectory) {
-		if(selectedDirectory != null && this.selectedDirectory != null && !selectedDirectory.getPath().equalsIgnoreCase(this.selectedDirectory.getPath())){
-			fileSearch.clear();
-			this.selectedDirectory = selectedDirectory;
-		}
-		ArrayList<PLYFile> list = new ArrayList<PLYFile>();
+		fileSearch.clear();
+		listFile.clear();
 		for(File f : selectedDirectory.listFiles()){
 			if(f.getName().endsWith(".ply")){
 				PLYFile ply = new PLYFile(f);
 				if(ply.onlyHeader()) {
-					if(fileSearch.getText().isEmpty() || ply.getFile().getName().contains(fileSearch.getText())) list.add(ply);
+					listFile.add(ply);
 				}
 			}
 		}
-		tableview.setItems(FXCollections.observableArrayList(list));
+		tableview.setItems(FXCollections.observableArrayList(listFile));
+	}
+	
+	public void showFilesSearch(){
+		tableview.getItems().clear();
+		if(fileSearch.getText().isEmpty()){
+			tableview.setItems(FXCollections.observableArrayList(listFile));
+			return;
+		}
+		ArrayList<PLYFile> accepted = new ArrayList<PLYFile>();
+		for(PLYFile ply : listFile){
+			if(ply.getFile().getName().contains(fileSearch.getText())) accepted.add(ply);
+		}
+		tableview.setItems(FXCollections.observableArrayList(accepted));
 	}
 	
 	public static void showAlert(String title, String headerText, String contentText){
