@@ -94,7 +94,7 @@ public class Parser {
 		return r;
 	}
 
-	public ArrayList<Face> getFaces(ArrayList<Point> points) {
+	public ArrayList<Face> getFaces(ArrayList<Point> points) throws Exception {
 		if(points == null || this.faces == null) {
 			return null;
 		}
@@ -103,15 +103,19 @@ public class Parser {
 
 		Scanner s = new Scanner(this.faces);
 		while(s.hasNext()){
-			idPoints = new ArrayList<>();
-			String line = s.nextLine();
-			String[] split = line.split(" ");
-			int faceSize = Integer.parseInt(split[0]);
-			for(int i = 0; i <= faceSize; i++) {
-				int idx = Integer.parseInt(split[i]);
-				idPoints.add(idx);
+			try {
+				idPoints = new ArrayList<>();
+				String line = s.nextLine();
+				String[] split = line.split(" ");
+				int faceSize = Integer.parseInt(split[0]);
+				for(int i = 0; i <= faceSize; i++) {
+					int idx = Integer.parseInt(split[i]);
+					idPoints.add(idx);
+				}
+				f.add(new Face(idPoints));
+			} catch(Exception e) {
+				throw e;
 			}
-			f.add(new Face(idPoints));
 		}
 		s.close();
 		return f;

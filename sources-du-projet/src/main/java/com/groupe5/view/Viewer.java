@@ -159,7 +159,12 @@ public class Viewer{
 				if(iRed >= points.size()*0.5) reduce = true;
 				if(iZoom >= points.size()*0.95) zoom = true;
 				
-				ArrayList<Face> faces = p.getFaces(points);
+				ArrayList<Face> faces = new ArrayList<>();
+				try {
+					faces = p.getFaces(points);
+				} catch (Exception e) {
+					FileChooser.showAlert("Exception", "Error Message", e.getMessage());
+				}
 				
 				slideZoom.setValue(1);
 				oldZoom = 1;

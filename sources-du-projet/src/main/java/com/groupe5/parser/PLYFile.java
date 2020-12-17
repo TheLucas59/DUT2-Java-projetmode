@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
+import com.groupe5.view.FileChooser;
 
 public class PLYFile {
 	public File file;
@@ -66,7 +67,11 @@ public class PLYFile {
 		}
 		header = p.getHeader();
 		points = p.getPoints();
-		faces = p.getFaces(points);
+		try {
+			faces = p.getFaces(points);
+		} catch (Exception e) {
+			FileChooser.showAlert("Exception", "Error Message", e.getMessage());
+		}
 		getFields();
 		return true;
 	}

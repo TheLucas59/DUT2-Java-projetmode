@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import com.groupe5.parser.PLYFile;
+import com.groupe5.view.ShowScene;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,6 +23,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 
+@SuppressWarnings("unused")
 public class FileChooser {
 	@FXML TextField path;
 	@FXML TableView<PLYFile> tableview;
@@ -105,7 +107,7 @@ public class FileChooser {
 		tableview.setItems(FXCollections.observableArrayList(list));
 	}
 	
-	public void showAlert(String title, String headerText, String contentText){
+	public static void showAlert(String title, String headerText, String contentText){
 		Alert alert = new Alert(AlertType.ERROR);
 
 		alert.setTitle(title);
