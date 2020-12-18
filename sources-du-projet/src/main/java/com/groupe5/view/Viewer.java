@@ -3,7 +3,6 @@ package com.groupe5.view;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.groupe5.calculation.Homothety;
@@ -53,6 +52,7 @@ public class Viewer{
 	
 	public boolean showLines;
 	public boolean showFaces;
+	private boolean rotAuto;
 	
 	
 	public void initialize(){
@@ -65,6 +65,7 @@ public class Viewer{
 	}
 	
 	public void buttonOpenFile(ActionEvent e){
+		modele.rotationAuto(modele, "stop");
 		ShowScene.getViewer().hide();
 		ShowScene.getFileChooser().show();
 	}
@@ -97,13 +98,17 @@ public class Viewer{
 
 		regionZoom.setOnScroll(scroll -> {
 			if(scroll.getDeltaY() > 0) {
-				slideZoom.setValue(slideZoom.getValue() + 1);
+				if(slideZoom.getValue() > 2)
+					slideZoom.setValue(slideZoom.getValue()*1.05);
+				else slideZoom.setValue(slideZoom.getValue() + 0.1);
 				modele.zoom();
 				oldZoom = slideZoom.getValue();
 			}
 			
 			if(scroll.getDeltaY() < 0) {
-				slideZoom.setValue(slideZoom.getValue() - 1);
+				if(slideZoom.getValue() > 2)
+					slideZoom.setValue(slideZoom.getValue()*0.95);
+				else slideZoom.setValue(slideZoom.getValue() - 0.1);
 				modele.zoom();
 				oldZoom = slideZoom.getValue();
 			}
@@ -126,13 +131,10 @@ public class Viewer{
 		
 
 		Thread thread = new Thread(new Runnable() {
-			private boolean reduce = false;
-			private boolean zoom = false;
-			private int iRed = 0;
-			private int iZoom = 0;
 
 			@Override
 			public void run() {
+				rotAuto = false;
 				Parser p = null;
 				try {
 					p = new Parser(fileToShow);
@@ -149,15 +151,7 @@ public class Viewer{
 					pt.setX(pt.getX()-objectCenter.getX());
 					pt.setY(pt.getY()-objectCenter.getY());
 					pt.setZ(pt.getZ()-objectCenter.getZ());
-					
-					if(pt.getX() > 100) iRed++;
-					else if(pt.getY() > 100) iRed++;
-					if(pt.getX() < 1) iZoom++;
-					else if(pt.getY() < 1) iZoom++;
 				}
-				
-				if(iRed >= points.size()*0.5) reduce = true;
-				if(iZoom >= points.size()*0.95) zoom = true;
 				
 				ArrayList<Face> faces = new ArrayList<>();
 				try {
@@ -170,24 +164,41 @@ public class Viewer{
 				oldZoom = 1;
 				modele = new Modele3D(new Matrix(points), faces, instance);
 				
-				System.out.println(Arrays.toString(modele.getPoints().getLineX()));
-				
-				if(reduce) {
-					Homothety red = new Homothety(0.1);
-					modele.getPoints().setMatrix(red.multiply(modele.getPoints()));
+				boolean onCenter = false;
+				double vZoom = 10050;
+				while(!onCenter) {
+					onCenter = true;
 					
-					System.out.println(Arrays.toString(modele.getPoints().getLineX()));
+					if(vZoom > 50) vZoom -= 50;
+					else if(vZoom > 10) vZoom -= 10;
+					else vZoom -= 0.1;
+					
+					Matrix tmp = modele.getPoints();
+					
+					Homothety h2 = new Homothety(vZoom);		
+					Matrix removeCenter = new Matrix(getCenter().multiply(h2.multiply(tmp)));
+					
+					for(double d : removeCenter.getLineX()) {
+						if(d < 17 || d > canvas.getWidth()) {
+							onCenter = false;
+						}
+					}
+					
+					for(double d : removeCenter.getLineY()) {
+						if(d < 17 || d > canvas.getHeight()) {
+							onCenter = false;
+						}
+					}
 				}
 				
-				if(zoom) {
-					Homothety zoom = new Homothety(20);
-					modele.getPoints().setMatrix(zoom.multiply(modele.getPoints()));
-				}
+				slideZoom.setMax(vZoom);
+				slideZoom.setValue(vZoom);
 				
 				RotationZ r = new RotationZ(180);
 				modele.getPoints().setMatrix(r.multiply(modele.getPoints()));
 				modele.getPoints().setMatrix(center.multiply(modele.getPoints()));
-				drawObject(modele.getFaces(), showLines, showFaces);
+				modele.zoom();
+				oldZoom = slideZoom.getValue();
 			}
 		});
 		
@@ -273,6 +284,16 @@ public class Viewer{
 	public void updateShowFaces() {
 		showFaces = !showFaces;
 		drawObject(modele.getFaces(), showLines, showFaces);
+	}
+	
+	public void rotAuto() {
+		rotAuto = !rotAuto;
+		String action;
+		
+		if(rotAuto) action = "run";
+		else action = "stop";
+		
+		modele.rotationAuto(modele, action);
 	}
 
 	public Translation getCenter() {
