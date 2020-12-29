@@ -19,6 +19,7 @@ public class Modele3D {
 	private Matrix points;
 	private List<Face> faces;
 	private Viewer view;
+	private final Vector lumiere = new Vector(1,1,0);
 	
 	private Timeline rotation;
 
@@ -94,6 +95,22 @@ public class Modele3D {
 
 		zoom();
 	}
+	
+	public float eclairageFace(Face f) {
+		List<Integer> pointsFace = f.getPoints();
+		float[][] pointsModele = this.points.getMatrix();
+		Point p1 = new Point(pointsModele[0][pointsFace.get(0)], pointsModele[1][pointsFace.get(0)], pointsModele[2][pointsFace.get(0)], 0);
+		Point p2 = new Point(pointsModele[0][pointsFace.get(1)], pointsModele[1][pointsFace.get(1)], pointsModele[2][pointsFace.get(1)], 0);
+		Point p3 = new Point(pointsModele[0][pointsFace.get(2)], pointsModele[1][pointsFace.get(2)], pointsModele[2][pointsFace.get(2)], 0);
+		Vector p1p2 = new Vector(p1, p2);
+		Vector p1p3 = new Vector(p1, p3);
+		Vector normal = p1p2.produitVectoriel(p1p3);
+		float teta = (float) Math.cos(normal.produitScalaire(lumiere));
+		if(teta > 0) {
+			return teta;
+		}
+		return -1;
+}
 
 	public void rotationAuto(Modele3D modele, String action) {	
 		switch(action) {

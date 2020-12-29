@@ -245,8 +245,14 @@ public class Viewer{
 		for(Face f : faces) {
 			double[] pointsX = getCoordsX(f);
 			double[] pointsY = getCoordsY(f);
-			if(showFaces)
+			if(showFaces) {
+				float eclairage = modele.eclairageFace(f);
 				gc.fillPolygon(pointsX, pointsY, f.getNbPoints()-1);
+				
+				if(eclairage != -1) {
+					gc.setFill(Color.rgb(Math.round(211*eclairage), Math.round(211*eclairage), Math.round(211*eclairage)));
+				}
+			}
 			if(showLines)
 				gc.strokePolygon(pointsX, pointsY, f.getNbPoints()-1);
 		}
