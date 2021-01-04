@@ -31,10 +31,39 @@ public class Vector {
 	}
 	
 	public float produitScalaire(Vector other) {
-		float newx = this.x * other.y;
+		float newx = this.x * other.x;
 		float newy = this.y * other.y;
 		float newz = this.z * other.z;
 		return newx + newy + newz;
 	}
+
+	public float norme() {
+		return (float) Math.sqrt(Math.pow(this.getX(), 2.0) + Math.pow(this.getY(), 2.0) + Math.pow(this.getZ(), 2.0));
+	}
+	
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public float getZ() {
+		return z;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public void setY(float y) {
+		this.y = y;
+	}
+
+	public void setZ(float z) {
+		this.z = z;
+	}
+	
 	
 }

@@ -12,6 +12,7 @@ import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Modele3D;
 import com.groupe5.geometry.Point;
+import com.groupe5.geometry.Vector;
 import com.groupe5.parser.Parser;
 
 import javafx.event.ActionEvent;
@@ -53,7 +54,6 @@ public class Viewer{
 	public boolean showLines;
 	public boolean showFaces;
 	private boolean rotAuto;
-	
 	
 	public void initialize(){
 		// System.out.println("init viewer");
@@ -250,7 +250,7 @@ public class Viewer{
 				gc.fillPolygon(pointsX, pointsY, f.getNbPoints()-1);
 				
 				if(eclairage != -1) {
-					gc.setFill(Color.rgb(Math.round(211*eclairage), Math.round(211*eclairage), Math.round(211*eclairage)));
+					gc.setFill(Color.rgb(Math.round(255*eclairage), Math.round(255*eclairage), Math.round(255*eclairage)));
 				}
 			}
 			if(showLines)

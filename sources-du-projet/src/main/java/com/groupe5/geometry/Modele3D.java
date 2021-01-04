@@ -19,7 +19,7 @@ public class Modele3D {
 	private Matrix points;
 	private List<Face> faces;
 	private Viewer view;
-	private final Vector lumiere = new Vector(1,1,0);
+	public final Vector lumiere = new Vector(1,0,1);
 	
 	private Timeline rotation;
 
@@ -105,11 +105,27 @@ public class Modele3D {
 		Vector p1p2 = new Vector(p1, p2);
 		Vector p1p3 = new Vector(p1, p3);
 		Vector normal = p1p2.produitVectoriel(p1p3);
-		float teta = (float) Math.cos(normal.produitScalaire(lumiere));
+		normal.setX(normal.getX()/normal.norme());
+		normal.setY(normal.getY()/normal.norme());
+		normal.setZ(normal.getZ()/normal.norme());
+		lumiere.setX(lumiere.getX()/lumiere.norme());
+		lumiere.setY(lumiere.getY()/lumiere.norme());
+		lumiere.setZ(lumiere.getZ()/lumiere.norme());
+		float scalaire = normal.produitScalaire(lumiere);
+		float teta = (float) Math.cos(scalaire);
 		if(teta > 0) {
 			return teta;
 		}
 		return -1;
+	
+		/*double costetatNum = (normal.getX() * lumiere.getX() + normal.getY() * lumiere.getY() + normal.getZ() * lumiere.getZ());         
+		double costetaDeNum = (Math.sqrt(Math.pow(normal.getX(), 2.0) + Math.pow(normal.getY(), 2.0) + Math.pow(normal.getZ(), 2.0)) + Math.sqrt(Math.pow(lumiere.getX(), 2.0) + Math.pow(lumiere.getY(), 2.0) + Math.pow(lumiere.getZ(), 2.0)));         
+		float costeta = (float) (costetatNum / costetaDeNum);
+		
+		if(costeta > 0) {
+			return costeta;
+		}
+		return -1;*/
 }
 
 	public void rotationAuto(Modele3D modele, String action) {	
