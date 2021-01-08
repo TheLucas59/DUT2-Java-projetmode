@@ -1,5 +1,7 @@
 package com.groupe5.geometry;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import com.groupe5.calculation.Matrix;
 import com.groupe5.calculation.RotationX;
 import com.groupe5.calculation.RotationY;
 import com.groupe5.calculation.Translation;
+import com.groupe5.observerpattern.Observed;
 import com.groupe5.view.Viewer;
 
 import javafx.animation.KeyFrame;
@@ -15,29 +18,37 @@ import javafx.animation.Timeline;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
-public class Modele3D {
+public class Modele3D extends Observed {
 	private Matrix points;
 	private List<Face> faces;
 	private Viewer view;
+	private File fileShow;
 	public final Vector lumiere = new Vector(1,0,1);
-	
+
 	private Timeline rotation;
 
-	public Modele3D(Matrix points, List<Face> faces, Viewer view) {
+	public Modele3D(Matrix points, List<Face> faces, Viewer view, File fileToShow) {
 		this.points = points;
 		this.faces = faces;
 		this.view = view;
+		this.fileShow = fileToShow;
 
 		RotationY ry = new RotationY(5);
 
 		KeyFrame begin = new KeyFrame(Duration.seconds(0));
 		KeyFrame end = new KeyFrame(Duration.millis(250), rot -> {
-			this.getPoints().setMatrix(view.getCenter().multiply(ry.multiply(view.getCenter().inv().multiply(this.getPoints()))));
+			this.getPoints().setMatrix(view.getCenter().multiply(ry.multiply((view.getCenter()).inv().multiply(this.getPoints()))));
 			zoom();
 		});
 
 		rotation = new Timeline(begin, end);
 		rotation.setCycleCount(Timeline.INDEFINITE);
+
+		attach(view);
+	}
+	
+	public void newView(Viewer view) {
+		attach(view);
 	}
 
 	public Matrix getPoints() {
@@ -58,17 +69,17 @@ public class Modele3D {
 
 	public void zoom() {
 		view.clearScreen();
-		view.getZoomText().setText("ZOOM : " + Math.round(view.slideZoom.getValue()) + "%");
+		view.getZoomText().setText("ZOOM : " + Math.round(view.getSlideZoom().getValue()) + "%");
 
 		this.getPoints().setMatrix(view.getCenter().inv().multiply(this.getPoints()));
-		Homothety h1 = new Homothety(1/view.oldZoom);		
+		Homothety h1 = new Homothety(1/view.getOldZoom());		
 		this.getPoints().setMatrix(h1.multiply(this.getPoints()));
 
-		Homothety h2 = new Homothety(view.slideZoom.getValue());		
+		Homothety h2 = new Homothety(view.getSlideZoom().getValue());		
 
 		Matrix removeCenter = new Matrix(view.getCenter().multiply(h2.multiply(this.getPoints())));
 		this.setMatrix(removeCenter);
-		view.drawObject(this.getFaces(), view.showLines, view.showFaces);
+		notifyObservers();
 	}
 
 	public void rotate(MouseEvent e, double oldMousePosX, double oldMousePosY) {
@@ -95,7 +106,7 @@ public class Modele3D {
 
 		zoom();
 	}
-	
+
 	public float eclairageFace(Face f) {
 		List<Integer> pointsFace = f.getPoints();
 		float[][] pointsModele = this.points.getMatrix();
@@ -117,16 +128,16 @@ public class Modele3D {
 			return teta;
 		}
 		return -1;
-	
+
 		/*double costetatNum = (normal.getX() * lumiere.getX() + normal.getY() * lumiere.getY() + normal.getZ() * lumiere.getZ());         
 		double costetaDeNum = (Math.sqrt(Math.pow(normal.getX(), 2.0) + Math.pow(normal.getY(), 2.0) + Math.pow(normal.getZ(), 2.0)) + Math.sqrt(Math.pow(lumiere.getX(), 2.0) + Math.pow(lumiere.getY(), 2.0) + Math.pow(lumiere.getZ(), 2.0)));         
 		float costeta = (float) (costetatNum / costetaDeNum);
-		
+
 		if(costeta > 0) {
 			return costeta;
 		}
 		return -1;*/
-}
+	}
 
 	public void rotationAuto(Modele3D modele, String action) {	
 		switch(action) {
@@ -138,4 +149,19 @@ public class Modele3D {
 			break;
 		}
 	}
+
+	public void setFile(File fileShow) {
+		this.fileShow = fileShow;
+		
+		notifyObservers("file");
+	}
+	
+	public File getFile() {
+		return this.fileShow;
+	}
+
+	public void setFaces(ArrayList<Face> faces) {
+		this.faces = faces;
+	}
+
 }

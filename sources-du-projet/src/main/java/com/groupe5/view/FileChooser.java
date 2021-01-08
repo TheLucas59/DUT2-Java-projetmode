@@ -92,7 +92,7 @@ public class FileChooser {
 	private void openFile(){
 		ShowScene.getFileChooser().hide();
 		ShowScene.getViewer().show();
-		Viewer.setFile(selectedItem.getFile());
+		PrimaryView.setFile(selectedItem.getFile());
 	}
 	
 	public void pathButton(ActionEvent e){

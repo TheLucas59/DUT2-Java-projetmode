@@ -3,8 +3,10 @@ package com.groupe5.observerpattern;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.groupe5.view.PrimaryView;
+
 public abstract class Observed {
-	private List<Observer> observers = new ArrayList<Observer>();
+	private List<Observer> observers = new ArrayList<>();
 	
 	public void attach(Observer obs) {
 		if(!observers.contains(obs)) observers.add(obs);
