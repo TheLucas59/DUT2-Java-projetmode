@@ -23,7 +23,7 @@ public class Modele3D extends Observed {
 	private List<Face> faces;
 	private Viewer view;
 	private File fileShow;
-	public final Vector lumiere = new Vector(1,0,1);
+	public final Vector lumiere = new Vector(1,1,0);
 
 	private Timeline rotation;
 
@@ -128,15 +128,6 @@ public class Modele3D extends Observed {
 			return teta;
 		}
 		return -1;
-
-		/*double costetatNum = (normal.getX() * lumiere.getX() + normal.getY() * lumiere.getY() + normal.getZ() * lumiere.getZ());         
-		double costetaDeNum = (Math.sqrt(Math.pow(normal.getX(), 2.0) + Math.pow(normal.getY(), 2.0) + Math.pow(normal.getZ(), 2.0)) + Math.sqrt(Math.pow(lumiere.getX(), 2.0) + Math.pow(lumiere.getY(), 2.0) + Math.pow(lumiere.getZ(), 2.0)));         
-		float costeta = (float) (costetatNum / costetaDeNum);
-
-		if(costeta > 0) {
-			return costeta;
-		}
-		return -1;*/
 	}
 
 	public void rotationAuto(Modele3D modele, String action) {	
