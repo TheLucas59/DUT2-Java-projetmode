@@ -33,10 +33,10 @@ public class Modele3D extends Observed {
 		this.view = view;
 		this.fileShow = fileToShow;
 
-		RotationY ry = new RotationY(5);
+		RotationY ry = new RotationY(1);
 
 		KeyFrame begin = new KeyFrame(Duration.seconds(0));
-		KeyFrame end = new KeyFrame(Duration.millis(250), rot -> {
+		KeyFrame end = new KeyFrame(Duration.millis(16.6), rot -> {
 			this.getPoints().setMatrix(view.getCenter().multiply(ry.multiply((view.getCenter()).inv().multiply(this.getPoints()))));
 			zoom();
 		});
