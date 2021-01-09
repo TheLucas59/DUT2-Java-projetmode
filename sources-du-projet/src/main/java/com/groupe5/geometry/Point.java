@@ -16,7 +16,7 @@ public class Point {
 	 * @param x Coordonnée X
 	 * @param y Coordonnée Y
 	 * @param z Coordoneé Z
-	 * @param id
+	 * @param id Id du point
 	 */
 	public Point(float x, float y, float z, int id) {
 		this.x = x;

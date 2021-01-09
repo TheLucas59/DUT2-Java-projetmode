@@ -100,7 +100,7 @@ public class Vector {
 
 	/**
 	 * Setter pour la coordonnée X.
-	 * @return Coordonnée X;
+	 * @param x Coordonnée X;
 	 */
 	public void setX(float x) {
 		this.x = x;
@@ -108,7 +108,7 @@ public class Vector {
 
 	/**
 	 * Setter pour la coordonnée Y.
-	 * @return Coordonnée Y.
+	 * @param y Coordonnée Y.
 	 */
 	public void setY(float y) {
 		this.y = y;
@@ -116,7 +116,7 @@ public class Vector {
 
 	/**
 	 * Setter pour la coordonnée Z.
-	 * @return Coordonnée Z.
+	 * @param z Coordonnée Z.
 	 */
 	public void setZ(float z) {
 		this.z = z;
