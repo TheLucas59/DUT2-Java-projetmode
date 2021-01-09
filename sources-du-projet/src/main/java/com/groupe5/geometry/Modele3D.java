@@ -109,6 +109,8 @@ public class Modele3D extends Observed {
 
 	/**
 	 * Retourne le coefficient permettant l'assombrissement des faces.
+	 * @param f face pour laquelle il faut calculer l'éclairage
+	 * @return le coefficient d'éclairage de la face f
 	 */
 	public float eclairageFace(Face f) {
 		List<Integer> pointsFace = f.getPoints();

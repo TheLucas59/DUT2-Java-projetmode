@@ -20,7 +20,7 @@ public class PLYFile {
 
 	/**
 	 * Crée un objet de PLYFile tout en initialisant ses ArrayLists.
-	 * @param file
+	 * @param file Fichier PLY
 	 */
 	public PLYFile(File file){
 		this.file = file;

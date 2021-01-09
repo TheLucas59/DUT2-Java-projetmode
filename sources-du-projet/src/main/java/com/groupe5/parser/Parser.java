@@ -21,8 +21,8 @@ public class Parser {
 	
 	/**
 	 * Crée un objet de Parser avec le fichier passé en paramètre et le parse
-	 * @param file
-	 * @throws IOException
+	 * @param file Fichier a parser
+	 * @throws IOException Erreur de lecture
 	 */
 	public Parser(File file) throws IOException{
 		parse(file);
@@ -30,8 +30,8 @@ public class Parser {
 	
 	/**
 	 * Parse toute les catégories du fichier
-	 * @param file
-	 * @throws IOException
+	 * @param file Fichier a parse
+	 * @throws IOException Erreur de lecture
 	 */
 	public void parse(File file) throws IOException {
 		String everything = readFile(file);
@@ -89,7 +89,7 @@ public class Parser {
 	
 	/**
 	 * Parse les points et retourne une liste de points
-	 * @return ArrayList<Point> points
+	 * @return ArrayList des points
 	 */
 	public ArrayList<Point> getPoints() {
 		if(this.points == null) {
@@ -112,7 +112,9 @@ public class Parser {
 
 	/**
 	 * Parse les points et retourne une liste de faces
-	 * @return ArrayList<Face> faces
+	 * @param points Liste des points
+	 * @return ArrayList des faces
+	 * @throws Exception Erreurs
 	 */
 	public ArrayList<Face> getFaces(ArrayList<Point> points) throws Exception {
 		if(points == null || this.faces == null) {
@@ -144,9 +146,9 @@ public class Parser {
 	
 	/**
 	 * Lis le fichier passé en paramètre et renvoie l'entièreté du fichier dans un String
-	 * @param file
-	 * @return String fileinstring
-	 * @throws IOException
+	 * @param file Fichier a parser
+	 * @return contenu du fichier dans un String
+	 * @throws IOException Erreur de lecture
 	 */
 	public String readFile(File file) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
