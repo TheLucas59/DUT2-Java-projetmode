@@ -2,7 +2,11 @@ package com.groupe5.observerpattern;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Pattern obersever
+ * @author plel
+ * @author duhayona
+ */
 public abstract class Observed {
 	private List<Observer> observers = new ArrayList<>();
 	

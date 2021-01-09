@@ -24,7 +24,7 @@ import javafx.stage.DirectoryChooser;
 
 /**
  * Class pour le sélecteur de fichiers
- * @author pirca 
+ * @author pirca
  */
 public class FileChooser {
 	@FXML TextField path;

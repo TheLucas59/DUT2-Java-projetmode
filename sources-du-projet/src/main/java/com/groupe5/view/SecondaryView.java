@@ -27,6 +27,7 @@ import javafx.scene.text.Text;
  * @author pirca
  * @author plel
  * @author duhayona
+ * @author demayl
  */
 public class SecondaryView extends Viewer {
 	
