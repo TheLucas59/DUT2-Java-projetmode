@@ -18,6 +18,10 @@ public class PLYFile {
 	String fileFormat;
 	String comment = "(aucun)";
 
+	/**
+	 * Crée un objet de PLYFile tout en initialisant ses ArrayLists.
+	 * @param file
+	 */
 	public PLYFile(File file){
 		this.file = file;
 		header = "";
@@ -25,10 +29,18 @@ public class PLYFile {
 		points = new ArrayList<>();
 	}
 	
+	/**
+	 * Renvoie le fichier
+	 * @return File file
+	 */
 	public File getFile() {
 		return this.file;
 	}
 	
+	/**
+	 * Parse le fichier si besoin, sinon renvoie le format de fichier
+	 * @return String fileFormat
+	 */
 	public String getFormat(){
 		if(fileFormat == null) {
 			this.onlyHeader();
@@ -36,6 +48,10 @@ public class PLYFile {
 		return fileFormat;
 	}
 	
+	/**
+	 * Parse le fichier si besoin, sinon renvoie le nombres de points
+	 * @return int vertexCount
+	 */
 	public int getTotalPoints(){
 		if(vertexCount == 0) {
 			this.onlyHeader();
@@ -43,6 +59,10 @@ public class PLYFile {
 		return vertexCount;
 	}
 	
+	/**
+	 * Parse le fichier si besoin, sinon renvoie le nombres de faces
+	 * @return int faceCount
+	 */
 	public int getTotalFaces(){
 		if(faceCount == 0) {
 			this.onlyHeader();
@@ -50,6 +70,10 @@ public class PLYFile {
 		return faceCount;
 	}
 	
+	/**
+	 * Parse le fichier si besoin, sinon renvoie le commentaire
+	 * @return commentaire du fichier ou "(aucun)" si aucun commentaire n'est spécifié
+	 */
 	public String getComment() {
 		if(comment == null) {
 			this.onlyHeader();
@@ -57,7 +81,10 @@ public class PLYFile {
 		return comment;
 	}
 	
-	// returns false if parsing fails
+	/**
+	 * Fait les appels aux fonctions de Parser pour affecter les ArrayLists de header, points et faces
+	 * @return false si le fichier n'a pas pu être parsé
+	 */
 	public boolean parse() {
 		Parser p;
 		try {
@@ -76,6 +103,10 @@ public class PLYFile {
 		return true;
 	}
 	
+	/**
+	 * Méthode permettant de parser uniquement le header pour améliorer le temps de chargement du navigateur de fichier
+	 * @return false si le fichier n'a pas pu être parsé
+	 */
 	public boolean onlyHeader() {
 		if(header.length() != 0) return false;
 		Parser p;
@@ -89,10 +120,9 @@ public class PLYFile {
 		return true;
 	}
 	
-	public String toString() {
-		return this.file.getName();
-	}
-	
+	/**
+	 * Initialise les champs a partir du header pour le navigateur 
+	 */
 	public void getFields() {
 		String[] fields = header.split("\n");
 		for(int i = 0; i < fields.length; i++) {

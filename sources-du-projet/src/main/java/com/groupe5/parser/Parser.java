@@ -19,11 +19,20 @@ public class Parser {
 
 	List<Integer> idPoints;
 	
+	/**
+	 * Crée un objet de Parser avec le fichier passé en paramètre et le parse
+	 * @param file
+	 * @throws IOException
+	 */
 	public Parser(File file) throws IOException{
 		parse(file);
 	}
 	
-	// séparer toute les catégories du fichier
+	/**
+	 * Parse toute les catégories du fichier
+	 * @param file
+	 * @throws IOException
+	 */
 	public void parse(File file) throws IOException {
 		String everything = readFile(file);
 		Scanner s = new Scanner(everything);
@@ -70,12 +79,18 @@ public class Parser {
 		s.close();
 	}
 
-	// renvoyer les objets apropriés
-	
+	/**
+	 * Renvoie le header
+	 * @return String header
+	 */
 	public String getHeader() {
 		return header;
 	}
 	
+	/**
+	 * Parse les points et retourne une liste de points
+	 * @return ArrayList<Point> points
+	 */
 	public ArrayList<Point> getPoints() {
 		if(this.points == null) {
 			return null;
@@ -95,6 +110,10 @@ public class Parser {
 		return r;
 	}
 
+	/**
+	 * Parse les points et retourne une liste de faces
+	 * @return ArrayList<Face> faces
+	 */
 	public ArrayList<Face> getFaces(ArrayList<Point> points) throws Exception {
 		if(points == null || this.faces == null) {
 			return null;
@@ -123,6 +142,12 @@ public class Parser {
 		return f;
 	}
 	
+	/**
+	 * Lis le fichier passé en paramètre et renvoie l'entièreté du fichier dans un String
+	 * @param file
+	 * @return String fileinstring
+	 * @throws IOException
+	 */
 	public String readFile(File file) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
 		try {
