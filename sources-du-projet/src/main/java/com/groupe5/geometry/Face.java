@@ -21,5 +21,11 @@ public class Face implements Comparable<Face> {
 	public int compareTo(Face o) {
 		return 1;
 	}
+
+	@Override
+	public String toString() {
+		return indices.toString();
+	}
+	
 	
 }

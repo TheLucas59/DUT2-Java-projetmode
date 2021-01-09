@@ -107,24 +107,29 @@ public class Modele3D extends Observed {
 		zoom();
 	}
 
+	/**
+	 * Retourne le coefficient permettant l'assombrissement des faces.
+	 */
 	public float eclairageFace(Face f) {
 		List<Integer> pointsFace = f.getPoints();
 		float[][] pointsModele = this.points.getMatrix();
-		Point p1 = new Point(pointsModele[0][pointsFace.get(0)], pointsModele[1][pointsFace.get(0)], pointsModele[2][pointsFace.get(0)], 0);
-		Point p2 = new Point(pointsModele[0][pointsFace.get(1)], pointsModele[1][pointsFace.get(1)], pointsModele[2][pointsFace.get(1)], 0);
-		Point p3 = new Point(pointsModele[0][pointsFace.get(2)], pointsModele[1][pointsFace.get(2)], pointsModele[2][pointsFace.get(2)], 0);
+		Point p1 = new Point(pointsModele[0][pointsFace.get(1)], pointsModele[1][pointsFace.get(1)], pointsModele[2][pointsFace.get(1)], 0);
+		Point p2 = new Point(pointsModele[0][pointsFace.get(2)], pointsModele[1][pointsFace.get(2)], pointsModele[2][pointsFace.get(2)], 0);
+		Point p3 = new Point(pointsModele[0][pointsFace.get(3)], pointsModele[1][pointsFace.get(3)], pointsModele[2][pointsFace.get(3)], 0);
 		Vector p1p2 = new Vector(p1, p2);
 		Vector p1p3 = new Vector(p1, p3);
 		Vector normal = p1p2.produitVectoriel(p1p3);
-		normal.setX(normal.getX()/normal.norme());
-		normal.setY(normal.getY()/normal.norme());
-		normal.setZ(normal.getZ()/normal.norme());
-		lumiere.setX(lumiere.getX()/lumiere.norme());
-		lumiere.setY(lumiere.getY()/lumiere.norme());
-		lumiere.setZ(lumiere.getZ()/lumiere.norme());
+		float normeNormal = normal.norme();
+		float normeLumiere = lumiere.norme();
+		normal.setX(normal.getX()/normeNormal);
+		normal.setY(normal.getY()/normeNormal);
+		normal.setZ(normal.getZ()/normeNormal);
+		lumiere.setX(lumiere.getX()/normeLumiere);
+		lumiere.setY(lumiere.getY()/normeLumiere);
+		lumiere.setZ(lumiere.getZ()/normeLumiere);
 		float scalaire = normal.produitScalaire(lumiere);
-		float teta = (float) Math.cos(scalaire);
-		if(teta > 0) {
+		if(scalaire > 0) {
+			float teta = (float) Math.cos(scalaire);
 			return teta;
 		}
 		return -1;

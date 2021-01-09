@@ -12,7 +12,6 @@ import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Modele3D;
 import com.groupe5.geometry.Point;
-import com.groupe5.geometry.Vector;
 import com.groupe5.observerpattern.Observed;
 import com.groupe5.parser.Parser;
 
@@ -230,18 +229,20 @@ public class PrimaryView extends Viewer {
 		modele.sortFaces();
 		gc.setStroke(Color.GRAY);
 		gc.setLineWidth(0.5);
-		gc.setFill(Color.LIGHTGRAY);
 		
 		for(Face f : faces) {
 			double[] pointsX = getCoordsX(f);
 			double[] pointsY = getCoordsY(f);
 			if(showFaces) {
 				float eclairage = modele.eclairageFace(f);
-				gc.fillPolygon(pointsX, pointsY, f.getNbPoints()-1);
 				
 				if(eclairage != -1) {
 					gc.setFill(Color.rgb(Math.round(255*eclairage), Math.round(255*eclairage), Math.round(255*eclairage)));
 				}
+				else {
+					gc.setFill(Color.WHITE);
+				}
+				gc.fillPolygon(pointsX, pointsY, f.getNbPoints()-1);
 			}
 			if(showLines)
 				gc.strokePolygon(pointsX, pointsY, f.getNbPoints()-1);

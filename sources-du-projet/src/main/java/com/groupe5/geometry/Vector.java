@@ -7,10 +7,9 @@ public class Vector {
 	private float z;
 	
 	public Vector(Point p1, Point p2) {		
-		x = p1.getX() - p2.getX();
-		y = p1.getY() - p2.getY();
-		z = p1.getZ() - p2.getZ();
-		
+		x = p2.getX() - p1.getX();
+		y = p2.getY() - p1.getY();
+		z = p2.getZ() - p1.getZ();
 	}
 	
 	public Vector(float x, float y, float z) {
@@ -65,5 +64,7 @@ public class Vector {
 		this.z = z;
 	}
 	
-	
+	public String toString() {
+		return x + " " + y + " " + z;
+	}
 }

@@ -15,7 +15,7 @@ public class FaceComparator<T> implements Comparator<Face> {
 			double moyF2;
 			double total = 0;
 
-			for(int i = 0; i < o1.getNbPoints(); i++) {
+			for(int i = 1; i < o1.getNbPoints(); i++) {
 				int indicePoint = o1.getPoints().get(i);
 				double z = modele.getPoints().getColumn(indicePoint)[2];
 				total += z;
@@ -23,7 +23,7 @@ public class FaceComparator<T> implements Comparator<Face> {
 			moyF1 = total/o1.getNbPoints();
 			total = 0;
 			
-			for(int i = 0; i < o2.getNbPoints(); i++) {
+			for(int i = 1; i < o2.getNbPoints(); i++) {
 				int indicePoint = o2.getPoints().get(i);
 				double z = modele.getPoints().getColumn(indicePoint)[2];
 				total += z;
