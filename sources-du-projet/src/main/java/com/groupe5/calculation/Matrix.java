@@ -1,16 +1,26 @@
 package com.groupe5.calculation;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.groupe5.geometry.Point;
 
+
+/**
+ * Décrit une matrice à partir d'un tableau à deux dimensions.
+ * @author duhayona
+ *
+ */
 public class Matrix {
 	
 	private float[][] matrix;
 	
 	private static final float COORDONNEE_HOMOGENE = 1.0f;
 
-	public Matrix(ArrayList<Point> points) {
+	/**
+	 * Crée une matrice de coordonnées des points à partir d'une liste de points.
+	 * @param points Liste des points avec lesquels on veut créer une matrice.
+	 */
+	public Matrix(List<Point> points) {
 		
 		matrix = new float[4][points.size()];			
 		
@@ -26,14 +36,27 @@ public class Matrix {
 		}
 	}
 	
+	/**
+	 * Crée une matrice de coordonnées de points à partir d'un tableau à deux dimensions.
+	 * @param matrix Tableau à deux dimensions de float contenant les coordonnées des points.
+	 */
 	public Matrix(float[][] matrix) {
 		this.matrix = matrix;
 	}
 	
+	/**
+	 * Renvoie la matrice sous la forme d'un tableau à deux dimensions.
+	 * @return Un tableau de float à deux dimensions contnenant les coordonnées des points.
+	 */
 	public float[][] getMatrix() {
 		return matrix;
 	}
 	
+	/**
+	 * Permet de récupérer une seule colonne d'une matrice de points, ce qui correspond aux coordonnées d'un point.
+	 * @param indice L'indice de la colonne dans la matrice.
+	 * @return Un tableau à une dimension contenant les données de la colonne de la matrice.
+	 */
 	public double[] getColumn(int indice) {
 		double[] coords = new double[matrix.length-1];
 		for(int i = 0; i < matrix.length-1; i++) {
@@ -42,6 +65,11 @@ public class Matrix {
 		return coords;
 		
 	}
+	
+	/**
+	 * Permet de récupérer toutes les valeurs des coordonnées X de la matrice.
+	 * @return Un tableau à une dimension contenant toutes les coordonnée X de la matrice.
+	 */
 	public double[] getLineX() {
 		double[] x = new double[matrix[0].length];		
 		
@@ -52,6 +80,10 @@ public class Matrix {
 		return x;
 	}
 	
+	/**
+	 * Permet de récupérer toutes les valeurs des coordonnées Y de la matrice.
+	 * @return Un tableau à une dimension contenant toutes les coordonnée Y de la matrice.
+	 */
 	public double[] getLineY() {
 		double[] y = new double[matrix[0].length];
 		
@@ -62,6 +94,10 @@ public class Matrix {
 		return y;
 	}
 	
+	/**
+	 * Permet de récupérer toutes les valeurs des coordonnées Z de la matrice.
+	 * @return Un tableau à une dimension contenant toutes les coordonnée Z de la matrice.
+	 */
 	public double[] getLineZ() {
 		double[] z = new double[matrix[0].length];
 		
@@ -72,6 +108,11 @@ public class Matrix {
 		return z;
 	}
 	
+	/**
+	 * Calcule la multiplication entre deux matrices.
+	 * @param secondMatrix La matrice sous forme de tableau à deux dimensions avec laquelle la matrice courante doit se multiplier.
+	 * @return Un tableau à deux dimensions contenant la matrice avec laquelle la multiplication doit se faire.
+	 */
 	public float[][] multiply(float[][] secondMatrix) {
 		float[][] firstMatrix = this.getMatrix();
 		
@@ -87,14 +128,26 @@ public class Matrix {
         return product;
     }
 	
+	/**
+	 * Calcule la multiplication entre deux matrices.
+	 * @param other La matrice avec la quelle la matrice corante doit se multiplier.
+	 * @return Un tableau à deux dimensions contenant la matrice avec laquelle la multiplication doit se faire.
+	 */
 	public float[][] multiply(Matrix other) {
 		return multiply(other.getMatrix());
 	}
 	
+	/**
+	 * Permet de changer le tableau à deux dimensions qui décrit la matrice.
+	 * @param tab le tableau à deux dimensions qui remplacera le tableau actuel.
+	 */
 	public void setMatrix(float[][] tab) {
 		matrix = tab;
 	}
 
+	/**
+	 * Permet d'obtenir une représentation sous forme de string de la matrice.
+	 */
 	public String toString() {
 		StringBuilder ret = new StringBuilder("");
 		

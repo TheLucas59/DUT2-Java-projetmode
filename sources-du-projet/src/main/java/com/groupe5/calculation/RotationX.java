@@ -1,6 +1,15 @@
 package com.groupe5.calculation;
 
+/**
+ * Définit la rotation autour de l'axe X.
+ * @author duhayona
+ *
+ */
 public class RotationX extends Matrix {
+	/**
+	 * Crée une matrice de rotation autour de l'axe X.
+	 * @param teta Angle de la rotation.
+	 */
 	public RotationX(float teta) {
 			
 			super(
@@ -13,6 +22,10 @@ public class RotationX extends Matrix {
 			);		
 		}
 		
+	/**
+	 * Renvoie la rotation sous la forme d'un tableau à deux dimensions.
+	 * @return Un tableau à deux dimensions de float contenant la matrice de rotation autour de l'axe X.
+	 */
 	public float[][] getRotation() {
 		return super.getMatrix();
 	}
