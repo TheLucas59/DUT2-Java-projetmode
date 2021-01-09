@@ -1,7 +1,7 @@
 package com.groupe5.view;
 
-import java.io.File;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.groupe5.calculation.Translation;
 import com.groupe5.geometry.Face;
@@ -39,7 +39,6 @@ public class SecondaryView extends Viewer {
 	private Modele3D modele;
 	private static SecondaryView instance;
 	private Translation center;
-	private Point objectCenter;
 	private double oldMousePosX;
 	private double oldMousePosY;
 	public double oldZoom = 1;
@@ -308,7 +307,7 @@ public class SecondaryView extends Viewer {
 	@Override
 	public void update(Observed observed, Object data) {
 		if(((String) data).equals("file")) {
-			System.out.println("update data 2");
+			Logger.getAnonymousLogger().info("update data 2");
 			showFile(PrimaryView.getModele());	
 		}
 	}

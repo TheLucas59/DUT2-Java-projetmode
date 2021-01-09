@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
@@ -49,7 +50,7 @@ public class Parser {
 		currentStack = new StringBuilder();
 		
 		if(vertexCount == null || faceCount == null) {
-			System.out.println("ERROR PARSING THE MODEL : Incorrect header");
+			Logger.getAnonymousLogger().severe("ERROR PARSING THE MODEL : Incorrect header");
 			s.close();
 			return;
 		}
@@ -79,7 +80,7 @@ public class Parser {
 		if(this.points == null) {
 			return null;
 		}
-		ArrayList<Point> r = new ArrayList<Point>();
+		ArrayList<Point> r = new ArrayList<>();
 		Scanner s = new Scanner(this.points);
 		int currentLine = -1;
 		while(s.hasNext()){
@@ -98,7 +99,7 @@ public class Parser {
 		if(points == null || this.faces == null) {
 			return null;
 		}
-		ArrayList<Face> f = new ArrayList<Face>();
+		ArrayList<Face> f = new ArrayList<>();
 
 
 		Scanner s = new Scanner(this.faces);
@@ -114,6 +115,7 @@ public class Parser {
 				}
 				f.add(new Face(idPoints));
 			} catch(Exception e) {
+				s.close();
 				throw e;
 			}
 		}

@@ -143,6 +143,9 @@ public class Modele3D extends Observed {
 		case "stop":
 			rotation.stop();
 			break;
+		default:
+			rotation.stop();
+			break;
 		}
 	}
 

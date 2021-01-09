@@ -8,7 +8,7 @@ public class Matrix {
 	
 	private float[][] matrix;
 	
-	private final float COORDONNEE_HOMOGENE = 1.0f;
+	private static final float COORDONNEE_HOMOGENE = 1.0f;
 
 	public Matrix(ArrayList<Point> points) {
 		

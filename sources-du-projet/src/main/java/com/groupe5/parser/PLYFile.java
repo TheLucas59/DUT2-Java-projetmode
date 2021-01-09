@@ -21,8 +21,8 @@ public class PLYFile {
 	public PLYFile(File file){
 		this.file = file;
 		header = "";
-		faces = new ArrayList<Face>();
-		points = new ArrayList<Point>();
+		faces = new ArrayList<>();
+		points = new ArrayList<>();
 	}
 	
 	public File getFile() {

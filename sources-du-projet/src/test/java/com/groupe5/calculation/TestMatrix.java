@@ -26,8 +26,8 @@ class TestMatrix {
 	
 	@BeforeEach
 	void setup() {
-		points1 = new ArrayList<Point>();
-		points2 = new ArrayList<Point>();
+		points1 = new ArrayList<>();
+		points2 = new ArrayList<>();
 		p1 = new Point(1, 1, 1, 0);
 		p2 = new Point(2, 2, 2, 0);
 		p3 = new Point(3, 3, 3, 0);

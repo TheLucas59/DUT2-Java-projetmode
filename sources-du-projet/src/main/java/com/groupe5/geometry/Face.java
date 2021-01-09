@@ -26,6 +26,4 @@ public class Face implements Comparable<Face> {
 	public String toString() {
 		return indices.toString();
 	}
-	
-	
 }

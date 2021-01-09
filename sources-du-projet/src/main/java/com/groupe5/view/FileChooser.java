@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import com.groupe5.parser.PLYFile;
-import com.groupe5.view.ShowScene;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -34,8 +33,7 @@ public class FileChooser {
 	@FXML TextField fileSearch;
 	
 	private PLYFile selectedItem = null;
-	private File selectedDirectory = null;
-	private ArrayList<PLYFile> listFile = new ArrayList<PLYFile>();
+	private ArrayList<PLYFile> listFile = new ArrayList<>();
 
 
 	public void initialize(){
@@ -125,7 +123,7 @@ public class FileChooser {
 			tableview.setItems(FXCollections.observableArrayList(listFile));
 			return;
 		}
-		ArrayList<PLYFile> accepted = new ArrayList<PLYFile>();
+		ArrayList<PLYFile> accepted = new ArrayList<>();
 		for(PLYFile ply : listFile){
 			if(ply.getFile().getName().contains(fileSearch.getText())) accepted.add(ply);
 		}

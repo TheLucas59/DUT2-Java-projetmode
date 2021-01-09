@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.groupe5.calculation.Homothety;
 import com.groupe5.calculation.Matrix;
@@ -53,7 +54,7 @@ public class PrimaryView extends Viewer {
 	
 	public boolean showLines;
 	public boolean showFaces;
-	private boolean rotAuto;
+	private boolean rotAutoFlag;
 	
 	public void initialize(){
 		// System.out.println("init viewer");
@@ -135,7 +136,7 @@ public class PrimaryView extends Viewer {
 
 			@Override
 			public void run() {
-				rotAuto = false;
+				rotAutoFlag = false;
 				Parser p = null;
 				try {
 					p = new Parser(fileToShow);
@@ -288,10 +289,10 @@ public class PrimaryView extends Viewer {
 	}
 	
 	public void rotAuto() {
-		rotAuto = !rotAuto;
+		rotAutoFlag = !rotAutoFlag;
 		String action;
 		
-		if(rotAuto) action = "run";
+		if(rotAutoFlag) action = "run";
 		else action = "stop";
 		
 		modele.rotationAuto(modele, action);
@@ -322,7 +323,7 @@ public class PrimaryView extends Viewer {
 	public void update(Observed observed, Object data) {
 		if(((String) data).equals("file")) {
 			showFile(fileShow);
-			System.out.println("update data");
+			Logger.getAnonymousLogger().info("update data");
 		}
 	}
 

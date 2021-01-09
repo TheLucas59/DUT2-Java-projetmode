@@ -31,16 +31,16 @@ public abstract class Viewer implements Observer {
 	}
 	
 	public Point setObjectCenter(ArrayList<Point> points) {
-		double X = 0, Y = 0, Z = 0;
+		double x = 0, y = 0, z = 0;
 		int size = points.size();
 		
 		for(Point p : points) {
-			X += p.getX();
-			Y += p.getY();
-			Z += p.getZ();
+			x += p.getX();
+			y += p.getY();
+			z += p.getZ();
 		}
 		
-		return new Point(((float) X/size), ((float) Y/size), ((float) Z/size), 0);
+		return new Point(((float) x/size), ((float) y/size), ((float) z/size), 0);
 	}
 	
 	public static File getFileToShow() {
