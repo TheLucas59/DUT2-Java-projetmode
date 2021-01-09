@@ -2,13 +2,29 @@ package com.groupe5.geometry;
 
 import java.util.Comparator;
 
+/**
+ * Permet la comparaison des faces d'un objet Modele3D.
+ * @author plel
+ *
+ */
+
 public class FaceComparator<T> implements Comparator<Face> {
 	private Modele3D modele;
 	
+	/**
+	 * Crée un objet FaceComparator à partir d'un modèle.
+	 * @param modele Modèle à partir duquel on crée le comparateur.
+	 */
 	public FaceComparator(Modele3D modele) {
 		this.modele = modele;
 	}
 	
+	/**
+	 * Permet de comparer de face entre elles. La comparaison se fait via la moyenne des coordonnées Z des faces.
+	 * @param o1 La face à comparer à o2.
+	 * @param o2 Une face qu'on compare à o1.
+	 * @return -1 si la face o1 a une moyenne des Z supérieure à o2, 1 si au contraire o2 a une moyenne supérieure à o1, 0 si les moyennes sont égales.
+	 */
 	@Override
 	public int compare(Face o1, Face o2) {
 		double moyF1;
