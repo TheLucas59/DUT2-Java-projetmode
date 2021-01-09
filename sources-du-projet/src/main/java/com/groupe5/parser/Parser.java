@@ -11,7 +11,11 @@ import java.util.logging.Logger;
 
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
-
+/**
+ * Parse un fichier PLY
+ * @author demayl
+ *
+ */
 public class Parser {
 	String header;
 	String faces;

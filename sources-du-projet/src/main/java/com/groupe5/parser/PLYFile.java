@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
 import com.groupe5.view.FileChooser;
-
+/**
+ * Descripteur de fichier PLY
+ * @author demayl
+ *
+ */
 public class PLYFile {
 	public File file;
 	public String header;
