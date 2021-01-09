@@ -30,6 +30,12 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+/**
+ * Class qui gère la fenêtre du Viewer 3D principal
+ * @author pirca
+ * @author plel
+ * @author duhayona
+ */
 public class PrimaryView extends Viewer {
 
 	@FXML Canvas canvas;

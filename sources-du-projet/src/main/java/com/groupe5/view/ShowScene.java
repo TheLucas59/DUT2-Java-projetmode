@@ -1,11 +1,6 @@
 package com.groupe5.view;
 
 import java.io.IOException;
-
-/**
- * Class qui gère les fenêtres de JavaFX
- * @author pirca
- */
 import java.net.MalformedURLException;
 
 import javafx.application.Application;
@@ -14,6 +9,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Class qui gère les fenêtres de JavaFX
+ * @author pirca
+ */
 public class ShowScene extends Application{
 	private static Stage fileChooser = null;
 	private static Stage viewer = null;
