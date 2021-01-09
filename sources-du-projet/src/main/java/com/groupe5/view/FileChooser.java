@@ -22,6 +22,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 
+/*
+ * Class pour le sélecteur de fichiers
+ * @author pirca 
+ * 
+ */
 public class FileChooser {
 	@FXML TextField path;
 	@FXML TableView<PLYFile> tableview;
@@ -35,7 +40,9 @@ public class FileChooser {
 	private PLYFile selectedItem = null;
 	private ArrayList<PLYFile> listFile = new ArrayList<>();
 
-
+	/*
+	 * Fonction qui initialise les évenements du sélecteur de fichiers
+	 */
 	public void initialize(){
 		fileName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFile().getName()));
 		fileComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
@@ -87,12 +94,19 @@ public class FileChooser {
 		});
 	}
 
+	/*
+	 * ouvrir un fichier dans le viewer
+	 */
 	private void openFile(){
 		ShowScene.getFileChooser().hide();
 		ShowScene.getViewer().show();
 		PrimaryView.setFile(selectedItem.getFile());
 	}
 	
+	/*
+	 * Gère l'evenement du bouton pour choisir l'emplacement des fichiers
+	 * @param e ActionEvent de JavaFX
+	 */
 	public void pathButton(ActionEvent e){
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		if(path.getText().length() != 0 && new File(path.getText()).exists()) directoryChooser.setInitialDirectory(new File(path.getText()));
@@ -103,6 +117,10 @@ public class FileChooser {
 		showFiles(selectedDirectory);
 	}
 
+	/*
+	 * Affiche les fichiers du répértoire choisi
+	 * @param selectedDirectory dossier choisi
+	 */
 	public void showFiles(File selectedDirectory) {
 		fileSearch.clear();
 		listFile.clear();
@@ -117,6 +135,9 @@ public class FileChooser {
 		tableview.setItems(FXCollections.observableArrayList(listFile));
 	}
 	
+	/*
+	 * Affiche les fichiers grâce à la recherche
+	 */
 	public void showFilesSearch(){
 		tableview.getItems().clear();
 		if(fileSearch.getText().isEmpty()){
@@ -130,6 +151,12 @@ public class FileChooser {
 		tableview.setItems(FXCollections.observableArrayList(accepted));
 	}
 	
+	/*
+	 * Affiche le message d'erreur
+	 * @param title titre du message
+	 * @param headerText contenu de l'erreur
+	 * @param contentText précision
+	 */
 	public static void showAlert(String title, String headerText, String contentText){
 		Alert alert = new Alert(AlertType.ERROR);
 

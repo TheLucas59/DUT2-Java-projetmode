@@ -1,6 +1,11 @@
 package com.groupe5.view;
 
 import java.io.IOException;
+
+/*
+ * Class qui gère les fenêtres de JavaFX
+ * @author pirca
+ */
 import java.net.MalformedURLException;
 
 import javafx.application.Application;
@@ -14,6 +19,11 @@ public class ShowScene extends Application{
 	private static Stage viewer = null;
 	private static Stage viewer2 = null;
 
+	/*
+	 * lance le sélecteur de fichier
+	 * @param stage stage JavaFX
+	 * @throws IOException
+	 */
 	public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource("/interface/filechooser.fxml"));
@@ -29,10 +39,18 @@ public class ShowScene extends Application{
         Application.launch(args);
     }
     
+    /*
+     * Retourne la fenêtre du sélecteur de fichier
+     * @return le stage du FileChooser
+     */
     public static Stage getFileChooser() {
     	return fileChooser;
     }
     
+    /*
+     * Retourne la fenêtre principale du viewer
+     * @return le stage Viewer
+     */
     public static Stage getViewer() {
     	if(viewer == null) {
     		FXMLLoader loader = new FXMLLoader();
@@ -52,6 +70,10 @@ public class ShowScene extends Application{
     	return viewer;
     }
 
+    /*
+     * Retourne la fenêtre secondaire du viewer
+     * @return le deuxieme stage Viewer
+     */
 	public static Stage secondWindow() {
 		if(viewer2 == null) {
     		FXMLLoader loader = new FXMLLoader();
