@@ -18,6 +18,12 @@ import javafx.animation.Timeline;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
+/**
+ * Décris un modèle chargé à partir d'un fichier
+ * @author plel, duhayona
+ *
+ */
+
 public class Modele3D extends Observed {
 	private Matrix points;
 	private List<Face> faces;
@@ -27,6 +33,13 @@ public class Modele3D extends Observed {
 
 	private Timeline rotation;
 
+	/**
+	 * Crée un objet Modele3D à partir d'une matrice de points et d'une liste de faces. Met en place également une TimeLine pour la rotation automatique.
+	 * @param points Matrice des points du modèle
+	 * @param faces Liste des indices des points du modèle
+	 * @param view Vue qui utilise ce modèle
+	 * @param fileToShow Le fichier qui décrit ce modèle
+	 */
 	public Modele3D(Matrix points, List<Face> faces, Viewer view, File fileToShow) {
 		this.points = points;
 		this.faces = faces;
@@ -47,26 +60,49 @@ public class Modele3D extends Observed {
 		attach(view);
 	}
 	
+	/**
+	 * Permet d'attacher une nouvelle vue au modèle.
+	 * @param view Vue à attacher
+	 */
 	public void newView(Viewer view) {
 		attach(view);
 	}
 
+	/**
+	 * Getter permettant de récupérer la matrice des points.
+	 * @return Un objet Matrix contenant les coordonnées des points.
+	 */
 	public Matrix getPoints() {
 		return points;
 	}
 
+	/**
+	 * Getter permettant de récupérer la liste des faces.
+	 * @return Une liste contenant les faces du modèle.
+	 */
 	public List<Face> getFaces() {
 		return this.faces;
 	}
 
+	/**
+	 * Setter permettant de changer la matrice des points. 
+	 * @param other Matrice qui va remplacer les points existants.
+	 */
 	public void setMatrix(Matrix other) {
 		this.points = other;
 	}
 
+	/**
+	 * Permet de trier les faces par rapport à leur coordonnée Z (voir la classe FaceComparator pour plus d'informations).
+	 */
 	public void sortFaces() {
 		Collections.sort(faces, new FaceComparator<Face>(this));
 	}
 
+	/**
+	 * Calcule le zoom du modèle lorsqu'on scroll avec la souris ou que la valeur est changée avec le slider.
+	 * 
+	 */
 	public void zoom() {
 		view.clearScreen();
 		view.getZoomText().setText("ZOOM : " + Math.round(view.getSlideZoom().getValue()) + "%");
@@ -82,6 +118,12 @@ public class Modele3D extends Observed {
 		notifyObservers();
 	}
 
+	/**
+	 * Calcule la rotation du modèle lorsqu'on utilise le clic gauche de la souris
+	 * @param e MouseEvent généré par JavaFX lors du clic de la souris
+	 * @param oldMousePosX ancienne coordonnée X de la souris lors du précédent clic
+	 * @param oldMousePosY ancienne coordonnée Y de la souris lors du précédent clic
+	 */
 	public void rotate(MouseEvent e, double oldMousePosX, double oldMousePosY) {
 		double mousePosX = e.getSceneX();
 		double mousePosY = e.getSceneY();
@@ -95,6 +137,12 @@ public class Modele3D extends Observed {
 		zoom();
 	}
 
+	/**
+	 * Calcule la translation du modèle lorsqu'on utilise le clic droit de la souris
+	 * @param e MouseEvent généré par JavaFX lors du clic de la souris
+	 * @param oldMousePosX ancienne coordonnée X de la souris lors du précédent clic
+	 * @param oldMousePosY ancienne coordonnée Y de la souris lors du précédent clic
+	 */
 	public void translation(MouseEvent e, double oldMousePosX, double oldMousePosY) {
 		double mousePosX = e.getSceneX();
 		double mousePosY = e.getSceneY();
@@ -109,8 +157,8 @@ public class Modele3D extends Observed {
 
 	/**
 	 * Retourne le coefficient permettant l'assombrissement des faces.
-	 * @param f face pour laquelle il faut calculer l'éclairage
-	 * @return le coefficient d'éclairage de la face f
+	 * @param f face pour laquelle il faut calculer le coefficient
+	 * @return le coefficient d'éclairage de la face f si le produit scalaire est supérieur à 0, sinon -1
 	 */
 	public float eclairageFace(Face f) {
 		List<Integer> pointsFace = f.getPoints();
@@ -137,6 +185,11 @@ public class Modele3D extends Observed {
 		return -1;
 	}
 
+	/**
+	 * Permet la rotation automatique du modèle.
+	 * @param modele Modele où doit s'appliquer la rotation.
+	 * @param action Permet de déterminer si la rotation doit commencer où s'arrêter.
+	 */
 	public void rotationAuto(Modele3D modele, String action) {	
 		switch(action) {
 		case "run":
@@ -151,16 +204,28 @@ public class Modele3D extends Observed {
 		}
 	}
 
+	/**
+	 * Permet de changer le fichier que le modèle décrit. Notifie également les vues de ce changement.
+	 * @param fileShow Fichier qui va être à présent utilisé.
+	 */
 	public void setFile(File fileShow) {
 		this.fileShow = fileShow;
 		
 		notifyObservers("file");
 	}
 	
+	/**
+	 * Getter permettant de récupérer le fichier que le modèle décrit.
+	 * @return Fichier décrit.
+	 */
 	public File getFile() {
 		return this.fileShow;
 	}
 
+	/**
+	 * Setter permettant de changer les faces décrites par le modèle.
+	 * @param faces Liste de faces qui remplacera la liste actuelle.
+	 */
 	public void setFaces(ArrayList<Face> faces) {
 		this.faces = faces;
 	}
