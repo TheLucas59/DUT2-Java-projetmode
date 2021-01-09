@@ -22,7 +22,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 
-/*
+/**
  * Class pour le sélecteur de fichiers
  * @author pirca 
  * 
@@ -40,7 +40,7 @@ public class FileChooser {
 	private PLYFile selectedItem = null;
 	private ArrayList<PLYFile> listFile = new ArrayList<>();
 
-	/*
+	/**
 	 * Fonction qui initialise les évenements du sélecteur de fichiers
 	 */
 	public void initialize(){
@@ -94,7 +94,7 @@ public class FileChooser {
 		});
 	}
 
-	/*
+	/**
 	 * ouvrir un fichier dans le viewer
 	 */
 	private void openFile(){
@@ -103,7 +103,7 @@ public class FileChooser {
 		PrimaryView.setFile(selectedItem.getFile());
 	}
 	
-	/*
+	/**
 	 * Gère l'evenement du bouton pour choisir l'emplacement des fichiers
 	 * @param e ActionEvent de JavaFX
 	 */
@@ -117,7 +117,7 @@ public class FileChooser {
 		showFiles(selectedDirectory);
 	}
 
-	/*
+	/**
 	 * Affiche les fichiers du répértoire choisi
 	 * @param selectedDirectory dossier choisi
 	 */
@@ -135,7 +135,7 @@ public class FileChooser {
 		tableview.setItems(FXCollections.observableArrayList(listFile));
 	}
 	
-	/*
+	/**
 	 * Affiche les fichiers grâce à la recherche
 	 */
 	public void showFilesSearch(){
@@ -151,7 +151,7 @@ public class FileChooser {
 		tableview.setItems(FXCollections.observableArrayList(accepted));
 	}
 	
-	/*
+	/**
 	 * Affiche le message d'erreur
 	 * @param title titre du message
 	 * @param headerText contenu de l'erreur

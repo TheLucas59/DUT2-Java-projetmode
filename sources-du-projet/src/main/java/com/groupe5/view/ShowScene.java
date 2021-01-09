@@ -2,7 +2,7 @@ package com.groupe5.view;
 
 import java.io.IOException;
 
-/*
+/**
  * Class qui gère les fenêtres de JavaFX
  * @author pirca
  */
@@ -19,7 +19,7 @@ public class ShowScene extends Application{
 	private static Stage viewer = null;
 	private static Stage viewer2 = null;
 
-	/*
+	/**
 	 * lance le sélecteur de fichier
 	 * @param stage stage JavaFX
 	 * @throws IOException
@@ -39,7 +39,7 @@ public class ShowScene extends Application{
         Application.launch(args);
     }
     
-    /*
+    /**
      * Retourne la fenêtre du sélecteur de fichier
      * @return le stage du FileChooser
      */
@@ -47,7 +47,7 @@ public class ShowScene extends Application{
     	return fileChooser;
     }
     
-    /*
+    /**
      * Retourne la fenêtre principale du viewer
      * @return le stage Viewer
      */
@@ -70,7 +70,7 @@ public class ShowScene extends Application{
     	return viewer;
     }
 
-    /*
+    /**
      * Retourne la fenêtre secondaire du viewer
      * @return le deuxieme stage Viewer
      */
