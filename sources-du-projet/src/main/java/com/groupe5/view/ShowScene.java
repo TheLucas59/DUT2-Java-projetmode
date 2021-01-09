@@ -22,7 +22,7 @@ public class ShowScene extends Application{
 	/**
 	 * lance le sélecteur de fichier
 	 * @param stage stage JavaFX
-	 * @throws IOException
+	 * @throws IOException fichier fxml non trouvé
 	 */
 	public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
