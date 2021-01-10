@@ -119,7 +119,8 @@ public class Parser {
 	 * Parse les points et retourne une liste de faces
 	 * @param points Liste des points
 	 * @return ArrayList des faces
-	 * @throws Exception Erreurs
+	 * @throws NumberFormatException Face non reconnue
+	 * @throws NoSuchElementException Scanner qui demande une ressource invalide
 	 */
 	public List<Face> getFaces(List<Point> points) throws NumberFormatException, NoSuchElementException {
 		if(points == null || this.faces == null) {
