@@ -50,7 +50,7 @@ public class SecondaryView extends Viewer {
 	
 	public boolean showLines;
 	public boolean showFaces;
-	private boolean rotAuto;
+	private boolean rotAutoFlag;
 	
 	public void initialize(){
 		instance = this;
@@ -200,10 +200,10 @@ public class SecondaryView extends Viewer {
 	 * Cette méthode est appelée en appuyant sur le bouton "Rotation auto" de la vue
 	 */
 	public void rotAuto() {
-		rotAuto = !rotAuto;
+		rotAutoFlag = !rotAutoFlag;
 		String action;
 		
-		if(rotAuto) action = "run";
+		if(rotAutoFlag) action = "run";
 		else action = "stop";
 		
 		modele.rotationAuto(modele, action);
