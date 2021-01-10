@@ -58,7 +58,7 @@ public class Modele3D extends Observed {
 
 		attach(view);
 	}
-	
+
 	/**
 	 * Permet d'attacher une nouvelle vue au modèle.
 	 * @param view Vue à attacher
@@ -246,4 +246,9 @@ public class Modele3D extends Observed {
 		this.faces = faces;
 	}
 
+	public Modele3D duplicate() {
+		return new Modele3D(this.points, this.faces, this.view, this.fileShow);
+	}
+	
+	
 }

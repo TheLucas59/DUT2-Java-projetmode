@@ -36,8 +36,7 @@ public class SecondaryView extends Viewer {
 	@FXML Text loadingString;
 	@FXML MenuBar menuBar;
 	@FXML Region regionZoom;
-	@FXML
-	public Slider slideZoom;
+	@FXML public Slider slideZoom;
 	@FXML Text zoomText;
 	
 	private GraphicsContext gc;
@@ -59,7 +58,9 @@ public class SecondaryView extends Viewer {
 		showLines = false;
 		showFaces = true;
 		
-		showFile(PrimaryView.getModele());
+		Modele3D modeleAAfficher = PrimaryView.getModele();
+		modele = modeleAAfficher.duplicate();
+		showFile(modele);
 	}
 
 	/**
@@ -245,4 +246,5 @@ public class SecondaryView extends Viewer {
 			showFile(PrimaryView.getModele());	
 		}
 	}
+	
 }

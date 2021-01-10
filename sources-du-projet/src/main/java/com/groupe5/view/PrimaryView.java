@@ -48,8 +48,7 @@ public class PrimaryView extends Viewer {
 	@FXML Text loadingString;
 	@FXML MenuBar menuBar;
 	@FXML Region regionZoom;
-	@FXML
-	public Slider slideZoom;
+	@FXML Slider slideZoom;
 	@FXML Text zoomText;
 	
 	private GraphicsContext gc;
