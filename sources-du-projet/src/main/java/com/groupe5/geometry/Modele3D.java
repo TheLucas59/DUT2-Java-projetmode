@@ -105,13 +105,16 @@ public class Modele3D extends Observed {
 	public void zoom() {
 		view.getZoomText().setText("ZOOM : " + Math.round(view.getSlideZoom().getValue()) + "%");
 
-		this.getPoints().setMatrix(view.getCenter().inv().multiply(this.getPoints()));
-		Homothety h1 = new Homothety(1/view.getOldZoom());		
-		this.getPoints().setMatrix(h1.multiply(this.getPoints()));
+		Matrix points = this.getPoints();
+		points.setMatrix(view.getCenter().inv().multiply(points));
+		Homothety h1 = new Homothety(1/view.getOldZoom());
+		points = this.getPoints();
+		points.setMatrix(h1.multiply(points));
 
 		Homothety h2 = new Homothety(view.getSlideZoom().getValue());		
 
-		Matrix removeCenter = new Matrix(view.getCenter().multiply(h2.multiply(this.getPoints())));
+		points = this.getPoints();
+		Matrix removeCenter = new Matrix(view.getCenter().multiply(h2.multiply(points)));
 		this.setMatrix(removeCenter);
 		notifyObservers();
 	}

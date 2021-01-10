@@ -110,7 +110,8 @@ public class FileChooser {
 	 */
 	public void pathButton(ActionEvent e){
 		DirectoryChooser directoryChooser = new DirectoryChooser();
-		if(path.getText().length() != 0 && new File(path.getText()).exists()) directoryChooser.setInitialDirectory(new File(path.getText()));
+		String text = path.getText();
+		if(text.length() != 0 && new File(path.getText()).exists()) directoryChooser.setInitialDirectory(new File(path.getText()));
 		else if(new File("./exemples/").exists()) directoryChooser.setInitialDirectory(new File("./exemples/"));
 		File selectedDirectory = directoryChooser.showDialog(null);
 		if(selectedDirectory == null) return;
@@ -125,8 +126,10 @@ public class FileChooser {
 	public void showFiles(File selectedDirectory) {
 		fileSearch.clear();
 		listFile.clear();
+		String name = "";
 		for(File f : selectedDirectory.listFiles()){
-			if(f.getName().endsWith(".ply")){
+			name = f.getName();
+			if(name.endsWith(".ply")){
 				PLYFile ply = new PLYFile(f);
 				if(ply.onlyHeader()) {
 					listFile.add(ply);

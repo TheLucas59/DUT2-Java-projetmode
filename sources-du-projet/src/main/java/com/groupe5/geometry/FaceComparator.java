@@ -1,6 +1,9 @@
 package com.groupe5.geometry;
 
 import java.util.Comparator;
+import java.util.List;
+
+import com.groupe5.calculation.Matrix;
 
 /**
  * Permet la comparaison des faces d'un objet Modele3D.
@@ -30,18 +33,21 @@ public class FaceComparator<T> implements Comparator<Face> {
 		double moyF1;
 		double moyF2;
 		double total = 0;
+		List<Integer> pointsO1 = o1.getPoints();
+		List<Integer> pointsO2 = o2.getPoints();
+		Matrix pointsModele = modele.getPoints();
 
 		for(int i = 1; i < o1.getNbPoints(); i++) {
-			int indicePoint = o1.getPoints().get(i);
-			double z = modele.getPoints().getColumn(indicePoint)[2];
+			int indicePoint = pointsO1.get(i);
+			double z = pointsModele.getColumn(indicePoint)[2];
 			total += z;
 		}
 		moyF1 = total/o1.getNbPoints();
 		total = 0;
 		
 		for(int i = 1; i < o2.getNbPoints(); i++) {
-			int indicePoint = o2.getPoints().get(i);
-			double z = modele.getPoints().getColumn(indicePoint)[2];
+			int indicePoint = pointsO2.get(i);
+			double z = pointsModele.getColumn(indicePoint)[2];
 			total += z;
 		}
 		moyF2 = total/o2.getNbPoints();
