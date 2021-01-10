@@ -3,6 +3,7 @@ package com.groupe5.view;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
 import com.groupe5.calculation.Homothety;
@@ -178,7 +179,7 @@ public class PrimaryView extends Viewer {
 				ArrayList<Face> faces = new ArrayList<>();
 				try {
 					faces = p.getFaces(points);
-				} catch (Exception e) {
+				} catch (NumberFormatException | NoSuchElementException e) {
 					Platform.runLater(() -> FileChooser.showAlert("Exception", "Error Message", e.getMessage()));
 				}
 				

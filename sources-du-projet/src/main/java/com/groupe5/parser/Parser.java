@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -120,7 +121,7 @@ public class Parser {
 	 * @return ArrayList des faces
 	 * @throws Exception Erreurs
 	 */
-	public ArrayList<Face> getFaces(ArrayList<Point> points) throws Exception {
+	public ArrayList<Face> getFaces(ArrayList<Point> points) throws NumberFormatException, NoSuchElementException {
 		if(points == null || this.faces == null) {
 			return null;
 		}
@@ -139,7 +140,7 @@ public class Parser {
 					idPoints.add(idx);
 				}
 				f.add(new Face(idPoints));
-			} catch(Exception e) {
+			} catch(NumberFormatException | NoSuchElementException e) {
 				s.close();
 				throw e;
 			}

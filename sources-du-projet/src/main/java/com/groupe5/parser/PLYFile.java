@@ -3,6 +3,7 @@ package com.groupe5.parser;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Point;
@@ -100,7 +101,10 @@ public class PLYFile {
 		points = p.getPoints();
 		try {
 			faces = p.getFaces(points);
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
+			FileChooser.showAlert("Exception", "Error Message", e.getMessage());
+		}
+		catch (NoSuchElementException e) {
 			FileChooser.showAlert("Exception", "Error Message", e.getMessage());
 		}
 		getFields();
@@ -116,7 +120,7 @@ public class PLYFile {
 		Parser p;
 		try {
 			p = new Parser(this.file);
-		} catch (Exception e) {
+		} catch (NumberFormatException | NoSuchElementException | IOException e) {
 			return false;
 		}
 		header = p.getHeader();
