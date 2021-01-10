@@ -104,7 +104,6 @@ public class Modele3D extends Observed {
 	 * 
 	 */
 	public void zoom() {
-		view.clearScreen();
 		view.getZoomText().setText("ZOOM : " + Math.round(view.getSlideZoom().getValue()) + "%");
 
 		this.getPoints().setMatrix(view.getCenter().inv().multiply(this.getPoints()));

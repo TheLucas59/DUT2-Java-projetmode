@@ -1,10 +1,8 @@
 package com.groupe5.view;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.groupe5.calculation.Translation;
-import com.groupe5.geometry.Face;
 import com.groupe5.geometry.Modele3D;
 import com.groupe5.geometry.Point;
 import com.groupe5.observerpattern.Observed;
@@ -55,7 +53,6 @@ public class SecondaryView extends Viewer {
 	private boolean rotAuto;
 	
 	public void initialize(){
-		// System.out.println("init viewer");
 		instance = this;
 		
 		gc = canvas.getGraphicsContext2D();
@@ -65,6 +62,10 @@ public class SecondaryView extends Viewer {
 		showFile(PrimaryView.getModele());
 	}
 
+	/**
+	 * Méthode qui initialise les contrôles de l'objet, et qui affiche l'objet
+	 * @param modele3d L'objet à afficher
+	 */
 	public void showFile(Modele3D modele3d) {
 		
 		instance = this;
@@ -74,7 +75,7 @@ public class SecondaryView extends Viewer {
 		canvas.setWidth(ShowScene.getViewer().getWidth());
 		canvas.setHeight(ShowScene.getViewer().getHeight()-37);
 		
-//		ShowScene.getViewer().setTitle("3D Viewer - "+modele3d.getName());
+		ShowScene.getViewer().setTitle("3D Viewer - " + fileShow.getName());
 		
 		center = new Translation(new Point(((float) canvas.getWidth()/2), ((float) canvas.getHeight()/2), 1, 1));
 		
@@ -123,78 +124,10 @@ public class SecondaryView extends Viewer {
 			}
 		});
 		
-
 		Thread thread = new Thread(new Runnable() {
-
+			
 			@Override
 			public void run() {
-//				rotAuto = false;
-//				Parser p = null;
-//				try {
-//					p = new Parser(fileToShow);
-//				}
-//				catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//				
-//				ArrayList<Point> points = p.getPoints();
-//				objectCenter = setObjectCenter(points);
-//				
-//				
-//				for(Point pt : points) {
-//					pt.setX(pt.getX()-objectCenter.getX());
-//					pt.setY(pt.getY()-objectCenter.getY());
-//					pt.setZ(pt.getZ()-objectCenter.getZ());
-//				}
-//				
-//				ArrayList<Face> faces = new ArrayList<>();
-//				try {
-//					faces = p.getFaces(points);
-//				} catch (Exception e) {
-//					FileChooser.showAlert("Exception", "Error Message", e.getMessage());
-//				}
-//				
-//				slideZoom.setValue(1);
-//				oldZoom = 1;
-//				modele = PrimaryView.getModele();
-//				modele.newView(instance);
-//				
-//				boolean onCenter = false;
-//				double vZoom = 10050;
-//				while(!onCenter) {
-//					onCenter = true;
-//					
-//					if(vZoom > 50) vZoom -= 50;
-//					else if(vZoom > 10) vZoom -= 10;
-//					else vZoom -= 0.1;
-//					
-//					Matrix tmp = modele.getPoints();
-//					
-//					Homothety h2 = new Homothety(vZoom);		
-//					Matrix removeCenter = new Matrix(getCenter().multiply(h2.multiply(tmp)));
-//					
-//					for(double d : removeCenter.getLineX()) {
-//						if(d < 17 || d > canvas.getWidth()) {
-//							onCenter = false;
-//						}
-//					}
-//					
-//					for(double d : removeCenter.getLineY()) {
-//						if(d < 17 || d > canvas.getHeight()) {
-//							onCenter = false;
-//						}
-//					}
-//				}
-//				
-//				slideZoom.setMax(vZoom);
-//				slideZoom.setValue(vZoom);
-//				
-//				RotationZ r = new RotationZ(180);
-//				modele.getPoints().setMatrix(r.multiply(modele.getPoints()));
-//				modele.getPoints().setMatrix(center.multiply(modele.getPoints()));
-//				modele.zoom();
-//				oldZoom = slideZoom.getValue();
-				
 				if(modele == null)
 					modele = PrimaryView.getModele();
 				else
@@ -208,38 +141,64 @@ public class SecondaryView extends Viewer {
 		thread.setDaemon(true);
 		thread.start();
 	}
-	
+
+	/**
+	 * Méthode utilisé lors d'une rotation, permettant de récupérer l'ancienne position de la souris avant d'effectuer la rotation
+	 * @param e Un événement JavaFX permettant de récupérer les informations du pointeur de souris
+	 */
 	private void setOldAngles(MouseEvent e) {
 		oldMousePosX = e.getSceneX();
 		oldMousePosY = e.getSceneY();
 	}
 
+	/**
+	 * Méthode utilisé lors d'une rotation, permettant de récupérer l'ancienne position de la souris avant d'effectuer la rotation
+	 * @param e Un événement JavaFX permettant de récupérer les informations du pointeur de souris
+	 */
 	@Override
 	public Translation getCenter() {
 		return center;
 	}
 
+	/**
+	 * Permet de cacher le modèle afficher sur la vue afin d'en afficher un nouveau
+	 */
 	@Override
 	public void clearScreen() {
 		gc.setFill(Color.rgb(153, 170, 181));
 		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
 	}
 	
+	/**
+	 * Permet de récupérer la valeur affiché sur Slider gérant le zoom
+	 */
 	@Override
 	public Text getZoomText() {
 		return zoomText;
 	}
 	
+	/**
+	 * Permettant de choisir si on veut afficher les lignes ou non.
+	 * Cette méthode est appelée en appuyant sur le bouton "Show lines" de la vue
+	 */
 	public void updateShowLines() {
 		showLines = !showLines;
-		drawObject(modele.getFaces(), showLines, showFaces);
+		drawObject(modele, gc, showLines, showFaces);
 	}
 	
+	/**
+	 * Permettant de choisir si on veut afficher les couleurs faces ou non.
+	 * Cette méthode est appelée en appuyant sur le bouton "Show faces" de la vue
+	 */
 	public void updateShowFaces() {
 		showFaces = !showFaces;
-		drawObject(modele.getFaces(), showLines, showFaces);
+		drawObject(modele, gc, showLines, showFaces);
 	}
 	
+	/**
+	 * Permet de lancer la rotation automatique de l'objet
+	 * Cette méthode est appelée en appuyant sur le bouton "Rotation auto" de la vue
+	 */
 	public void rotAuto() {
 		rotAuto = !rotAuto;
 		String action;
@@ -250,67 +209,35 @@ public class SecondaryView extends Viewer {
 		modele.rotationAuto(modele, action);
 	}
 	
-	public void drawObject(List<Face> faces, boolean showLines, boolean showFaces) {	
-		clearScreen();
-		
-		modele.sortFaces();
-		gc.setStroke(Color.GRAY);
-		gc.setLineWidth(0.5);
-		gc.setFill(Color.LIGHTGRAY);
-		
-		for(Face f : faces) {
-			double[] pointsX = getCoordsX(f);
-			double[] pointsY = getCoordsY(f);
-			if(showFaces) {
-				float eclairage = modele.eclairageFace(f);
-				gc.fillPolygon(pointsX, pointsY, f.getNbPoints()-1);
-				
-				if(eclairage != -1) {
-					gc.setFill(Color.rgb(Math.round(255*eclairage), Math.round(255*eclairage), Math.round(255*eclairage)));
-				}
-			}
-			if(showLines)
-				gc.strokePolygon(pointsX, pointsY, f.getNbPoints()-1);
-		}
-	}
-	
-	private double[] getCoordsX(Face f) {
-		double[] result = new double[f.getNbPoints()-1];
-		int j = 0;
-		for(Integer i : f.getPoints()) {
-			if(j != 0) {
-				result[j-1] = modele.getPoints().getColumn(i)[0];
-			}
-			j++;
-		}
-		return result;
-	}
-
-	private double[] getCoordsY(Face f) {
-		double[] result = new double[f.getNbPoints()];
-		int j = 0;
-		for(Integer i : f.getPoints()) {
-			if(j != 0) {
-				result[j-1] = modele.getPoints().getColumn(i)[1];
-			}
-			j++;
-		}
-		return result;
-	}
-	
+	/**
+	 * Permet de récupérer la valeur du zoom de l'objet avant modification
+	 * @return La valeur de l'ancien zoom
+	 */
 	public double getOldZoom() {
 		return oldZoom;
 	}
 	
+	/**
+	 * Permet de récupérer la valeur du slider gérant le zoom
+	 * @return La valeur du slider SlideZoom
+	 */
 	public Slider getSlideZoom() {
 		return slideZoom;
 	}
-
+	
+	/**
+	 * Méthode provenant de la superclass Observer
+	 * Appelée automatiquement lors d'un notifyObservers() dans Modele3D
+	 */
 	@Override
 	public void update(Observed observed) {
-		drawObject(modele.getFaces(), showLines, showFaces);
+		drawObject(modele, gc, showLines, showFaces);
 	}
 
+	/**
+	 * Méthode provenant de la superclass Observer
+	 * Appelée automatiquement lors d'un notifyObservers() dans Modele3D
+	 */
 	@Override
 	public void update(Observed observed, Object data) {
 		if(((String) data).equals("file")) {

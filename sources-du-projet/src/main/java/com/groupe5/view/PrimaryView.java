@@ -3,7 +3,6 @@ package com.groupe5.view;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.groupe5.calculation.Homothety;
@@ -64,7 +63,6 @@ public class PrimaryView extends Viewer {
 	private boolean rotAutoFlag;
 	
 	public void initialize(){
-		// System.out.println("init viewer");
 		instance = this;
 		
 		gc = canvas.getGraphicsContext2D();
@@ -72,17 +70,31 @@ public class PrimaryView extends Viewer {
 		showFaces = false;
 	}
 	
+	/**
+	 * Permet d'ouvrir le sélecteur de fichier
+	 * Appelée lors d'un appuie sur le bouton "Nouveau fichier" de la vue
+	 * @param e Un événement JavaFX
+	 */
 	public void buttonOpenFile(ActionEvent e){
 		modele.rotationAuto(modele, "stop");
 		ShowScene.getViewer().hide();
-//		ShowScene.secondWindow().hide();
+		ShowScene.secondWindow().hide();
 		ShowScene.getFileChooser().show();
 	}
 	
+	/**
+	 * Permet de fermer le fichier ouvert
+	 * @param e Un événement JavaFX
+	 */
 	public void buttonCloseFile(ActionEvent e){
 		clearScreen();
+		ShowScene.secondWindow().hide();
 	}
 	
+	/**
+	 * Méthode qui initialise les contrôles de l'objet, et qui affiche l'objet
+	 * @param fileToShow Le fichier contenant les informations de l'objet à afficher
+	 */
 	public void showFile(File fileToShow) {
 		clearScreen();
 
@@ -221,80 +233,53 @@ public class PrimaryView extends Viewer {
 		thread.start();
 	}
 	
+	/**
+	 * Permet de cacher le modèle afficher sur la vue afin d'en afficher un nouveau
+	 */
 	public void clearScreen() {
 		gc.setFill(Color.rgb(153, 170, 181));
 		gc.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
 	}
 	
+	/**
+	 * Méthode utilisé lors d'une rotation, permettant de récupérer l'ancienne position de la souris avant d'effectuer la rotation
+	 * @param e Un événement JavaFX permettant de récupérer les informations du pointeur de souris
+	 */
 	private void setOldAngles(MouseEvent e) {
 		oldMousePosX = e.getSceneX();
 		oldMousePosY = e.getSceneY();
 	}
 	
-	public void drawObject(List<Face> faces, boolean showLines, boolean showFaces) {	
-		clearScreen();
-		
-		modele.sortFaces();
-		gc.setStroke(Color.GRAY);
-		gc.setLineWidth(0.5);
-		
-		for(Face f : faces) {
-			double[] pointsX = getCoordsX(f);
-			double[] pointsY = getCoordsY(f);
-			if(showFaces) {
-				float eclairage = modele.eclairageFace(f);
-				
-				if(eclairage != -1) {
-					gc.setFill(Color.rgb(Math.round(255*eclairage), Math.round(255*eclairage), Math.round(255*eclairage)));
-				}
-				else {
-					gc.setFill(Color.WHITE);
-				}
-				gc.fillPolygon(pointsX, pointsY, f.getNbPoints()-1);
-			}
-			if(showLines)
-				gc.strokePolygon(pointsX, pointsY, f.getNbPoints()-1);
-		}
-	}
-	
-	private double[] getCoordsX(Face f) {
-		double[] result = new double[f.getNbPoints()-1];
-		int j = 0;
-		for(Integer i : f.getPoints()) {
-			if(j != 0) {
-				result[j-1] = modele.getPoints().getColumn(i)[0];
-			}
-			j++;
-		}
-		return result;
-	}
-
-	private double[] getCoordsY(Face f) {
-		double[] result = new double[f.getNbPoints()];
-		int j = 0;
-		for(Integer i : f.getPoints()) {
-			if(j != 0) {
-				result[j-1] = modele.getPoints().getColumn(i)[1];
-			}
-			j++;
-		}
-		return result;
-	}
-	
+	/**
+	 * Permettant de choisir si on veut afficher les lignes ou non.
+	 * Cette méthode est appelée en appuyant sur le bouton "Show lines" de la vue
+	 */
 	public void updateShowLines() {
 		showLines = !showLines;
-		drawObject(modele.getFaces(), showLines, showFaces);
+		drawObject(modele, gc, showLines, showFaces);
 	}
 	
+	/**
+	 * Permettant de choisir si on veut afficher les couleurs faces ou non.
+	 * Cette méthode est appelée en appuyant sur le bouton "Show faces" de la vue
+	 */
 	public void updateShowFaces() {
 		showFaces = !showFaces;
-		drawObject(modele.getFaces(), showLines, showFaces);
+		drawObject(modele, gc, showLines, showFaces);
 	}
 	
+	/**
+	 * Permet d'ouvrir la deuxième fenêtre d'affichage
+	 * Cette méthode est appelée en appuyant sur le bouton "Nouvelle vue" de la vue
+	 */
 	public void newWindow() {
 		ShowScene.secondWindow().show();
 	}
 	
+	/**
+	 * Permet de lancer la rotation automatique de l'objet
+	 * Cette méthode en appuyant sur le bouton "Rotation auto" de la vue
+	 */
 	public void rotAuto() {
 		rotAutoFlag = !rotAutoFlag;
 		String action;
@@ -305,27 +290,50 @@ public class PrimaryView extends Viewer {
 		modele.rotationAuto(modele, action);
 	}
 
+	/**
+	 * Méthode utilisé lors d'une rotation, permettant de récupérer l'ancienne position de la souris avant d'effectuer la rotation
+	 * @param e Un événement JavaFX permettant de récupérer les informations du pointeur de souris
+	 */
 	public Translation getCenter() {
 		return center;
 	}
 
+	/**
+	 * Permet de récupérer la valeur affiché sur Slider gérant le zoom
+	 */
 	public Text getZoomText() {
 		return zoomText;
 	}
 	
+	/**
+	 * Permet de récupérer la valeur du zoom de l'objet avant modification
+	 * @return La valeur de l'ancien zoom
+	 */
 	public double getOldZoom() {
 		return oldZoom;
 	}
 	
+	/**
+	 * Permet de récupérer la valeur du slider gérant le zoom
+	 * @return La valeur du slider SlideZoom
+	 */
 	public Slider getSlideZoom() {
 		return slideZoom;
 	}
 
+	/**
+	 * Méthode provenant de la superclass Observer
+	 * Appelée automatiquement lors d'un notifyObservers() dans Modele3D
+	 */
 	@Override
 	public void update(Observed observed) {
-		drawObject(modele.getFaces(), showLines, showFaces);
+		drawObject(modele, gc, showLines, showFaces);
 	}
 
+	/**
+	 * Méthode provenant de la superclass Observer
+	 * Appelée automatiquement lors d'un notifyObservers() dans Modele3D
+	 */
 	@Override
 	public void update(Observed observed, Object data) {
 		if(((String) data).equals("file")) {
@@ -334,6 +342,10 @@ public class PrimaryView extends Viewer {
 		}
 	}
 
+	/**
+	 * Permet de modifier la valeur du fichier à afficher lors du changement d'objet à afficher
+	 * @param file Le nouveau fichier
+	 */
 	public static void setFile(File file) {
 		fileShow = file;
 		if(modele != null)
@@ -342,6 +354,10 @@ public class PrimaryView extends Viewer {
 			instance.showFile(file);
 	}
 	
+	/**
+	 * Permet de récupérer le modèle afficher
+	 * @return Le modèle utilisé
+	 */
 	public static Modele3D getModele() {
 		return modele;
 	}
