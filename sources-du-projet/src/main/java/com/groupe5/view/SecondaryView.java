@@ -152,8 +152,8 @@ public class SecondaryView extends Viewer {
 	}
 
 	/**
-	 * Méthode utilisé lors d'une rotation, permettant de récupérer l'ancienne position de la souris avant d'effectuer la rotation
-	 * @param e Un événement JavaFX permettant de récupérer les informations du pointeur de souris
+	 * Permet de récupérer la translation qui déplace l'objet au centre
+	 * @return Un objet de type Translation qui déplace l'objet au centre de l'écran
 	 */
 	@Override
 	public Translation getCenter() {

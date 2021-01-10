@@ -47,7 +47,7 @@ public abstract class Viewer implements Observer {
 	
 	
 	/**
-	 * Calcul le point central de l'objet affiché
+	 * Calcule le point central de l'objet affiché
 	 * @param points Liste des points de l'objet.
 	 * @return Un point situé au centre de l'objet.
 	 */
