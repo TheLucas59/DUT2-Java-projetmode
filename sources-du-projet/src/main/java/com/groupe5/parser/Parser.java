@@ -165,7 +165,7 @@ public class Parser {
 		        sb.append(line).append("\n");
 		        line = br.readLine();
 		    }
-		    return(sb.toString());
+		    return sb.toString();
 		} finally {
 		    br.close();
 		}

@@ -1,7 +1,6 @@
 package com.groupe5.geometry;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class Modele3D extends Observed {
 
 		KeyFrame begin = new KeyFrame(Duration.seconds(0));
 		KeyFrame end = new KeyFrame(Duration.millis(16.6), rot -> {
-			this.getPoints().setMatrix(view.getCenter().multiply(ry.multiply((view.getCenter()).inv().multiply(this.getPoints()))));
+			this.getPoints().setMatrix(view.getCenter().multiply(ry.multiply(view.getCenter().inv().multiply(this.getPoints()))));
 			zoom();
 		});
 

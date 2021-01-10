@@ -106,7 +106,7 @@ public class PrimaryView extends Viewer {
 		
 		ShowScene.getViewer().setTitle("3D Viewer - " + fileToShow);
 		
-		center = new Translation(new Point(((float) canvas.getWidth()/2), ((float) canvas.getHeight()/2), 1, 1));
+		center = new Translation(new Point((float) canvas.getWidth()/2, (float) canvas.getHeight()/2, 1, 1));
 		
 		//ACTIVATION ZOOM AUTO AVEC SLIDER
 

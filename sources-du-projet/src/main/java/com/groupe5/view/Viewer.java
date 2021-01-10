@@ -1,7 +1,6 @@
 package com.groupe5.view;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.groupe5.calculation.Matrix;
@@ -61,7 +60,7 @@ public abstract class Viewer implements Observer {
 			z += p.getZ();
 		}
 
-		return new Point(((float) x/size), ((float) y/size), ((float) z/size), 0);
+		return new Point((float) x/size, (float) y/size, (float) z/size, 0);
 	}
 
 	/**
