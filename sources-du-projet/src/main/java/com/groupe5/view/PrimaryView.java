@@ -15,6 +15,7 @@ import com.groupe5.geometry.Point;
 import com.groupe5.observerpattern.Observed;
 import com.groupe5.parser.Parser;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -178,7 +179,7 @@ public class PrimaryView extends Viewer {
 				try {
 					faces = p.getFaces(points);
 				} catch (Exception e) {
-					FileChooser.showAlert("Exception", "Error Message", e.getMessage());
+					Platform.runLater(() -> FileChooser.showAlert("Exception", "Error Message", e.getMessage()));
 				}
 				
 				slideZoom.setValue(1);
@@ -218,7 +219,7 @@ public class PrimaryView extends Viewer {
 					}
 				}
 				
-				slideZoom.setMax(vZoom);
+				slideZoom.setMax(vZoom*4);
 				slideZoom.setValue(vZoom);
 				
 				RotationZ r = new RotationZ(180);

@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -163,6 +164,11 @@ public class FileChooser {
 		alert.setHeaderText(headerText);
 		alert.setContentText(contentText);
 
-		alert.showAndWait();
+		alert.showAndWait().ifPresent(button -> {
+			if(button == ButtonType.OK) {
+				ShowScene.getViewer().hide();
+				ShowScene.getFileChooser().show();
+			}
+		});
 	}
 }

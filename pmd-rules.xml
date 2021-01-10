@@ -84,4 +84,5 @@
     </rule>
     <rule ref="category/java/errorprone.xml/AvoidFieldNameMatchingMethodName" />
     <rule ref="category/java/bestpractices.xml/LooseCoupling" />
+	<rule ref="category/java/design.xml/LawOfDemeter" />
 </ruleset>
