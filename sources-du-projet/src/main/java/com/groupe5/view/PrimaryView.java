@@ -206,7 +206,9 @@ public class PrimaryView extends Viewer {
 					Matrix tmp = modele.getPoints();
 					
 					Homothety h2 = new Homothety(vZoom);		
-					Matrix removeCenter = new Matrix(getCenter().multiply(h2.multiply(tmp)));
+					Translation centre = getCenter();
+					float[][] zoomDeBase = h2.multiply(tmp);
+					Matrix removeCenter = new Matrix(centre.multiply(zoomDeBase));
 					
 					for(double d : removeCenter.getLineX()) {
 						if(d < 25 || d > canvas.getWidth() - 25) {
