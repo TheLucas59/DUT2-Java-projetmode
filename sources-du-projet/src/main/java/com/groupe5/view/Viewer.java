@@ -41,7 +41,7 @@ public abstract class Viewer implements Observer {
 	 * @param fileShow Le fichier où sont écrites les informations à afficher.
 	 * @return Un nouveau Modele3D
 	 */
-	public Modele3D newModele(Matrix points, ArrayList<Face> faces, Viewer view, File fileShow) {
+	public Modele3D newModele(Matrix points, List<Face> faces, Viewer view, File fileShow) {
 		return new Modele3D(points, faces, view, fileShow);
 	}
 	
@@ -51,7 +51,7 @@ public abstract class Viewer implements Observer {
 	 * @param points Liste des points de l'objet.
 	 * @return Un point situé au centre de l'objet.
 	 */
-	public Point setObjectCenter(ArrayList<Point> points) {
+	public Point setObjectCenter(List<Point> points) {
 		double x = 0, y = 0, z = 0;
 		int size = points.size();
 

@@ -225,7 +225,7 @@ public class Modele3D extends Observed {
 	 * Setter permettant de changer les faces décrites par le modèle.
 	 * @param faces Liste de faces qui remplacera la liste actuelle.
 	 */
-	public void setFaces(ArrayList<Face> faces) {
+	public void setFaces(List<Face> faces) {
 		this.faces = faces;
 	}
 

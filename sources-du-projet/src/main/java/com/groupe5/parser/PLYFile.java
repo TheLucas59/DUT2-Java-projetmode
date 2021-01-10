@@ -3,6 +3,7 @@ package com.groupe5.parser;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.groupe5.geometry.Face;
@@ -16,8 +17,8 @@ import com.groupe5.view.FileChooser;
 public class PLYFile {
 	public File file;
 	public String header;
-	public ArrayList<Face> faces;
-	public ArrayList<Point> points;
+	public List<Face> faces;
+	public List<Point> points;
 	int faceCount;
 	int vertexCount;
 	String fileFormat;

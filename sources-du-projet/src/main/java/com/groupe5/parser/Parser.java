@@ -96,7 +96,7 @@ public class Parser {
 	 * Parse les points et retourne une liste de points
 	 * @return ArrayList des points
 	 */
-	public ArrayList<Point> getPoints() {
+	public List<Point> getPoints() {
 		if(this.points == null) {
 			return null;
 		}
@@ -121,7 +121,7 @@ public class Parser {
 	 * @return ArrayList des faces
 	 * @throws Exception Erreurs
 	 */
-	public ArrayList<Face> getFaces(ArrayList<Point> points) throws NumberFormatException, NoSuchElementException {
+	public List<Face> getFaces(List<Point> points) throws NumberFormatException, NoSuchElementException {
 		if(points == null || this.faces == null) {
 			return null;
 		}

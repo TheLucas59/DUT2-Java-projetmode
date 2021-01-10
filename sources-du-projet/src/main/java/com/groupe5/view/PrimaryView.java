@@ -3,6 +3,7 @@ package com.groupe5.view;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
@@ -166,7 +167,7 @@ public class PrimaryView extends Viewer {
 					e.printStackTrace();
 				}
 				
-				ArrayList<Point> points = p.getPoints();
+				List<Point> points = p.getPoints();
 				objectCenter = setObjectCenter(points);
 				
 				
@@ -176,7 +177,7 @@ public class PrimaryView extends Viewer {
 					pt.setZ(pt.getZ()-objectCenter.getZ());
 				}
 				
-				ArrayList<Face> faces = new ArrayList<>();
+				List<Face> faces = new ArrayList<>();
 				try {
 					faces = p.getFaces(points);
 				} catch (NumberFormatException | NoSuchElementException e) {

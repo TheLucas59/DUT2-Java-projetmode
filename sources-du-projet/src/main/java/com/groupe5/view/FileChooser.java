@@ -2,6 +2,7 @@ package com.groupe5.view;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.groupe5.parser.PLYFile;
 
@@ -38,7 +39,7 @@ public class FileChooser {
 	@FXML TextField fileSearch;
 	
 	private PLYFile selectedItem = null;
-	private ArrayList<PLYFile> listFile = new ArrayList<>();
+	private List<PLYFile> listFile = new ArrayList<>();
 
 	/**
 	 * Fonction qui initialise les évenements du sélecteur de fichiers

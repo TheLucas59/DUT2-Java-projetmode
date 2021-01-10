@@ -3,6 +3,7 @@ package com.groupe5.calculation;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import com.groupe5.geometry.Point;
 
 class TestTranslation {
 	
-	ArrayList<Point> points;
+	List<Point> points;
 	Translation t1;
 	Translation t2;
 	Point p1;

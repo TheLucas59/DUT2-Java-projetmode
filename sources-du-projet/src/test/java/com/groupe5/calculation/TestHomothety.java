@@ -3,6 +3,7 @@ package com.groupe5.calculation;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import com.groupe5.geometry.Point;
 
 class TestHomothety {
 
-	ArrayList<Point> points;
+	List<Point> points;
 	Homothety h1;
 	Homothety h2;
 	Point p1;
