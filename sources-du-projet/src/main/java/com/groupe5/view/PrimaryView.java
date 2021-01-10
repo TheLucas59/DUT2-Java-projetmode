@@ -66,8 +66,8 @@ public class PrimaryView extends Viewer {
 		instance = this;
 		
 		gc = canvas.getGraphicsContext2D();
-		showLines = true;
-		showFaces = false;
+		showLines = false;
+		showFaces = true;
 	}
 	
 	/**
@@ -206,13 +206,13 @@ public class PrimaryView extends Viewer {
 					Matrix removeCenter = new Matrix(getCenter().multiply(h2.multiply(tmp)));
 					
 					for(double d : removeCenter.getLineX()) {
-						if(d < 17 || d > canvas.getWidth()) {
+						if(d < 25 || d > canvas.getWidth() - 25) {
 							onCenter = false;
 						}
 					}
 					
 					for(double d : removeCenter.getLineY()) {
-						if(d < 17 || d > canvas.getHeight()) {
+						if(d < 25 || d > canvas.getHeight() - 25) {
 							onCenter = false;
 						}
 					}

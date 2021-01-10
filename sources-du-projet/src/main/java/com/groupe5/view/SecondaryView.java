@@ -56,8 +56,8 @@ public class SecondaryView extends Viewer {
 		instance = this;
 		
 		gc = canvas.getGraphicsContext2D();
-		showLines = true;
-		showFaces = false;
+		showLines = false;
+		showFaces = true;
 		
 		showFile(PrimaryView.getModele());
 	}
