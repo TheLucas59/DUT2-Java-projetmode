@@ -1,0 +1,19 @@
+stages:
+  - 🔍test
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=./.m2/repository"
+
+cache:
+  paths:
+    - ./.m2/
+
+test:
+  stage: 🔍test
+  image: openjdk:11-jdk
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  script:
+    - apt-get update && apt-get -y install maven && apt-get clean
+    - cd sources-du-projet
+    - mvn $MAVEN_OPTS install jacoco:report sonar:sonar
+    - cat target/site/jacoco/index.html
